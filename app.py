@@ -22,17 +22,19 @@ local_css("style.css")
 
 @st.cache_data
 def load_data():
-    # 데이터 로드 (업로드하신 파일 경로에 맞게 수정 필요)
     df = pd.read_csv("emdat.csv")
     
-    # 필요한 전처리
-    # 날짜 처리 등 (Start Year가 정수형인지 확인)
+    # 1. 필수 전처리: 연도가 없는 데이터 제거 및 정수 변환
     df = df[df['Start Year'].notna()]
     df['Start Year'] = df['Start Year'].astype(int)
     
-    # 한국 데이터 별도 추출 (South Korea, Korea, Rep. 등 확인 필요)
-    # 데이터 내 Country 명칭 확인 후 필터링. 보통 'Korea (the Republic of)' 등으로 표기됨
-    # 여기서는 예시로 'Korea'가 포함된 경우를 찾습니다.
+    # 2. 🔥 핵심 수정 사항: 시각화에 사용되는 수치형 컬럼의 결측치(NaN)를 0으로 채우기
+    # 이 처리를 안 하면 px.scatter의 size 옵션에서 ValueError가 발생합니다.
+    cols_to_fix = ['Total Deaths', 'Total Affected', 'Total Damage (\'000 US$)']
+    for col in cols_to_fix:
+        if col in df.columns:
+            df[col] = df[col].fillna(0)
+            
     return df
 
 try:
