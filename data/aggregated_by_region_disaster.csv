@@ -1,0 +1,128 @@
+Region,Disaster Type,Total_Disasters,Total_Deaths,Total_Affected
+Africa,Air,94,4163.0,684.0
+Africa,Animal incident,1,12.0,5.0
+Africa,Chemical spill,2,5.0,430.0
+Africa,Collapse (Industrial),66,1727.0,560.0
+Africa,Collapse (Miscellaneous),45,1106.0,1976.0
+Africa,Drought,107,743.0,305326226.0
+Africa,Earthquake,25,5633.0,1489553.0
+Africa,Epidemic,604,98700.0,4899556.0
+Africa,Explosion (Industrial),44,2133.0,26882.0
+Africa,Explosion (Miscellaneous),38,2621.0,82936.0
+Africa,Extreme temperature,10,164.0,1845138.0
+Africa,Fire (Industrial),9,219.0,105.0
+Africa,Fire (Miscellaneous),96,1418.0,234467.0
+Africa,Flood,677,20765.0,75099050.0
+Africa,Industrial accident (General),13,391.0,96225.0
+Africa,Infestation,22,0.0,3200000.0
+Africa,Mass movement (dry),2,114.0,707.0
+Africa,Mass movement (wet),52,3513.0,135068.0
+Africa,Miscellaneous accident (General),56,1458.0,4242.0
+Africa,Poisoning,3,300.0,18585.0
+Africa,Rail,61,2097.0,7209.0
+Africa,Road,990,21312.0,20752.0
+Africa,Storm,189,17831.0,18499657.0
+Africa,Volcanic activity,8,234.0,675557.0
+Africa,Water,520,25007.0,13058.0
+Africa,Wildfire,20,297.0,129881.0
+Americas,Air,108,3140.0,567.0
+Americas,Chemical spill,5,9.0,82954.0
+Americas,Collapse (Industrial),13,523.0,714.0
+Americas,Collapse (Miscellaneous),19,732.0,1220.0
+Americas,Drought,64,446.0,21048403.0
+Americas,Earthquake,81,227869.0,12019398.0
+Americas,Epidemic,81,10244.0,3413939.0
+Americas,Explosion (Industrial),35,858.0,15608.0
+Americas,Explosion (Miscellaneous),21,839.0,4377.0
+Americas,Extreme temperature,48,4568.0,5229707.0
+Americas,Fire (Industrial),3,57.0,72.0
+Americas,Fire (Miscellaneous),63,2406.0,64932.0
+Americas,Flood,622,11280.0,57006590.0
+Americas,Gas leak,3,23.0,8297.0
+Americas,Industrial accident (General),6,47.0,1.0
+Americas,Infestation,1,0.0,0.0
+Americas,Mass movement (dry),2,48.0,3028.0
+Americas,Mass movement (wet),77,2713.0,288216.0
+Americas,Miscellaneous accident (General),24,336.0,110905.0
+Americas,Oil spill,4,1.0,512137.0
+Americas,Poisoning,3,81.0,550800.0
+Americas,Rail,27,262.0,9115.0
+Americas,Road,423,8595.0,8481.0
+Americas,Storm,614,8836.0,146560499.0
+Americas,Volcanic activity,33,484.0,3343764.0
+Americas,Water,93,2369.0,1641.0
+Americas,Wildfire,112,713.0,11700823.0
+Asia,Air,157,7314.0,1315.0
+Asia,Chemical spill,8,17.0,5862.0
+Asia,Collapse (Industrial),74,3296.0,2100.0
+Asia,Collapse (Miscellaneous),89,2679.0,16453.0
+Asia,Drought,68,145.0,1044588850.0
+Asia,Earthquake,364,473793.0,119982696.0
+Asia,Epidemic,160,14107.0,2959635.0
+Asia,Explosion (Industrial),347,10228.0,424925.0
+Asia,Explosion (Miscellaneous),86,1828.0,25281.0
+Asia,Extreme temperature,110,16260.0,115641232.0
+Asia,Fire (Industrial),92,2415.0,221808.0
+Asia,Fire (Miscellaneous),225,5954.0,365784.0
+Asia,Flood,1177,61015.0,1148067889.0
+Asia,Gas leak,30,254.0,159006.0
+Asia,Glacial lake outburst flood,5,232.0,94144.0
+Asia,Industrial accident (General),78,1984.0,37248.0
+Asia,Infestation,3,0.0,0.0
+Asia,Mass movement (dry),7,158.0,360.0
+Asia,Mass movement (wet),219,11478.0,7156428.0
+Asia,Miscellaneous accident (General),100,7589.0,22156.0
+Asia,Oil spill,2,0.0,17000.0
+Asia,Poisoning,13,131.0,15935.0
+Asia,Radiation,2,26.0,7129.0
+Asia,Rail,119,3885.0,53596.0
+Asia,Road,717,16615.0,12532.0
+Asia,Storm,783,37642.0,462463376.0
+Asia,Volcanic activity,43,471.0,1772510.0
+Asia,Water,420,19812.0,61096.0
+Asia,Wildfire,36,130.0,912849.0
+Europe,Air,79,2875.0,581.0
+Europe,Chemical spill,7,15.0,7892.0
+Europe,Collapse (Industrial),4,115.0,41.0
+Europe,Collapse (Miscellaneous),13,393.0,1734.0
+Europe,Drought,22,2.0,1278769.0
+Europe,Earthquake,45,484.0,631650.0
+Europe,Epidemic,17,18.0,18891.0
+Europe,Explosion (Industrial),43,1114.0,31169.0
+Europe,Explosion (Miscellaneous),22,400.0,18789.0
+Europe,Extreme temperature,240,247026.0,652043.0
+Europe,Fire (Industrial),9,144.0,3237.0
+Europe,Fire (Miscellaneous),64,1443.0,7040.0
+Europe,Flood,335,1442.0,7917241.0
+Europe,Gas leak,3,23.0,153.0
+Europe,Glacial lake outburst flood,2,12.0,0.0
+Europe,Industrial accident (General),4,67.0,971.0
+Europe,Infestation,1,0.0,0.0
+Europe,Mass movement (dry),1,8.0,200.0
+Europe,Mass movement (wet),15,239.0,6819.0
+Europe,Miscellaneous accident (General),19,174.0,5059.0
+Europe,Poisoning,1,0.0,100.0
+Europe,Rail,43,888.0,2748.0
+Europe,Road,103,1687.0,1722.0
+Europe,Storm,281,684.0,4049725.0
+Europe,Volcanic activity,3,0.0,328.0
+Europe,Water,128,4787.0,2746.0
+Europe,Wildfire,59,404.0,245896.0
+Oceania,Air,6,99.0,4.0
+Oceania,Drought,13,24.0,2803593.0
+Oceania,Earthquake,18,406.0,1255690.0
+Oceania,Epidemic,19,465.0,44899.0
+Oceania,Explosion (Industrial),1,29.0,2.0
+Oceania,Extreme temperature,3,139.0,0.0
+Oceania,Fire (Miscellaneous),3,46.0,9.0
+Oceania,Flood,69,145.0,709200.0
+Oceania,Industrial accident (General),1,0.0,0.0
+Oceania,Infestation,2,0.0,0.0
+Oceania,Mass movement (dry),1,10.0,0.0
+Oceania,Mass movement (wet),13,890.0,19044.0
+Oceania,Rail,2,11.0,143.0
+Oceania,Road,1,10.0,20.0
+Oceania,Storm,110,398.0,2548887.0
+Oceania,Volcanic activity,16,25.0,181803.0
+Oceania,Water,11,804.0,384.0
+Oceania,Wildfire,15,192.0,19913.0

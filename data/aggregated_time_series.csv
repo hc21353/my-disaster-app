@@ -1,0 +1,1884 @@
+Region,Disaster Type,Year,Total_Occurrences
+Africa,Air,2000,7
+Africa,Air,2001,3
+Africa,Air,2002,6
+Africa,Air,2003,9
+Africa,Air,2004,4
+Africa,Air,2005,8
+Africa,Air,2006,6
+Africa,Air,2007,4
+Africa,Air,2008,6
+Africa,Air,2009,2
+Africa,Air,2010,2
+Africa,Air,2011,5
+Africa,Air,2012,6
+Africa,Air,2013,4
+Africa,Air,2014,3
+Africa,Air,2015,1
+Africa,Air,2016,1
+Africa,Air,2017,2
+Africa,Air,2018,3
+Africa,Air,2019,3
+Africa,Air,2020,1
+Africa,Air,2021,1
+Africa,Air,2022,3
+Africa,Air,2024,1
+Africa,Air,2025,3
+Africa,Animal incident,2014,1
+Africa,Chemical spill,2001,1
+Africa,Chemical spill,2007,1
+Africa,Collapse (Industrial),2000,1
+Africa,Collapse (Industrial),2001,2
+Africa,Collapse (Industrial),2002,2
+Africa,Collapse (Industrial),2004,1
+Africa,Collapse (Industrial),2005,5
+Africa,Collapse (Industrial),2006,5
+Africa,Collapse (Industrial),2007,2
+Africa,Collapse (Industrial),2008,1
+Africa,Collapse (Industrial),2009,5
+Africa,Collapse (Industrial),2010,2
+Africa,Collapse (Industrial),2011,2
+Africa,Collapse (Industrial),2012,1
+Africa,Collapse (Industrial),2013,6
+Africa,Collapse (Industrial),2014,3
+Africa,Collapse (Industrial),2015,2
+Africa,Collapse (Industrial),2016,2
+Africa,Collapse (Industrial),2017,1
+Africa,Collapse (Industrial),2018,1
+Africa,Collapse (Industrial),2019,6
+Africa,Collapse (Industrial),2020,2
+Africa,Collapse (Industrial),2021,5
+Africa,Collapse (Industrial),2022,1
+Africa,Collapse (Industrial),2023,2
+Africa,Collapse (Industrial),2024,2
+Africa,Collapse (Industrial),2025,4
+Africa,Collapse (Miscellaneous),2000,2
+Africa,Collapse (Miscellaneous),2001,2
+Africa,Collapse (Miscellaneous),2002,3
+Africa,Collapse (Miscellaneous),2003,2
+Africa,Collapse (Miscellaneous),2004,3
+Africa,Collapse (Miscellaneous),2005,1
+Africa,Collapse (Miscellaneous),2006,2
+Africa,Collapse (Miscellaneous),2007,2
+Africa,Collapse (Miscellaneous),2008,4
+Africa,Collapse (Miscellaneous),2009,1
+Africa,Collapse (Miscellaneous),2010,2
+Africa,Collapse (Miscellaneous),2011,1
+Africa,Collapse (Miscellaneous),2012,3
+Africa,Collapse (Miscellaneous),2013,3
+Africa,Collapse (Miscellaneous),2014,2
+Africa,Collapse (Miscellaneous),2015,1
+Africa,Collapse (Miscellaneous),2016,2
+Africa,Collapse (Miscellaneous),2017,1
+Africa,Collapse (Miscellaneous),2019,1
+Africa,Collapse (Miscellaneous),2020,2
+Africa,Collapse (Miscellaneous),2023,1
+Africa,Collapse (Miscellaneous),2024,3
+Africa,Collapse (Miscellaneous),2025,1
+Africa,Drought,2000,2
+Africa,Drought,2001,11
+Africa,Drought,2002,7
+Africa,Drought,2003,4
+Africa,Drought,2005,10
+Africa,Drought,2007,4
+Africa,Drought,2008,4
+Africa,Drought,2009,1
+Africa,Drought,2010,2
+Africa,Drought,2011,5
+Africa,Drought,2012,2
+Africa,Drought,2013,1
+Africa,Drought,2014,1
+Africa,Drought,2015,2
+Africa,Drought,2016,4
+Africa,Drought,2017,7
+Africa,Drought,2018,2
+Africa,Drought,2019,3
+Africa,Drought,2020,7
+Africa,Drought,2021,6
+Africa,Drought,2022,12
+Africa,Drought,2023,3
+Africa,Drought,2024,5
+Africa,Drought,2025,2
+Africa,Earthquake,2000,1
+Africa,Earthquake,2001,1
+Africa,Earthquake,2002,3
+Africa,Earthquake,2003,2
+Africa,Earthquake,2004,7
+Africa,Earthquake,2006,1
+Africa,Earthquake,2008,1
+Africa,Earthquake,2014,2
+Africa,Earthquake,2015,1
+Africa,Earthquake,2016,2
+Africa,Earthquake,2020,1
+Africa,Earthquake,2023,1
+Africa,Earthquake,2025,2
+Africa,Epidemic,2000,63
+Africa,Epidemic,2001,53
+Africa,Epidemic,2002,49
+Africa,Epidemic,2003,24
+Africa,Epidemic,2004,28
+Africa,Epidemic,2005,40
+Africa,Epidemic,2006,51
+Africa,Epidemic,2007,24
+Africa,Epidemic,2008,32
+Africa,Epidemic,2009,28
+Africa,Epidemic,2010,26
+Africa,Epidemic,2011,16
+Africa,Epidemic,2012,17
+Africa,Epidemic,2013,15
+Africa,Epidemic,2014,18
+Africa,Epidemic,2015,9
+Africa,Epidemic,2016,14
+Africa,Epidemic,2017,17
+Africa,Epidemic,2018,13
+Africa,Epidemic,2019,18
+Africa,Epidemic,2020,4
+Africa,Epidemic,2021,4
+Africa,Epidemic,2022,12
+Africa,Epidemic,2023,13
+Africa,Epidemic,2024,10
+Africa,Epidemic,2025,6
+Africa,Explosion (Industrial),2000,9
+Africa,Explosion (Industrial),2001,3
+Africa,Explosion (Industrial),2003,2
+Africa,Explosion (Industrial),2004,5
+Africa,Explosion (Industrial),2005,2
+Africa,Explosion (Industrial),2006,3
+Africa,Explosion (Industrial),2007,1
+Africa,Explosion (Industrial),2009,1
+Africa,Explosion (Industrial),2011,1
+Africa,Explosion (Industrial),2013,1
+Africa,Explosion (Industrial),2015,3
+Africa,Explosion (Industrial),2019,5
+Africa,Explosion (Industrial),2020,1
+Africa,Explosion (Industrial),2022,1
+Africa,Explosion (Industrial),2023,4
+Africa,Explosion (Industrial),2024,1
+Africa,Explosion (Industrial),2025,1
+Africa,Explosion (Miscellaneous),2000,2
+Africa,Explosion (Miscellaneous),2001,5
+Africa,Explosion (Miscellaneous),2002,5
+Africa,Explosion (Miscellaneous),2003,1
+Africa,Explosion (Miscellaneous),2004,2
+Africa,Explosion (Miscellaneous),2006,2
+Africa,Explosion (Miscellaneous),2007,5
+Africa,Explosion (Miscellaneous),2009,2
+Africa,Explosion (Miscellaneous),2011,3
+Africa,Explosion (Miscellaneous),2012,2
+Africa,Explosion (Miscellaneous),2013,1
+Africa,Explosion (Miscellaneous),2014,2
+Africa,Explosion (Miscellaneous),2015,1
+Africa,Explosion (Miscellaneous),2016,1
+Africa,Explosion (Miscellaneous),2018,1
+Africa,Explosion (Miscellaneous),2021,1
+Africa,Explosion (Miscellaneous),2022,1
+Africa,Explosion (Miscellaneous),2024,1
+Africa,Extreme temperature,2000,1
+Africa,Extreme temperature,2002,1
+Africa,Extreme temperature,2003,1
+Africa,Extreme temperature,2004,1
+Africa,Extreme temperature,2007,1
+Africa,Extreme temperature,2016,1
+Africa,Extreme temperature,2017,1
+Africa,Extreme temperature,2018,1
+Africa,Extreme temperature,2019,1
+Africa,Extreme temperature,2024,1
+Africa,Fire (Industrial),2000,3
+Africa,Fire (Industrial),2002,1
+Africa,Fire (Industrial),2007,1
+Africa,Fire (Industrial),2008,1
+Africa,Fire (Industrial),2010,1
+Africa,Fire (Industrial),2015,1
+Africa,Fire (Industrial),2021,1
+Africa,Fire (Miscellaneous),2000,5
+Africa,Fire (Miscellaneous),2001,5
+Africa,Fire (Miscellaneous),2002,6
+Africa,Fire (Miscellaneous),2003,3
+Africa,Fire (Miscellaneous),2004,7
+Africa,Fire (Miscellaneous),2005,8
+Africa,Fire (Miscellaneous),2006,6
+Africa,Fire (Miscellaneous),2007,3
+Africa,Fire (Miscellaneous),2008,2
+Africa,Fire (Miscellaneous),2009,3
+Africa,Fire (Miscellaneous),2010,4
+Africa,Fire (Miscellaneous),2011,5
+Africa,Fire (Miscellaneous),2013,2
+Africa,Fire (Miscellaneous),2015,4
+Africa,Fire (Miscellaneous),2016,3
+Africa,Fire (Miscellaneous),2017,1
+Africa,Fire (Miscellaneous),2018,3
+Africa,Fire (Miscellaneous),2019,2
+Africa,Fire (Miscellaneous),2020,3
+Africa,Fire (Miscellaneous),2021,3
+Africa,Fire (Miscellaneous),2022,7
+Africa,Fire (Miscellaneous),2023,4
+Africa,Fire (Miscellaneous),2024,3
+Africa,Fire (Miscellaneous),2025,4
+Africa,Flood,2000,26
+Africa,Flood,2001,30
+Africa,Flood,2002,23
+Africa,Flood,2003,29
+Africa,Flood,2004,23
+Africa,Flood,2005,19
+Africa,Flood,2006,32
+Africa,Flood,2007,30
+Africa,Flood,2008,22
+Africa,Flood,2009,23
+Africa,Flood,2010,25
+Africa,Flood,2011,19
+Africa,Flood,2012,18
+Africa,Flood,2013,22
+Africa,Flood,2014,8
+Africa,Flood,2015,16
+Africa,Flood,2016,17
+Africa,Flood,2017,12
+Africa,Flood,2018,21
+Africa,Flood,2019,48
+Africa,Flood,2020,48
+Africa,Flood,2021,22
+Africa,Flood,2022,43
+Africa,Flood,2023,32
+Africa,Flood,2024,41
+Africa,Flood,2025,28
+Africa,Industrial accident (General),2002,2
+Africa,Industrial accident (General),2005,1
+Africa,Industrial accident (General),2006,1
+Africa,Industrial accident (General),2008,2
+Africa,Industrial accident (General),2009,2
+Africa,Industrial accident (General),2014,1
+Africa,Industrial accident (General),2019,2
+Africa,Industrial accident (General),2022,1
+Africa,Industrial accident (General),2023,1
+Africa,Infestation,2004,11
+Africa,Infestation,2006,1
+Africa,Infestation,2009,1
+Africa,Infestation,2010,1
+Africa,Infestation,2019,2
+Africa,Infestation,2020,6
+Africa,Mass movement (dry),2008,1
+Africa,Mass movement (dry),2024,1
+Africa,Mass movement (wet),2000,4
+Africa,Mass movement (wet),2001,2
+Africa,Mass movement (wet),2002,1
+Africa,Mass movement (wet),2003,1
+Africa,Mass movement (wet),2007,1
+Africa,Mass movement (wet),2008,1
+Africa,Mass movement (wet),2009,1
+Africa,Mass movement (wet),2010,6
+Africa,Mass movement (wet),2014,1
+Africa,Mass movement (wet),2016,1
+Africa,Mass movement (wet),2017,2
+Africa,Mass movement (wet),2018,4
+Africa,Mass movement (wet),2019,6
+Africa,Mass movement (wet),2020,1
+Africa,Mass movement (wet),2022,2
+Africa,Mass movement (wet),2023,6
+Africa,Mass movement (wet),2024,8
+Africa,Mass movement (wet),2025,4
+Africa,Miscellaneous accident (General),2000,2
+Africa,Miscellaneous accident (General),2001,3
+Africa,Miscellaneous accident (General),2002,2
+Africa,Miscellaneous accident (General),2003,2
+Africa,Miscellaneous accident (General),2004,3
+Africa,Miscellaneous accident (General),2005,4
+Africa,Miscellaneous accident (General),2007,1
+Africa,Miscellaneous accident (General),2008,2
+Africa,Miscellaneous accident (General),2009,2
+Africa,Miscellaneous accident (General),2010,1
+Africa,Miscellaneous accident (General),2011,3
+Africa,Miscellaneous accident (General),2012,3
+Africa,Miscellaneous accident (General),2013,2
+Africa,Miscellaneous accident (General),2014,3
+Africa,Miscellaneous accident (General),2015,4
+Africa,Miscellaneous accident (General),2016,1
+Africa,Miscellaneous accident (General),2017,2
+Africa,Miscellaneous accident (General),2020,2
+Africa,Miscellaneous accident (General),2021,3
+Africa,Miscellaneous accident (General),2022,3
+Africa,Miscellaneous accident (General),2023,5
+Africa,Miscellaneous accident (General),2024,2
+Africa,Miscellaneous accident (General),2025,1
+Africa,Poisoning,2000,1
+Africa,Poisoning,2010,1
+Africa,Poisoning,2024,1
+Africa,Rail,2000,7
+Africa,Rail,2001,2
+Africa,Rail,2002,4
+Africa,Rail,2003,3
+Africa,Rail,2004,1
+Africa,Rail,2005,5
+Africa,Rail,2006,2
+Africa,Rail,2007,2
+Africa,Rail,2008,2
+Africa,Rail,2009,5
+Africa,Rail,2010,1
+Africa,Rail,2011,3
+Africa,Rail,2012,1
+Africa,Rail,2013,3
+Africa,Rail,2014,1
+Africa,Rail,2015,3
+Africa,Rail,2016,2
+Africa,Rail,2017,2
+Africa,Rail,2018,5
+Africa,Rail,2019,3
+Africa,Rail,2021,2
+Africa,Rail,2022,1
+Africa,Rail,2025,1
+Africa,Road,2000,78
+Africa,Road,2001,71
+Africa,Road,2002,72
+Africa,Road,2003,63
+Africa,Road,2004,57
+Africa,Road,2005,53
+Africa,Road,2006,67
+Africa,Road,2007,52
+Africa,Road,2008,48
+Africa,Road,2009,29
+Africa,Road,2010,29
+Africa,Road,2011,49
+Africa,Road,2012,32
+Africa,Road,2013,31
+Africa,Road,2014,25
+Africa,Road,2015,21
+Africa,Road,2016,19
+Africa,Road,2017,26
+Africa,Road,2018,27
+Africa,Road,2019,19
+Africa,Road,2020,13
+Africa,Road,2021,19
+Africa,Road,2022,24
+Africa,Road,2023,21
+Africa,Road,2024,23
+Africa,Road,2025,22
+Africa,Storm,2000,8
+Africa,Storm,2001,5
+Africa,Storm,2002,12
+Africa,Storm,2003,6
+Africa,Storm,2004,6
+Africa,Storm,2005,5
+Africa,Storm,2006,5
+Africa,Storm,2007,5
+Africa,Storm,2008,7
+Africa,Storm,2009,9
+Africa,Storm,2010,4
+Africa,Storm,2011,5
+Africa,Storm,2012,8
+Africa,Storm,2013,3
+Africa,Storm,2014,3
+Africa,Storm,2015,7
+Africa,Storm,2016,2
+Africa,Storm,2017,6
+Africa,Storm,2018,5
+Africa,Storm,2019,8
+Africa,Storm,2020,5
+Africa,Storm,2021,7
+Africa,Storm,2022,11
+Africa,Storm,2023,13
+Africa,Storm,2024,19
+Africa,Storm,2025,15
+Africa,Volcanic activity,2002,1
+Africa,Volcanic activity,2005,2
+Africa,Volcanic activity,2006,1
+Africa,Volcanic activity,2014,1
+Africa,Volcanic activity,2021,3
+Africa,Water,2000,14
+Africa,Water,2001,19
+Africa,Water,2002,24
+Africa,Water,2003,18
+Africa,Water,2004,19
+Africa,Water,2005,23
+Africa,Water,2006,26
+Africa,Water,2007,22
+Africa,Water,2008,25
+Africa,Water,2009,26
+Africa,Water,2010,11
+Africa,Water,2011,21
+Africa,Water,2012,15
+Africa,Water,2013,14
+Africa,Water,2014,24
+Africa,Water,2015,14
+Africa,Water,2016,14
+Africa,Water,2017,18
+Africa,Water,2018,21
+Africa,Water,2019,24
+Africa,Water,2020,21
+Africa,Water,2021,25
+Africa,Water,2022,18
+Africa,Water,2023,19
+Africa,Water,2024,27
+Africa,Water,2025,18
+Africa,Wildfire,2000,2
+Africa,Wildfire,2001,2
+Africa,Wildfire,2002,1
+Africa,Wildfire,2007,4
+Africa,Wildfire,2009,1
+Africa,Wildfire,2013,1
+Africa,Wildfire,2017,2
+Africa,Wildfire,2019,1
+Africa,Wildfire,2021,1
+Africa,Wildfire,2022,2
+Africa,Wildfire,2023,1
+Africa,Wildfire,2024,1
+Africa,Wildfire,2025,1
+Americas,Air,2000,8
+Americas,Air,2001,11
+Americas,Air,2002,5
+Americas,Air,2003,5
+Americas,Air,2004,4
+Americas,Air,2005,7
+Americas,Air,2006,3
+Americas,Air,2007,2
+Americas,Air,2008,9
+Americas,Air,2009,9
+Americas,Air,2010,5
+Americas,Air,2011,6
+Americas,Air,2012,1
+Americas,Air,2013,2
+Americas,Air,2014,2
+Americas,Air,2015,4
+Americas,Air,2016,6
+Americas,Air,2017,2
+Americas,Air,2018,3
+Americas,Air,2019,5
+Americas,Air,2020,1
+Americas,Air,2022,1
+Americas,Air,2023,1
+Americas,Air,2024,1
+Americas,Air,2025,5
+Americas,Chemical spill,2000,1
+Americas,Chemical spill,2004,1
+Americas,Chemical spill,2013,1
+Americas,Chemical spill,2014,2
+Americas,Collapse (Industrial),2007,1
+Americas,Collapse (Industrial),2011,2
+Americas,Collapse (Industrial),2014,2
+Americas,Collapse (Industrial),2015,2
+Americas,Collapse (Industrial),2017,1
+Americas,Collapse (Industrial),2018,1
+Americas,Collapse (Industrial),2019,1
+Americas,Collapse (Industrial),2022,1
+Americas,Collapse (Industrial),2023,1
+Americas,Collapse (Industrial),2025,1
+Americas,Collapse (Miscellaneous),2000,2
+Americas,Collapse (Miscellaneous),2001,1
+Americas,Collapse (Miscellaneous),2002,1
+Americas,Collapse (Miscellaneous),2003,1
+Americas,Collapse (Miscellaneous),2004,2
+Americas,Collapse (Miscellaneous),2007,1
+Americas,Collapse (Miscellaneous),2008,1
+Americas,Collapse (Miscellaneous),2009,1
+Americas,Collapse (Miscellaneous),2012,1
+Americas,Collapse (Miscellaneous),2018,1
+Americas,Collapse (Miscellaneous),2019,2
+Americas,Collapse (Miscellaneous),2021,2
+Americas,Collapse (Miscellaneous),2022,1
+Americas,Collapse (Miscellaneous),2024,1
+Americas,Collapse (Miscellaneous),2025,1
+Americas,Drought,2000,5
+Americas,Drought,2001,5
+Americas,Drought,2002,4
+Americas,Drought,2003,2
+Americas,Drought,2004,3
+Americas,Drought,2005,1
+Americas,Drought,2007,1
+Americas,Drought,2008,2
+Americas,Drought,2009,3
+Americas,Drought,2010,6
+Americas,Drought,2011,1
+Americas,Drought,2012,3
+Americas,Drought,2013,1
+Americas,Drought,2014,4
+Americas,Drought,2015,3
+Americas,Drought,2016,3
+Americas,Drought,2018,5
+Americas,Drought,2019,1
+Americas,Drought,2020,1
+Americas,Drought,2022,2
+Americas,Drought,2023,5
+Americas,Drought,2024,3
+Americas,Earthquake,2000,3
+Americas,Earthquake,2001,5
+Americas,Earthquake,2002,1
+Americas,Earthquake,2003,6
+Americas,Earthquake,2004,4
+Americas,Earthquake,2005,2
+Americas,Earthquake,2006,2
+Americas,Earthquake,2007,6
+Americas,Earthquake,2008,1
+Americas,Earthquake,2010,3
+Americas,Earthquake,2011,1
+Americas,Earthquake,2012,2
+Americas,Earthquake,2013,1
+Americas,Earthquake,2014,4
+Americas,Earthquake,2015,2
+Americas,Earthquake,2016,5
+Americas,Earthquake,2017,3
+Americas,Earthquake,2018,4
+Americas,Earthquake,2019,6
+Americas,Earthquake,2020,2
+Americas,Earthquake,2021,5
+Americas,Earthquake,2022,3
+Americas,Earthquake,2023,1
+Americas,Earthquake,2024,2
+Americas,Earthquake,2025,7
+Americas,Epidemic,2000,3
+Americas,Epidemic,2001,1
+Americas,Epidemic,2002,9
+Americas,Epidemic,2003,2
+Americas,Epidemic,2006,2
+Americas,Epidemic,2007,1
+Americas,Epidemic,2008,6
+Americas,Epidemic,2009,9
+Americas,Epidemic,2010,9
+Americas,Epidemic,2011,5
+Americas,Epidemic,2012,6
+Americas,Epidemic,2013,5
+Americas,Epidemic,2014,2
+Americas,Epidemic,2015,2
+Americas,Epidemic,2016,3
+Americas,Epidemic,2017,1
+Americas,Epidemic,2018,1
+Americas,Epidemic,2019,7
+Americas,Epidemic,2020,3
+Americas,Epidemic,2022,1
+Americas,Epidemic,2023,2
+Americas,Epidemic,2024,1
+Americas,Explosion (Industrial),2001,3
+Americas,Explosion (Industrial),2004,1
+Americas,Explosion (Industrial),2005,1
+Americas,Explosion (Industrial),2006,2
+Americas,Explosion (Industrial),2007,3
+Americas,Explosion (Industrial),2008,2
+Americas,Explosion (Industrial),2009,1
+Americas,Explosion (Industrial),2010,5
+Americas,Explosion (Industrial),2011,3
+Americas,Explosion (Industrial),2012,2
+Americas,Explosion (Industrial),2013,2
+Americas,Explosion (Industrial),2016,1
+Americas,Explosion (Industrial),2017,2
+Americas,Explosion (Industrial),2019,1
+Americas,Explosion (Industrial),2020,1
+Americas,Explosion (Industrial),2022,1
+Americas,Explosion (Industrial),2023,2
+Americas,Explosion (Industrial),2024,1
+Americas,Explosion (Industrial),2025,1
+Americas,Explosion (Miscellaneous),2000,3
+Americas,Explosion (Miscellaneous),2002,3
+Americas,Explosion (Miscellaneous),2004,1
+Americas,Explosion (Miscellaneous),2005,1
+Americas,Explosion (Miscellaneous),2010,1
+Americas,Explosion (Miscellaneous),2013,2
+Americas,Explosion (Miscellaneous),2014,1
+Americas,Explosion (Miscellaneous),2016,1
+Americas,Explosion (Miscellaneous),2017,1
+Americas,Explosion (Miscellaneous),2018,1
+Americas,Explosion (Miscellaneous),2019,1
+Americas,Explosion (Miscellaneous),2020,1
+Americas,Explosion (Miscellaneous),2022,1
+Americas,Explosion (Miscellaneous),2023,1
+Americas,Explosion (Miscellaneous),2024,1
+Americas,Explosion (Miscellaneous),2025,1
+Americas,Extreme temperature,2000,6
+Americas,Extreme temperature,2001,3
+Americas,Extreme temperature,2002,4
+Americas,Extreme temperature,2003,2
+Americas,Extreme temperature,2004,5
+Americas,Extreme temperature,2006,3
+Americas,Extreme temperature,2007,4
+Americas,Extreme temperature,2009,1
+Americas,Extreme temperature,2010,3
+Americas,Extreme temperature,2011,1
+Americas,Extreme temperature,2012,2
+Americas,Extreme temperature,2013,4
+Americas,Extreme temperature,2014,2
+Americas,Extreme temperature,2018,1
+Americas,Extreme temperature,2021,2
+Americas,Extreme temperature,2023,3
+Americas,Extreme temperature,2024,2
+Americas,Fire (Industrial),2004,1
+Americas,Fire (Industrial),2022,1
+Americas,Fire (Industrial),2023,1
+Americas,Fire (Miscellaneous),2000,4
+Americas,Fire (Miscellaneous),2001,3
+Americas,Fire (Miscellaneous),2002,5
+Americas,Fire (Miscellaneous),2003,4
+Americas,Fire (Miscellaneous),2004,4
+Americas,Fire (Miscellaneous),2005,4
+Americas,Fire (Miscellaneous),2006,2
+Americas,Fire (Miscellaneous),2007,4
+Americas,Fire (Miscellaneous),2008,2
+Americas,Fire (Miscellaneous),2009,2
+Americas,Fire (Miscellaneous),2010,3
+Americas,Fire (Miscellaneous),2011,1
+Americas,Fire (Miscellaneous),2012,3
+Americas,Fire (Miscellaneous),2013,1
+Americas,Fire (Miscellaneous),2014,4
+Americas,Fire (Miscellaneous),2015,1
+Americas,Fire (Miscellaneous),2016,1
+Americas,Fire (Miscellaneous),2017,2
+Americas,Fire (Miscellaneous),2018,1
+Americas,Fire (Miscellaneous),2019,3
+Americas,Fire (Miscellaneous),2020,1
+Americas,Fire (Miscellaneous),2022,1
+Americas,Fire (Miscellaneous),2023,2
+Americas,Fire (Miscellaneous),2024,3
+Americas,Fire (Miscellaneous),2025,2
+Americas,Flood,2000,29
+Americas,Flood,2001,20
+Americas,Flood,2002,28
+Americas,Flood,2003,28
+Americas,Flood,2004,18
+Americas,Flood,2005,19
+Americas,Flood,2006,26
+Americas,Flood,2007,16
+Americas,Flood,2008,19
+Americas,Flood,2009,18
+Americas,Flood,2010,16
+Americas,Flood,2011,23
+Americas,Flood,2012,10
+Americas,Flood,2013,16
+Americas,Flood,2014,17
+Americas,Flood,2015,22
+Americas,Flood,2016,26
+Americas,Flood,2017,19
+Americas,Flood,2018,20
+Americas,Flood,2019,34
+Americas,Flood,2020,21
+Americas,Flood,2021,53
+Americas,Flood,2022,43
+Americas,Flood,2023,35
+Americas,Flood,2024,28
+Americas,Flood,2025,18
+Americas,Gas leak,2007,1
+Americas,Gas leak,2015,1
+Americas,Gas leak,2016,1
+Americas,Industrial accident (General),2001,1
+Americas,Industrial accident (General),2002,1
+Americas,Industrial accident (General),2009,1
+Americas,Industrial accident (General),2014,1
+Americas,Industrial accident (General),2016,1
+Americas,Industrial accident (General),2021,1
+Americas,Infestation,2000,1
+Americas,Mass movement (dry),2008,1
+Americas,Mass movement (dry),2009,1
+Americas,Mass movement (wet),2000,5
+Americas,Mass movement (wet),2001,2
+Americas,Mass movement (wet),2002,3
+Americas,Mass movement (wet),2003,5
+Americas,Mass movement (wet),2004,3
+Americas,Mass movement (wet),2005,1
+Americas,Mass movement (wet),2006,2
+Americas,Mass movement (wet),2007,1
+Americas,Mass movement (wet),2008,2
+Americas,Mass movement (wet),2009,5
+Americas,Mass movement (wet),2010,4
+Americas,Mass movement (wet),2011,4
+Americas,Mass movement (wet),2013,2
+Americas,Mass movement (wet),2014,1
+Americas,Mass movement (wet),2015,3
+Americas,Mass movement (wet),2016,1
+Americas,Mass movement (wet),2017,5
+Americas,Mass movement (wet),2018,2
+Americas,Mass movement (wet),2019,2
+Americas,Mass movement (wet),2020,3
+Americas,Mass movement (wet),2021,1
+Americas,Mass movement (wet),2022,6
+Americas,Mass movement (wet),2023,5
+Americas,Mass movement (wet),2024,4
+Americas,Mass movement (wet),2025,5
+Americas,Miscellaneous accident (General),2000,3
+Americas,Miscellaneous accident (General),2001,1
+Americas,Miscellaneous accident (General),2003,1
+Americas,Miscellaneous accident (General),2004,2
+Americas,Miscellaneous accident (General),2005,6
+Americas,Miscellaneous accident (General),2008,1
+Americas,Miscellaneous accident (General),2011,1
+Americas,Miscellaneous accident (General),2013,2
+Americas,Miscellaneous accident (General),2015,1
+Americas,Miscellaneous accident (General),2018,1
+Americas,Miscellaneous accident (General),2020,1
+Americas,Miscellaneous accident (General),2021,1
+Americas,Miscellaneous accident (General),2022,1
+Americas,Miscellaneous accident (General),2023,1
+Americas,Miscellaneous accident (General),2025,1
+Americas,Oil spill,2012,1
+Americas,Oil spill,2015,2
+Americas,Oil spill,2025,1
+Americas,Poisoning,2003,1
+Americas,Poisoning,2006,1
+Americas,Poisoning,2016,1
+Americas,Rail,2000,3
+Americas,Rail,2001,1
+Americas,Rail,2002,4
+Americas,Rail,2004,1
+Americas,Rail,2005,3
+Americas,Rail,2008,1
+Americas,Rail,2010,1
+Americas,Rail,2011,2
+Americas,Rail,2012,1
+Americas,Rail,2013,3
+Americas,Rail,2015,3
+Americas,Rail,2016,2
+Americas,Rail,2017,1
+Americas,Rail,2025,1
+Americas,Road,2000,20
+Americas,Road,2001,10
+Americas,Road,2002,21
+Americas,Road,2003,21
+Americas,Road,2004,17
+Americas,Road,2005,13
+Americas,Road,2006,18
+Americas,Road,2007,13
+Americas,Road,2008,28
+Americas,Road,2009,19
+Americas,Road,2010,23
+Americas,Road,2011,14
+Americas,Road,2012,21
+Americas,Road,2013,14
+Americas,Road,2014,19
+Americas,Road,2015,15
+Americas,Road,2016,8
+Americas,Road,2017,13
+Americas,Road,2018,11
+Americas,Road,2019,11
+Americas,Road,2020,6
+Americas,Road,2021,15
+Americas,Road,2022,8
+Americas,Road,2023,16
+Americas,Road,2024,19
+Americas,Road,2025,30
+Americas,Storm,2000,17
+Americas,Storm,2001,26
+Americas,Storm,2002,28
+Americas,Storm,2003,19
+Americas,Storm,2004,29
+Americas,Storm,2005,29
+Americas,Storm,2006,11
+Americas,Storm,2007,16
+Americas,Storm,2008,25
+Americas,Storm,2009,12
+Americas,Storm,2010,18
+Americas,Storm,2011,18
+Americas,Storm,2012,13
+Americas,Storm,2013,12
+Americas,Storm,2014,8
+Americas,Storm,2015,9
+Americas,Storm,2016,20
+Americas,Storm,2017,38
+Americas,Storm,2018,14
+Americas,Storm,2019,16
+Americas,Storm,2020,37
+Americas,Storm,2021,33
+Americas,Storm,2022,35
+Americas,Storm,2023,28
+Americas,Storm,2024,62
+Americas,Storm,2025,41
+Americas,Volcanic activity,2000,2
+Americas,Volcanic activity,2001,1
+Americas,Volcanic activity,2002,2
+Americas,Volcanic activity,2003,1
+Americas,Volcanic activity,2005,1
+Americas,Volcanic activity,2006,5
+Americas,Volcanic activity,2007,1
+Americas,Volcanic activity,2008,3
+Americas,Volcanic activity,2010,2
+Americas,Volcanic activity,2011,2
+Americas,Volcanic activity,2013,1
+Americas,Volcanic activity,2015,3
+Americas,Volcanic activity,2018,2
+Americas,Volcanic activity,2019,1
+Americas,Volcanic activity,2020,1
+Americas,Volcanic activity,2021,2
+Americas,Volcanic activity,2022,1
+Americas,Volcanic activity,2023,1
+Americas,Volcanic activity,2024,1
+Americas,Water,2000,8
+Americas,Water,2001,3
+Americas,Water,2002,5
+Americas,Water,2003,4
+Americas,Water,2004,6
+Americas,Water,2005,6
+Americas,Water,2006,3
+Americas,Water,2007,6
+Americas,Water,2008,3
+Americas,Water,2009,3
+Americas,Water,2010,4
+Americas,Water,2011,2
+Americas,Water,2012,3
+Americas,Water,2013,3
+Americas,Water,2014,3
+Americas,Water,2015,1
+Americas,Water,2016,2
+Americas,Water,2017,6
+Americas,Water,2018,2
+Americas,Water,2019,7
+Americas,Water,2020,2
+Americas,Water,2021,3
+Americas,Water,2022,6
+Americas,Water,2023,1
+Americas,Water,2024,1
+Americas,Wildfire,2000,7
+Americas,Wildfire,2001,6
+Americas,Wildfire,2002,9
+Americas,Wildfire,2003,6
+Americas,Wildfire,2004,1
+Americas,Wildfire,2005,3
+Americas,Wildfire,2006,2
+Americas,Wildfire,2007,2
+Americas,Wildfire,2008,2
+Americas,Wildfire,2009,1
+Americas,Wildfire,2010,1
+Americas,Wildfire,2011,3
+Americas,Wildfire,2012,1
+Americas,Wildfire,2013,4
+Americas,Wildfire,2014,1
+Americas,Wildfire,2015,4
+Americas,Wildfire,2016,3
+Americas,Wildfire,2017,5
+Americas,Wildfire,2018,4
+Americas,Wildfire,2019,6
+Americas,Wildfire,2020,1
+Americas,Wildfire,2021,6
+Americas,Wildfire,2022,6
+Americas,Wildfire,2023,6
+Americas,Wildfire,2024,15
+Americas,Wildfire,2025,7
+Asia,Air,2000,13
+Asia,Air,2001,7
+Asia,Air,2002,9
+Asia,Air,2003,5
+Asia,Air,2004,6
+Asia,Air,2005,7
+Asia,Air,2006,11
+Asia,Air,2007,8
+Asia,Air,2008,4
+Asia,Air,2009,10
+Asia,Air,2010,11
+Asia,Air,2011,8
+Asia,Air,2012,6
+Asia,Air,2013,4
+Asia,Air,2014,6
+Asia,Air,2015,6
+Asia,Air,2016,4
+Asia,Air,2017,4
+Asia,Air,2018,7
+Asia,Air,2019,4
+Asia,Air,2020,2
+Asia,Air,2021,5
+Asia,Air,2022,2
+Asia,Air,2023,2
+Asia,Air,2024,3
+Asia,Air,2025,3
+Asia,Chemical spill,2003,1
+Asia,Chemical spill,2006,1
+Asia,Chemical spill,2007,3
+Asia,Chemical spill,2009,1
+Asia,Chemical spill,2013,1
+Asia,Chemical spill,2016,1
+Asia,Collapse (Industrial),2000,2
+Asia,Collapse (Industrial),2001,4
+Asia,Collapse (Industrial),2002,1
+Asia,Collapse (Industrial),2003,2
+Asia,Collapse (Industrial),2004,4
+Asia,Collapse (Industrial),2005,4
+Asia,Collapse (Industrial),2006,2
+Asia,Collapse (Industrial),2007,5
+Asia,Collapse (Industrial),2008,5
+Asia,Collapse (Industrial),2009,4
+Asia,Collapse (Industrial),2010,1
+Asia,Collapse (Industrial),2011,2
+Asia,Collapse (Industrial),2012,1
+Asia,Collapse (Industrial),2013,3
+Asia,Collapse (Industrial),2014,6
+Asia,Collapse (Industrial),2015,6
+Asia,Collapse (Industrial),2016,2
+Asia,Collapse (Industrial),2017,2
+Asia,Collapse (Industrial),2018,1
+Asia,Collapse (Industrial),2019,5
+Asia,Collapse (Industrial),2020,1
+Asia,Collapse (Industrial),2021,1
+Asia,Collapse (Industrial),2022,3
+Asia,Collapse (Industrial),2023,3
+Asia,Collapse (Industrial),2024,2
+Asia,Collapse (Industrial),2025,2
+Asia,Collapse (Miscellaneous),2000,6
+Asia,Collapse (Miscellaneous),2001,10
+Asia,Collapse (Miscellaneous),2002,5
+Asia,Collapse (Miscellaneous),2003,3
+Asia,Collapse (Miscellaneous),2004,3
+Asia,Collapse (Miscellaneous),2005,4
+Asia,Collapse (Miscellaneous),2006,5
+Asia,Collapse (Miscellaneous),2007,9
+Asia,Collapse (Miscellaneous),2009,2
+Asia,Collapse (Miscellaneous),2010,8
+Asia,Collapse (Miscellaneous),2011,3
+Asia,Collapse (Miscellaneous),2012,2
+Asia,Collapse (Miscellaneous),2013,2
+Asia,Collapse (Miscellaneous),2014,4
+Asia,Collapse (Miscellaneous),2015,1
+Asia,Collapse (Miscellaneous),2016,2
+Asia,Collapse (Miscellaneous),2017,4
+Asia,Collapse (Miscellaneous),2018,2
+Asia,Collapse (Miscellaneous),2019,2
+Asia,Collapse (Miscellaneous),2020,2
+Asia,Collapse (Miscellaneous),2021,2
+Asia,Collapse (Miscellaneous),2022,3
+Asia,Collapse (Miscellaneous),2023,3
+Asia,Collapse (Miscellaneous),2025,2
+Asia,Drought,2000,11
+Asia,Drought,2001,3
+Asia,Drought,2002,7
+Asia,Drought,2003,2
+Asia,Drought,2005,3
+Asia,Drought,2006,2
+Asia,Drought,2007,1
+Asia,Drought,2008,2
+Asia,Drought,2009,4
+Asia,Drought,2010,1
+Asia,Drought,2012,1
+Asia,Drought,2014,2
+Asia,Drought,2015,6
+Asia,Drought,2016,3
+Asia,Drought,2017,1
+Asia,Drought,2019,7
+Asia,Drought,2021,5
+Asia,Drought,2023,3
+Asia,Drought,2024,2
+Asia,Drought,2025,2
+Asia,Earthquake,2000,13
+Asia,Earthquake,2001,10
+Asia,Earthquake,2002,23
+Asia,Earthquake,2003,23
+Asia,Earthquake,2004,25
+Asia,Earthquake,2005,14
+Asia,Earthquake,2006,11
+Asia,Earthquake,2007,6
+Asia,Earthquake,2008,9
+Asia,Earthquake,2009,7
+Asia,Earthquake,2010,12
+Asia,Earthquake,2011,13
+Asia,Earthquake,2012,11
+Asia,Earthquake,2013,19
+Asia,Earthquake,2014,5
+Asia,Earthquake,2015,12
+Asia,Earthquake,2016,15
+Asia,Earthquake,2017,14
+Asia,Earthquake,2018,13
+Asia,Earthquake,2019,18
+Asia,Earthquake,2020,8
+Asia,Earthquake,2021,12
+Asia,Earthquake,2022,17
+Asia,Earthquake,2023,25
+Asia,Earthquake,2024,10
+Asia,Earthquake,2025,19
+Asia,Epidemic,2000,37
+Asia,Epidemic,2001,10
+Asia,Epidemic,2002,18
+Asia,Epidemic,2003,5
+Asia,Epidemic,2004,6
+Asia,Epidemic,2005,13
+Asia,Epidemic,2006,3
+Asia,Epidemic,2007,10
+Asia,Epidemic,2008,3
+Asia,Epidemic,2009,3
+Asia,Epidemic,2010,6
+Asia,Epidemic,2011,6
+Asia,Epidemic,2012,1
+Asia,Epidemic,2013,1
+Asia,Epidemic,2014,1
+Asia,Epidemic,2015,3
+Asia,Epidemic,2016,4
+Asia,Epidemic,2017,7
+Asia,Epidemic,2018,2
+Asia,Epidemic,2019,8
+Asia,Epidemic,2021,1
+Asia,Epidemic,2022,4
+Asia,Epidemic,2023,5
+Asia,Epidemic,2024,2
+Asia,Epidemic,2025,1
+Asia,Explosion (Industrial),2000,20
+Asia,Explosion (Industrial),2001,26
+Asia,Explosion (Industrial),2002,26
+Asia,Explosion (Industrial),2003,29
+Asia,Explosion (Industrial),2004,33
+Asia,Explosion (Industrial),2005,41
+Asia,Explosion (Industrial),2006,34
+Asia,Explosion (Industrial),2007,18
+Asia,Explosion (Industrial),2008,15
+Asia,Explosion (Industrial),2009,16
+Asia,Explosion (Industrial),2010,13
+Asia,Explosion (Industrial),2011,11
+Asia,Explosion (Industrial),2012,4
+Asia,Explosion (Industrial),2013,7
+Asia,Explosion (Industrial),2014,5
+Asia,Explosion (Industrial),2015,5
+Asia,Explosion (Industrial),2016,7
+Asia,Explosion (Industrial),2017,5
+Asia,Explosion (Industrial),2018,6
+Asia,Explosion (Industrial),2019,4
+Asia,Explosion (Industrial),2020,3
+Asia,Explosion (Industrial),2021,2
+Asia,Explosion (Industrial),2022,4
+Asia,Explosion (Industrial),2023,4
+Asia,Explosion (Industrial),2024,4
+Asia,Explosion (Industrial),2025,5
+Asia,Explosion (Miscellaneous),2000,4
+Asia,Explosion (Miscellaneous),2001,3
+Asia,Explosion (Miscellaneous),2002,7
+Asia,Explosion (Miscellaneous),2003,9
+Asia,Explosion (Miscellaneous),2004,1
+Asia,Explosion (Miscellaneous),2005,8
+Asia,Explosion (Miscellaneous),2006,2
+Asia,Explosion (Miscellaneous),2007,1
+Asia,Explosion (Miscellaneous),2008,5
+Asia,Explosion (Miscellaneous),2009,1
+Asia,Explosion (Miscellaneous),2010,9
+Asia,Explosion (Miscellaneous),2011,4
+Asia,Explosion (Miscellaneous),2012,3
+Asia,Explosion (Miscellaneous),2013,5
+Asia,Explosion (Miscellaneous),2014,2
+Asia,Explosion (Miscellaneous),2015,4
+Asia,Explosion (Miscellaneous),2016,2
+Asia,Explosion (Miscellaneous),2017,2
+Asia,Explosion (Miscellaneous),2018,1
+Asia,Explosion (Miscellaneous),2019,1
+Asia,Explosion (Miscellaneous),2020,1
+Asia,Explosion (Miscellaneous),2021,2
+Asia,Explosion (Miscellaneous),2022,2
+Asia,Explosion (Miscellaneous),2023,2
+Asia,Explosion (Miscellaneous),2024,2
+Asia,Explosion (Miscellaneous),2025,3
+Asia,Extreme temperature,2000,6
+Asia,Extreme temperature,2001,5
+Asia,Extreme temperature,2002,6
+Asia,Extreme temperature,2003,4
+Asia,Extreme temperature,2004,3
+Asia,Extreme temperature,2005,6
+Asia,Extreme temperature,2006,1
+Asia,Extreme temperature,2007,4
+Asia,Extreme temperature,2008,4
+Asia,Extreme temperature,2009,2
+Asia,Extreme temperature,2010,3
+Asia,Extreme temperature,2011,2
+Asia,Extreme temperature,2012,4
+Asia,Extreme temperature,2013,3
+Asia,Extreme temperature,2014,3
+Asia,Extreme temperature,2015,2
+Asia,Extreme temperature,2016,4
+Asia,Extreme temperature,2017,1
+Asia,Extreme temperature,2018,8
+Asia,Extreme temperature,2019,5
+Asia,Extreme temperature,2020,1
+Asia,Extreme temperature,2022,8
+Asia,Extreme temperature,2023,8
+Asia,Extreme temperature,2024,16
+Asia,Extreme temperature,2025,1
+Asia,Fire (Industrial),2000,4
+Asia,Fire (Industrial),2001,1
+Asia,Fire (Industrial),2002,7
+Asia,Fire (Industrial),2003,6
+Asia,Fire (Industrial),2004,6
+Asia,Fire (Industrial),2005,5
+Asia,Fire (Industrial),2006,4
+Asia,Fire (Industrial),2007,5
+Asia,Fire (Industrial),2008,5
+Asia,Fire (Industrial),2009,3
+Asia,Fire (Industrial),2010,7
+Asia,Fire (Industrial),2011,2
+Asia,Fire (Industrial),2012,6
+Asia,Fire (Industrial),2013,1
+Asia,Fire (Industrial),2014,3
+Asia,Fire (Industrial),2015,4
+Asia,Fire (Industrial),2016,3
+Asia,Fire (Industrial),2017,4
+Asia,Fire (Industrial),2018,1
+Asia,Fire (Industrial),2019,6
+Asia,Fire (Industrial),2021,3
+Asia,Fire (Industrial),2022,1
+Asia,Fire (Industrial),2023,2
+Asia,Fire (Industrial),2024,1
+Asia,Fire (Industrial),2025,2
+Asia,Fire (Miscellaneous),2000,8
+Asia,Fire (Miscellaneous),2001,7
+Asia,Fire (Miscellaneous),2002,10
+Asia,Fire (Miscellaneous),2003,9
+Asia,Fire (Miscellaneous),2004,13
+Asia,Fire (Miscellaneous),2005,8
+Asia,Fire (Miscellaneous),2006,7
+Asia,Fire (Miscellaneous),2007,6
+Asia,Fire (Miscellaneous),2008,4
+Asia,Fire (Miscellaneous),2009,6
+Asia,Fire (Miscellaneous),2010,11
+Asia,Fire (Miscellaneous),2011,8
+Asia,Fire (Miscellaneous),2012,6
+Asia,Fire (Miscellaneous),2013,6
+Asia,Fire (Miscellaneous),2014,5
+Asia,Fire (Miscellaneous),2015,12
+Asia,Fire (Miscellaneous),2016,12
+Asia,Fire (Miscellaneous),2017,12
+Asia,Fire (Miscellaneous),2018,7
+Asia,Fire (Miscellaneous),2019,7
+Asia,Fire (Miscellaneous),2020,3
+Asia,Fire (Miscellaneous),2021,13
+Asia,Fire (Miscellaneous),2022,10
+Asia,Fire (Miscellaneous),2023,11
+Asia,Fire (Miscellaneous),2024,13
+Asia,Fire (Miscellaneous),2025,11
+Asia,Flood,2000,29
+Asia,Flood,2001,43
+Asia,Flood,2002,46
+Asia,Flood,2003,48
+Asia,Flood,2004,37
+Asia,Flood,2005,47
+Asia,Flood,2006,48
+Asia,Flood,2007,46
+Asia,Flood,2008,34
+Asia,Flood,2009,26
+Asia,Flood,2010,34
+Asia,Flood,2011,30
+Asia,Flood,2012,38
+Asia,Flood,2013,42
+Asia,Flood,2014,29
+Asia,Flood,2015,41
+Asia,Flood,2016,42
+Asia,Flood,2017,43
+Asia,Flood,2018,47
+Asia,Flood,2019,62
+Asia,Flood,2020,61
+Asia,Flood,2021,68
+Asia,Flood,2022,60
+Asia,Flood,2023,57
+Asia,Flood,2024,64
+Asia,Flood,2025,55
+Asia,Gas leak,2000,3
+Asia,Gas leak,2001,1
+Asia,Gas leak,2002,1
+Asia,Gas leak,2004,7
+Asia,Gas leak,2005,5
+Asia,Gas leak,2012,1
+Asia,Gas leak,2014,1
+Asia,Gas leak,2015,1
+Asia,Gas leak,2016,1
+Asia,Gas leak,2017,1
+Asia,Gas leak,2019,1
+Asia,Gas leak,2020,2
+Asia,Gas leak,2022,2
+Asia,Gas leak,2023,1
+Asia,Gas leak,2024,1
+Asia,Gas leak,2025,1
+Asia,Glacial lake outburst flood,2021,1
+Asia,Glacial lake outburst flood,2023,1
+Asia,Glacial lake outburst flood,2024,1
+Asia,Glacial lake outburst flood,2025,2
+Asia,Industrial accident (General),2001,4
+Asia,Industrial accident (General),2002,2
+Asia,Industrial accident (General),2003,7
+Asia,Industrial accident (General),2004,7
+Asia,Industrial accident (General),2005,9
+Asia,Industrial accident (General),2006,4
+Asia,Industrial accident (General),2007,5
+Asia,Industrial accident (General),2008,4
+Asia,Industrial accident (General),2009,4
+Asia,Industrial accident (General),2010,5
+Asia,Industrial accident (General),2011,5
+Asia,Industrial accident (General),2012,8
+Asia,Industrial accident (General),2013,1
+Asia,Industrial accident (General),2014,3
+Asia,Industrial accident (General),2015,1
+Asia,Industrial accident (General),2016,4
+Asia,Industrial accident (General),2017,1
+Asia,Industrial accident (General),2019,1
+Asia,Industrial accident (General),2020,1
+Asia,Industrial accident (General),2021,1
+Asia,Industrial accident (General),2023,1
+Asia,Infestation,2001,1
+Asia,Infestation,2020,2
+Asia,Mass movement (dry),2000,1
+Asia,Mass movement (dry),2004,1
+Asia,Mass movement (dry),2006,1
+Asia,Mass movement (dry),2012,1
+Asia,Mass movement (dry),2013,1
+Asia,Mass movement (dry),2015,1
+Asia,Mass movement (dry),2018,1
+Asia,Mass movement (wet),2000,12
+Asia,Mass movement (wet),2001,15
+Asia,Mass movement (wet),2002,10
+Asia,Mass movement (wet),2003,9
+Asia,Mass movement (wet),2004,11
+Asia,Mass movement (wet),2005,5
+Asia,Mass movement (wet),2006,7
+Asia,Mass movement (wet),2007,7
+Asia,Mass movement (wet),2008,5
+Asia,Mass movement (wet),2009,8
+Asia,Mass movement (wet),2010,13
+Asia,Mass movement (wet),2011,7
+Asia,Mass movement (wet),2012,9
+Asia,Mass movement (wet),2013,4
+Asia,Mass movement (wet),2014,4
+Asia,Mass movement (wet),2015,10
+Asia,Mass movement (wet),2016,4
+Asia,Mass movement (wet),2017,13
+Asia,Mass movement (wet),2018,4
+Asia,Mass movement (wet),2019,4
+Asia,Mass movement (wet),2020,9
+Asia,Mass movement (wet),2021,6
+Asia,Mass movement (wet),2022,6
+Asia,Mass movement (wet),2023,10
+Asia,Mass movement (wet),2024,18
+Asia,Mass movement (wet),2025,9
+Asia,Miscellaneous accident (General),2000,5
+Asia,Miscellaneous accident (General),2001,4
+Asia,Miscellaneous accident (General),2002,2
+Asia,Miscellaneous accident (General),2003,3
+Asia,Miscellaneous accident (General),2004,11
+Asia,Miscellaneous accident (General),2005,12
+Asia,Miscellaneous accident (General),2006,3
+Asia,Miscellaneous accident (General),2007,1
+Asia,Miscellaneous accident (General),2008,6
+Asia,Miscellaneous accident (General),2009,3
+Asia,Miscellaneous accident (General),2010,3
+Asia,Miscellaneous accident (General),2011,2
+Asia,Miscellaneous accident (General),2013,2
+Asia,Miscellaneous accident (General),2014,8
+Asia,Miscellaneous accident (General),2015,6
+Asia,Miscellaneous accident (General),2016,4
+Asia,Miscellaneous accident (General),2017,4
+Asia,Miscellaneous accident (General),2019,1
+Asia,Miscellaneous accident (General),2020,2
+Asia,Miscellaneous accident (General),2021,1
+Asia,Miscellaneous accident (General),2022,5
+Asia,Miscellaneous accident (General),2023,3
+Asia,Miscellaneous accident (General),2024,4
+Asia,Miscellaneous accident (General),2025,5
+Asia,Oil spill,2006,1
+Asia,Oil spill,2007,1
+Asia,Poisoning,2000,1
+Asia,Poisoning,2004,9
+Asia,Poisoning,2006,1
+Asia,Poisoning,2009,2
+Asia,Radiation,2005,1
+Asia,Radiation,2006,1
+Asia,Rail,2000,8
+Asia,Rail,2001,15
+Asia,Rail,2002,7
+Asia,Rail,2003,9
+Asia,Rail,2004,9
+Asia,Rail,2005,13
+Asia,Rail,2006,1
+Asia,Rail,2007,4
+Asia,Rail,2008,4
+Asia,Rail,2009,2
+Asia,Rail,2010,5
+Asia,Rail,2011,4
+Asia,Rail,2012,1
+Asia,Rail,2013,2
+Asia,Rail,2014,6
+Asia,Rail,2015,5
+Asia,Rail,2016,4
+Asia,Rail,2017,3
+Asia,Rail,2018,2
+Asia,Rail,2019,4
+Asia,Rail,2020,3
+Asia,Rail,2021,3
+Asia,Rail,2022,1
+Asia,Rail,2023,2
+Asia,Rail,2025,2
+Asia,Road,2000,62
+Asia,Road,2001,41
+Asia,Road,2002,61
+Asia,Road,2003,56
+Asia,Road,2004,44
+Asia,Road,2005,47
+Asia,Road,2006,34
+Asia,Road,2007,28
+Asia,Road,2008,32
+Asia,Road,2009,16
+Asia,Road,2010,28
+Asia,Road,2011,28
+Asia,Road,2012,17
+Asia,Road,2013,25
+Asia,Road,2014,18
+Asia,Road,2015,15
+Asia,Road,2016,24
+Asia,Road,2017,20
+Asia,Road,2018,26
+Asia,Road,2019,16
+Asia,Road,2020,6
+Asia,Road,2021,12
+Asia,Road,2022,16
+Asia,Road,2023,13
+Asia,Road,2024,18
+Asia,Road,2025,14
+Asia,Storm,2000,38
+Asia,Storm,2001,36
+Asia,Storm,2002,34
+Asia,Storm,2003,25
+Asia,Storm,2004,34
+Asia,Storm,2005,26
+Asia,Storm,2006,13
+Asia,Storm,2007,18
+Asia,Storm,2008,16
+Asia,Storm,2009,22
+Asia,Storm,2010,13
+Asia,Storm,2011,16
+Asia,Storm,2012,17
+Asia,Storm,2013,26
+Asia,Storm,2014,19
+Asia,Storm,2015,36
+Asia,Storm,2016,31
+Asia,Storm,2017,39
+Asia,Storm,2018,37
+Asia,Storm,2019,27
+Asia,Storm,2020,37
+Asia,Storm,2021,33
+Asia,Storm,2022,23
+Asia,Storm,2023,52
+Asia,Storm,2024,49
+Asia,Storm,2025,66
+Asia,Volcanic activity,2000,3
+Asia,Volcanic activity,2001,2
+Asia,Volcanic activity,2002,1
+Asia,Volcanic activity,2004,4
+Asia,Volcanic activity,2006,1
+Asia,Volcanic activity,2007,2
+Asia,Volcanic activity,2009,1
+Asia,Volcanic activity,2010,2
+Asia,Volcanic activity,2011,3
+Asia,Volcanic activity,2013,1
+Asia,Volcanic activity,2014,1
+Asia,Volcanic activity,2017,1
+Asia,Volcanic activity,2018,1
+Asia,Volcanic activity,2020,3
+Asia,Volcanic activity,2021,3
+Asia,Volcanic activity,2022,3
+Asia,Volcanic activity,2023,3
+Asia,Volcanic activity,2024,5
+Asia,Volcanic activity,2025,3
+Asia,Water,2000,17
+Asia,Water,2001,18
+Asia,Water,2002,19
+Asia,Water,2003,26
+Asia,Water,2004,27
+Asia,Water,2005,31
+Asia,Water,2006,16
+Asia,Water,2007,25
+Asia,Water,2008,13
+Asia,Water,2009,23
+Asia,Water,2010,16
+Asia,Water,2011,18
+Asia,Water,2012,13
+Asia,Water,2013,13
+Asia,Water,2014,20
+Asia,Water,2015,18
+Asia,Water,2016,17
+Asia,Water,2017,18
+Asia,Water,2018,9
+Asia,Water,2019,8
+Asia,Water,2020,7
+Asia,Water,2021,9
+Asia,Water,2022,15
+Asia,Water,2023,8
+Asia,Water,2024,7
+Asia,Water,2025,9
+Asia,Wildfire,2000,3
+Asia,Wildfire,2002,3
+Asia,Wildfire,2003,1
+Asia,Wildfire,2004,1
+Asia,Wildfire,2005,2
+Asia,Wildfire,2006,1
+Asia,Wildfire,2007,1
+Asia,Wildfire,2008,1
+Asia,Wildfire,2010,1
+Asia,Wildfire,2016,2
+Asia,Wildfire,2018,1
+Asia,Wildfire,2019,1
+Asia,Wildfire,2020,2
+Asia,Wildfire,2021,2
+Asia,Wildfire,2022,1
+Asia,Wildfire,2023,3
+Asia,Wildfire,2024,3
+Asia,Wildfire,2025,7
+Europe,Air,2000,3
+Europe,Air,2001,8
+Europe,Air,2002,10
+Europe,Air,2003,4
+Europe,Air,2004,3
+Europe,Air,2005,4
+Europe,Air,2006,5
+Europe,Air,2008,6
+Europe,Air,2009,3
+Europe,Air,2010,5
+Europe,Air,2011,3
+Europe,Air,2012,2
+Europe,Air,2013,4
+Europe,Air,2014,3
+Europe,Air,2015,3
+Europe,Air,2016,4
+Europe,Air,2018,3
+Europe,Air,2019,1
+Europe,Air,2020,1
+Europe,Air,2021,1
+Europe,Air,2022,1
+Europe,Air,2023,1
+Europe,Air,2025,1
+Europe,Chemical spill,2000,2
+Europe,Chemical spill,2002,1
+Europe,Chemical spill,2007,1
+Europe,Chemical spill,2008,1
+Europe,Chemical spill,2010,1
+Europe,Chemical spill,2011,1
+Europe,Collapse (Industrial),2003,1
+Europe,Collapse (Industrial),2009,1
+Europe,Collapse (Industrial),2011,1
+Europe,Collapse (Industrial),2024,1
+Europe,Collapse (Miscellaneous),2000,1
+Europe,Collapse (Miscellaneous),2001,2
+Europe,Collapse (Miscellaneous),2004,1
+Europe,Collapse (Miscellaneous),2005,1
+Europe,Collapse (Miscellaneous),2006,3
+Europe,Collapse (Miscellaneous),2013,1
+Europe,Collapse (Miscellaneous),2015,1
+Europe,Collapse (Miscellaneous),2018,2
+Europe,Collapse (Miscellaneous),2024,1
+Europe,Drought,2000,3
+Europe,Drought,2002,1
+Europe,Drought,2003,4
+Europe,Drought,2004,1
+Europe,Drought,2006,1
+Europe,Drought,2007,1
+Europe,Drought,2010,1
+Europe,Drought,2012,2
+Europe,Drought,2017,1
+Europe,Drought,2018,2
+Europe,Drought,2022,4
+Europe,Drought,2023,1
+Europe,Earthquake,2000,4
+Europe,Earthquake,2001,1
+Europe,Earthquake,2002,5
+Europe,Earthquake,2003,1
+Europe,Earthquake,2004,2
+Europe,Earthquake,2006,2
+Europe,Earthquake,2007,2
+Europe,Earthquake,2008,2
+Europe,Earthquake,2009,1
+Europe,Earthquake,2010,1
+Europe,Earthquake,2011,1
+Europe,Earthquake,2012,3
+Europe,Earthquake,2016,4
+Europe,Earthquake,2017,4
+Europe,Earthquake,2019,4
+Europe,Earthquake,2020,3
+Europe,Earthquake,2021,1
+Europe,Earthquake,2022,1
+Europe,Earthquake,2023,2
+Europe,Earthquake,2025,1
+Europe,Epidemic,2000,8
+Europe,Epidemic,2001,3
+Europe,Epidemic,2002,5
+Europe,Epidemic,2024,1
+Europe,Explosion (Industrial),2000,2
+Europe,Explosion (Industrial),2001,6
+Europe,Explosion (Industrial),2002,2
+Europe,Explosion (Industrial),2003,1
+Europe,Explosion (Industrial),2004,5
+Europe,Explosion (Industrial),2005,2
+Europe,Explosion (Industrial),2006,2
+Europe,Explosion (Industrial),2007,5
+Europe,Explosion (Industrial),2008,2
+Europe,Explosion (Industrial),2009,2
+Europe,Explosion (Industrial),2010,1
+Europe,Explosion (Industrial),2011,1
+Europe,Explosion (Industrial),2013,1
+Europe,Explosion (Industrial),2014,1
+Europe,Explosion (Industrial),2015,2
+Europe,Explosion (Industrial),2016,2
+Europe,Explosion (Industrial),2018,1
+Europe,Explosion (Industrial),2019,1
+Europe,Explosion (Industrial),2022,1
+Europe,Explosion (Industrial),2023,1
+Europe,Explosion (Industrial),2025,2
+Europe,Explosion (Miscellaneous),2000,3
+Europe,Explosion (Miscellaneous),2001,1
+Europe,Explosion (Miscellaneous),2003,1
+Europe,Explosion (Miscellaneous),2004,4
+Europe,Explosion (Miscellaneous),2007,2
+Europe,Explosion (Miscellaneous),2008,2
+Europe,Explosion (Miscellaneous),2009,1
+Europe,Explosion (Miscellaneous),2010,2
+Europe,Explosion (Miscellaneous),2012,1
+Europe,Explosion (Miscellaneous),2016,1
+Europe,Explosion (Miscellaneous),2018,1
+Europe,Explosion (Miscellaneous),2019,1
+Europe,Explosion (Miscellaneous),2021,1
+Europe,Explosion (Miscellaneous),2025,1
+Europe,Extreme temperature,2000,9
+Europe,Extreme temperature,2001,6
+Europe,Extreme temperature,2002,1
+Europe,Extreme temperature,2003,10
+Europe,Extreme temperature,2004,4
+Europe,Extreme temperature,2005,12
+Europe,Extreme temperature,2006,9
+Europe,Extreme temperature,2007,7
+Europe,Extreme temperature,2008,2
+Europe,Extreme temperature,2009,7
+Europe,Extreme temperature,2010,8
+Europe,Extreme temperature,2011,2
+Europe,Extreme temperature,2012,20
+Europe,Extreme temperature,2013,2
+Europe,Extreme temperature,2014,3
+Europe,Extreme temperature,2015,2
+Europe,Extreme temperature,2016,1
+Europe,Extreme temperature,2017,6
+Europe,Extreme temperature,2018,16
+Europe,Extreme temperature,2019,12
+Europe,Extreme temperature,2020,3
+Europe,Extreme temperature,2021,1
+Europe,Extreme temperature,2022,32
+Europe,Extreme temperature,2023,34
+Europe,Extreme temperature,2024,31
+Europe,Fire (Industrial),2002,1
+Europe,Fire (Industrial),2003,1
+Europe,Fire (Industrial),2004,1
+Europe,Fire (Industrial),2006,2
+Europe,Fire (Industrial),2012,1
+Europe,Fire (Industrial),2015,1
+Europe,Fire (Industrial),2016,1
+Europe,Fire (Industrial),2021,1
+Europe,Fire (Miscellaneous),2000,2
+Europe,Fire (Miscellaneous),2001,2
+Europe,Fire (Miscellaneous),2002,1
+Europe,Fire (Miscellaneous),2003,5
+Europe,Fire (Miscellaneous),2004,2
+Europe,Fire (Miscellaneous),2005,5
+Europe,Fire (Miscellaneous),2006,1
+Europe,Fire (Miscellaneous),2007,7
+Europe,Fire (Miscellaneous),2008,1
+Europe,Fire (Miscellaneous),2009,4
+Europe,Fire (Miscellaneous),2011,2
+Europe,Fire (Miscellaneous),2012,3
+Europe,Fire (Miscellaneous),2013,2
+Europe,Fire (Miscellaneous),2015,3
+Europe,Fire (Miscellaneous),2016,4
+Europe,Fire (Miscellaneous),2017,1
+Europe,Fire (Miscellaneous),2018,2
+Europe,Fire (Miscellaneous),2019,1
+Europe,Fire (Miscellaneous),2020,6
+Europe,Fire (Miscellaneous),2021,1
+Europe,Fire (Miscellaneous),2022,3
+Europe,Fire (Miscellaneous),2023,2
+Europe,Fire (Miscellaneous),2024,2
+Europe,Fire (Miscellaneous),2025,2
+Europe,Flood,2000,23
+Europe,Flood,2001,16
+Europe,Flood,2002,26
+Europe,Flood,2003,13
+Europe,Flood,2004,11
+Europe,Flood,2005,23
+Europe,Flood,2006,20
+Europe,Flood,2007,10
+Europe,Flood,2008,6
+Europe,Flood,2009,9
+Europe,Flood,2010,25
+Europe,Flood,2011,4
+Europe,Flood,2012,7
+Europe,Flood,2013,13
+Europe,Flood,2014,14
+Europe,Flood,2015,9
+Europe,Flood,2016,9
+Europe,Flood,2017,7
+Europe,Flood,2018,10
+Europe,Flood,2019,13
+Europe,Flood,2020,13
+Europe,Flood,2021,18
+Europe,Flood,2022,5
+Europe,Flood,2023,17
+Europe,Flood,2024,8
+Europe,Flood,2025,6
+Europe,Gas leak,2008,1
+Europe,Gas leak,2009,1
+Europe,Gas leak,2021,1
+Europe,Glacial lake outburst flood,2022,1
+Europe,Glacial lake outburst flood,2025,1
+Europe,Industrial accident (General),2001,1
+Europe,Industrial accident (General),2002,1
+Europe,Industrial accident (General),2021,1
+Europe,Industrial accident (General),2022,1
+Europe,Infestation,2001,1
+Europe,Mass movement (dry),2017,1
+Europe,Mass movement (wet),2000,4
+Europe,Mass movement (wet),2002,2
+Europe,Mass movement (wet),2019,1
+Europe,Mass movement (wet),2020,2
+Europe,Mass movement (wet),2021,2
+Europe,Mass movement (wet),2022,1
+Europe,Mass movement (wet),2023,3
+Europe,Miscellaneous accident (General),2000,4
+Europe,Miscellaneous accident (General),2001,1
+Europe,Miscellaneous accident (General),2002,2
+Europe,Miscellaneous accident (General),2003,1
+Europe,Miscellaneous accident (General),2004,3
+Europe,Miscellaneous accident (General),2005,4
+Europe,Miscellaneous accident (General),2010,1
+Europe,Miscellaneous accident (General),2013,1
+Europe,Miscellaneous accident (General),2014,1
+Europe,Miscellaneous accident (General),2017,1
+Europe,Poisoning,2001,1
+Europe,Rail,2000,3
+Europe,Rail,2001,2
+Europe,Rail,2002,2
+Europe,Rail,2003,1
+Europe,Rail,2004,2
+Europe,Rail,2005,2
+Europe,Rail,2006,6
+Europe,Rail,2007,1
+Europe,Rail,2008,1
+Europe,Rail,2009,2
+Europe,Rail,2010,4
+Europe,Rail,2011,1
+Europe,Rail,2012,2
+Europe,Rail,2013,2
+Europe,Rail,2014,2
+Europe,Rail,2015,2
+Europe,Rail,2016,2
+Europe,Rail,2017,1
+Europe,Rail,2021,1
+Europe,Rail,2022,1
+Europe,Rail,2023,1
+Europe,Rail,2024,1
+Europe,Rail,2025,1
+Europe,Road,2000,4
+Europe,Road,2001,6
+Europe,Road,2002,3
+Europe,Road,2003,10
+Europe,Road,2004,8
+Europe,Road,2005,4
+Europe,Road,2006,2
+Europe,Road,2007,4
+Europe,Road,2008,4
+Europe,Road,2009,4
+Europe,Road,2010,4
+Europe,Road,2011,2
+Europe,Road,2012,5
+Europe,Road,2013,5
+Europe,Road,2014,4
+Europe,Road,2015,9
+Europe,Road,2016,1
+Europe,Road,2017,7
+Europe,Road,2018,3
+Europe,Road,2019,6
+Europe,Road,2021,2
+Europe,Road,2022,4
+Europe,Road,2023,1
+Europe,Road,2025,1
+Europe,Storm,2000,9
+Europe,Storm,2001,2
+Europe,Storm,2002,16
+Europe,Storm,2003,6
+Europe,Storm,2004,7
+Europe,Storm,2005,14
+Europe,Storm,2006,4
+Europe,Storm,2007,13
+Europe,Storm,2008,8
+Europe,Storm,2009,7
+Europe,Storm,2010,10
+Europe,Storm,2011,4
+Europe,Storm,2012,1
+Europe,Storm,2013,16
+Europe,Storm,2014,12
+Europe,Storm,2015,1
+Europe,Storm,2016,2
+Europe,Storm,2017,12
+Europe,Storm,2018,14
+Europe,Storm,2019,17
+Europe,Storm,2020,17
+Europe,Storm,2021,11
+Europe,Storm,2022,22
+Europe,Storm,2023,30
+Europe,Storm,2024,14
+Europe,Storm,2025,12
+Europe,Volcanic activity,2001,1
+Europe,Volcanic activity,2010,1
+Europe,Volcanic activity,2018,1
+Europe,Water,2000,5
+Europe,Water,2001,4
+Europe,Water,2002,7
+Europe,Water,2003,2
+Europe,Water,2004,7
+Europe,Water,2005,2
+Europe,Water,2006,3
+Europe,Water,2007,7
+Europe,Water,2008,5
+Europe,Water,2009,2
+Europe,Water,2010,1
+Europe,Water,2011,10
+Europe,Water,2012,7
+Europe,Water,2013,5
+Europe,Water,2014,9
+Europe,Water,2015,13
+Europe,Water,2016,5
+Europe,Water,2017,2
+Europe,Water,2018,3
+Europe,Water,2019,4
+Europe,Water,2020,2
+Europe,Water,2021,6
+Europe,Water,2022,2
+Europe,Water,2023,5
+Europe,Water,2024,8
+Europe,Water,2025,2
+Europe,Wildfire,2000,11
+Europe,Wildfire,2001,3
+Europe,Wildfire,2002,3
+Europe,Wildfire,2003,3
+Europe,Wildfire,2004,3
+Europe,Wildfire,2005,2
+Europe,Wildfire,2007,3
+Europe,Wildfire,2009,1
+Europe,Wildfire,2010,1
+Europe,Wildfire,2013,1
+Europe,Wildfire,2017,4
+Europe,Wildfire,2018,5
+Europe,Wildfire,2020,2
+Europe,Wildfire,2021,3
+Europe,Wildfire,2022,4
+Europe,Wildfire,2023,6
+Europe,Wildfire,2024,2
+Europe,Wildfire,2025,2
+Oceania,Air,2005,1
+Oceania,Air,2007,1
+Oceania,Air,2009,1
+Oceania,Air,2011,1
+Oceania,Air,2012,1
+Oceania,Air,2016,1
+Oceania,Drought,2002,1
+Oceania,Drought,2006,1
+Oceania,Drought,2011,1
+Oceania,Drought,2013,1
+Oceania,Drought,2015,3
+Oceania,Drought,2016,1
+Oceania,Drought,2018,1
+Oceania,Drought,2021,1
+Oceania,Drought,2022,1
+Oceania,Drought,2023,1
+Oceania,Drought,2024,1
+Oceania,Earthquake,2000,1
+Oceania,Earthquake,2001,1
+Oceania,Earthquake,2002,4
+Oceania,Earthquake,2009,1
+Oceania,Earthquake,2010,1
+Oceania,Earthquake,2011,1
+Oceania,Earthquake,2016,2
+Oceania,Earthquake,2018,3
+Oceania,Earthquake,2019,1
+Oceania,Earthquake,2022,1
+Oceania,Earthquake,2024,2
+Oceania,Epidemic,2000,2
+Oceania,Epidemic,2001,1
+Oceania,Epidemic,2002,2
+Oceania,Epidemic,2003,1
+Oceania,Epidemic,2009,4
+Oceania,Epidemic,2013,1
+Oceania,Epidemic,2016,3
+Oceania,Epidemic,2018,1
+Oceania,Epidemic,2019,4
+Oceania,Explosion (Industrial),2010,1
+Oceania,Extreme temperature,2001,1
+Oceania,Extreme temperature,2014,1
+Oceania,Extreme temperature,2018,1
+Oceania,Fire (Miscellaneous),2000,2
+Oceania,Fire (Miscellaneous),2011,1
+Oceania,Flood,2000,1
+Oceania,Flood,2001,4
+Oceania,Flood,2002,2
+Oceania,Flood,2003,2
+Oceania,Flood,2004,5
+Oceania,Flood,2005,1
+Oceania,Flood,2006,4
+Oceania,Flood,2007,2
+Oceania,Flood,2008,5
+Oceania,Flood,2009,3
+Oceania,Flood,2010,4
+Oceania,Flood,2011,1
+Oceania,Flood,2012,5
+Oceania,Flood,2013,1
+Oceania,Flood,2014,2
+Oceania,Flood,2015,1
+Oceania,Flood,2016,2
+Oceania,Flood,2017,1
+Oceania,Flood,2018,2
+Oceania,Flood,2020,5
+Oceania,Flood,2021,4
+Oceania,Flood,2022,5
+Oceania,Flood,2023,5
+Oceania,Flood,2024,2
+Oceania,Industrial accident (General),2011,1
+Oceania,Infestation,2000,1
+Oceania,Infestation,2004,1
+Oceania,Mass movement (dry),2008,1
+Oceania,Mass movement (wet),2002,1
+Oceania,Mass movement (wet),2003,2
+Oceania,Mass movement (wet),2006,2
+Oceania,Mass movement (wet),2009,1
+Oceania,Mass movement (wet),2012,1
+Oceania,Mass movement (wet),2019,1
+Oceania,Mass movement (wet),2020,2
+Oceania,Mass movement (wet),2024,2
+Oceania,Mass movement (wet),2025,1
+Oceania,Rail,2004,1
+Oceania,Rail,2007,1
+Oceania,Road,2023,1
+Oceania,Storm,2000,4
+Oceania,Storm,2001,7
+Oceania,Storm,2002,6
+Oceania,Storm,2003,7
+Oceania,Storm,2004,11
+Oceania,Storm,2005,5
+Oceania,Storm,2006,4
+Oceania,Storm,2007,4
+Oceania,Storm,2009,2
+Oceania,Storm,2010,4
+Oceania,Storm,2011,4
+Oceania,Storm,2012,4
+Oceania,Storm,2014,2
+Oceania,Storm,2015,7
+Oceania,Storm,2016,2
+Oceania,Storm,2017,3
+Oceania,Storm,2018,4
+Oceania,Storm,2019,2
+Oceania,Storm,2020,5
+Oceania,Storm,2021,6
+Oceania,Storm,2022,2
+Oceania,Storm,2023,10
+Oceania,Storm,2024,3
+Oceania,Storm,2025,2
+Oceania,Volcanic activity,2001,1
+Oceania,Volcanic activity,2002,1
+Oceania,Volcanic activity,2004,1
+Oceania,Volcanic activity,2005,2
+Oceania,Volcanic activity,2006,3
+Oceania,Volcanic activity,2008,1
+Oceania,Volcanic activity,2017,1
+Oceania,Volcanic activity,2018,2
+Oceania,Volcanic activity,2019,2
+Oceania,Volcanic activity,2021,1
+Oceania,Volcanic activity,2022,1
+Oceania,Water,2000,1
+Oceania,Water,2003,1
+Oceania,Water,2009,2
+Oceania,Water,2010,2
+Oceania,Water,2012,2
+Oceania,Water,2013,1
+Oceania,Water,2018,1
+Oceania,Water,2023,1
+Oceania,Wildfire,2000,1
+Oceania,Wildfire,2001,2
+Oceania,Wildfire,2002,1
+Oceania,Wildfire,2003,1
+Oceania,Wildfire,2006,1
+Oceania,Wildfire,2009,1
+Oceania,Wildfire,2011,1
+Oceania,Wildfire,2015,1
+Oceania,Wildfire,2016,1
+Oceania,Wildfire,2019,1
+Oceania,Wildfire,2020,1
+Oceania,Wildfire,2021,1
+Oceania,Wildfire,2025,2

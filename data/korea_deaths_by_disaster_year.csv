@@ -1,0 +1,71 @@
+Disaster Type,Year,Total_Deaths
+Air,2002,129.0
+Air,2024,179.0
+Collapse (Miscellaneous),2014,24.0
+Earthquake,2016,0.0
+Earthquake,2017,0.0
+Epidemic,2000,6.0
+Epidemic,2015,36.0
+Extreme temperature,2018,0.0
+Extreme temperature,2022,2.0
+Extreme temperature,2024,22.0
+Fire (Industrial),2008,40.0
+Fire (Industrial),2024,22.0
+Fire (Miscellaneous),2003,430.0
+Fire (Miscellaneous),2010,10.0
+Fire (Miscellaneous),2014,21.0
+Fire (Miscellaneous),2015,5.0
+Fire (Miscellaneous),2017,29.0
+Fire (Miscellaneous),2018,37.0
+Fire (Miscellaneous),2020,38.0
+Fire (Miscellaneous),2023,0.0
+Flood,2000,20.0
+Flood,2001,8.0
+Flood,2002,21.0
+Flood,2004,10.0
+Flood,2006,46.0
+Flood,2007,3.0
+Flood,2020,42.0
+Flood,2022,14.0
+Flood,2023,58.0
+Flood,2024,4.0
+Flood,2025,31.0
+Gas leak,2012,5.0
+Mass movement (wet),2011,59.0
+Miscellaneous accident (General),2005,11.0
+Miscellaneous accident (General),2022,159.0
+Oil spill,2007,0.0
+Rail,2003,3.0
+Rail,2014,0.0
+Road,2000,18.0
+Road,2002,31.0
+Road,2009,17.0
+Storm,2000,8.0
+Storm,2001,11.0
+Storm,2002,204.0
+Storm,2004,14.0
+Storm,2005,5.0
+Storm,2007,20.0
+Storm,2012,0.0
+Storm,2014,14.0
+Storm,2016,9.0
+Storm,2019,20.0
+Storm,2020,29.0
+Storm,2021,0.0
+Storm,2022,12.0
+Storm,2023,2.0
+Storm,2024,1.0
+Water,2000,11.0
+Water,2005,13.0
+Water,2006,15.0
+Water,2007,14.0
+Water,2010,46.0
+Water,2011,22.0
+Water,2014,304.0
+Water,2017,15.0
+Water,2019,12.0
+Water,2024,14.0
+Wildfire,2000,2.0
+Wildfire,2004,0.0
+Wildfire,2023,1.0
+Wildfire,2025,31.0
