@@ -24,8 +24,8 @@ local_css("style.css")
 @st.cache_data
 def load_data():
     # 메인 데이터 로드
-    df = pd.read_csv("emdat.csv") # Raw Data for Globe Calculation
-    df_korea = pd.read_csv("korea_deaths_by_disaster_year.csv")
+    df = pd.read_csv("data/emdat.csv") # Raw Data for Globe Calculation
+    df_korea = pd.read_csv("data/korea_deaths_by_disaster_year.csv")
     
     # 전처리: 연도 변환 및 결측치 처리
     df = df[df['Start Year'].notna()]
