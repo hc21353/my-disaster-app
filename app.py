@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+import numpy as np
+import math
 
 # -----------------------------------------------------------------------------
 # 1. 설정 및 데이터 로딩
@@ -10,10 +12,9 @@ st.set_page_config(
     page_title="The Pulse of Disasters",
     page_icon="🌍",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed" # 사이드바 숨김 (지구본 집중)
 )
 
-# CSS 파일 로드 함수
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
@@ -22,203 +23,229 @@ local_css("style.css")
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("emdat.csv")
+    # 메인 데이터 로드
+    df = pd.read_csv("emdat.csv") # Raw Data for Globe Calculation
+    df_korea = pd.read_csv("korea_deaths_by_disaster_year.csv")
     
-    # 1. 필수 전처리: 연도가 없는 데이터 제거 및 정수 변환
+    # 전처리: 연도 변환 및 결측치 처리
     df = df[df['Start Year'].notna()]
     df['Start Year'] = df['Start Year'].astype(int)
     
-    # 2. 🔥 핵심 수정 사항: 시각화에 사용되는 수치형 컬럼의 결측치(NaN)를 0으로 채우기
-    # 이 처리를 안 하면 px.scatter의 size 옵션에서 ValueError가 발생합니다.
+    # 수치 컬럼 결측치 0 처리
     cols_to_fix = ['Total Deaths', 'Total Affected', 'Total Damage (\'000 US$)']
     for col in cols_to_fix:
         if col in df.columns:
             df[col] = df[col].fillna(0)
-            
-    return df
+    
+    # 한국 데이터 전처리
+    df_korea['Total_Deaths'] = df_korea['Total_Deaths'].fillna(0)
+    
+    return df, df_korea
 
 try:
-    df = load_data()
+    df_raw, df_korea_raw = load_data()
 except FileNotFoundError:
-    st.error("데이터 파일을 찾을 수 없습니다. 'emdat.csv' 파일을 같은 폴더에 넣어주세요.")
+    st.error("데이터 파일을 찾을 수 없습니다.")
     st.stop()
 
 # -----------------------------------------------------------------------------
-# 2. 사이드바 (컨트롤 패널)
+# 2. 메인 헤더
 # -----------------------------------------------------------------------------
-st.sidebar.header("🕹️ Filter Options")
-
-# 연도 슬라이더
-min_year = int(df['Start Year'].min())
-max_year = int(df['Start Year'].max())
-selected_year_range = st.sidebar.slider(
-    "분석 기간 선택",
-    min_year, max_year, (1950, 2024) # 기본값 설정
-)
-
-# 데이터 필터링
-df_filtered = df[
-    (df['Start Year'] >= selected_year_range[0]) &
-    (df['Start Year'] <= selected_year_range[1])
-]
-
-# 재해 유형 필터
-disaster_groups = st.sidebar.multiselect(
-    "재해 그룹 선택 (Disaster Group)",
-    options=df_filtered['Disaster Group'].unique(),
-    default=df_filtered['Disaster Group'].unique()
-)
-df_final = df_filtered[df_filtered['Disaster Group'].isin(disaster_groups)]
-
-# -----------------------------------------------------------------------------
-# 3. 메인 대시보드 구조
-# -----------------------------------------------------------------------------
-
-# 헤더 섹션
 st.markdown('<p class="main-title">The Pulse of Disasters 🌍</p>', unsafe_allow_html=True)
-st.markdown('<p class="sub-title">글로벌 자연재해 발생 패턴과 인류 대응력의 진화: 디커플링(Decoupling) 분석</p>', unsafe_allow_html=True)
-
-# KPI 섹션
-col1, col2, col3, col4 = st.columns(4)
-with col1:
-    st.metric("총 발생 건수", f"{len(df_final):,} 건")
-with col2:
-    total_deaths = df_final['Total Deaths'].sum()
-    st.metric("총 사망자 수", f"{int(total_deaths):,} 명")
-with col3:
-    total_affected = df_final['Total Affected'].sum()
-    st.metric("총 피해 인구", f"{int(total_affected):,} 명")
-with col4:
-    # 데이터가 비어있을 수 있으므로 처리
-    cost = df_final['Total Damage (\'000 US$)'].sum()
-    st.metric("총 피해액 (천 달러)", f"${int(cost):,}")
-
+st.markdown('<p class="sub-title">Decoupling: Disaster Frequency vs. Human Impact</p>', unsafe_allow_html=True)
 st.markdown("---")
 
 # -----------------------------------------------------------------------------
-# 섹션 1: The Decoupling (핵심 메시지)
+# 3. GLOBAL SECTION: The Globe
 # -----------------------------------------------------------------------------
-st.subheader("📊 Insight 1: 재해는 늘었지만, 인류는 강해졌다 (Decoupling)")
 
-# 연도별 집계
-yearly_stats = df_final.groupby('Start Year').agg({
-    'Disaster Type': 'count',
-    'Total Deaths': 'sum'
-}).reset_index()
-yearly_stats.columns = ['Year', 'Occurrence', 'Deaths']
+# (1) 데이터 준비: 연도별/지역별/재해유형별 집계
+# Top 7 재해 유형 선정 (전체 기간 기준 빈도수)
+top_7_disasters = df_raw['Disaster Type'].value_counts().nlargest(7).index.tolist()
+df_globe = df_raw[df_raw['Disaster Type'].isin(top_7_disasters)].copy()
 
-# 이중축 차트 (Bar + Line)
-fig_decoupling = go.Figure()
+# 컨트롤 패널 (토글 및 슬라이더)
+c1, c2, c3 = st.columns([1, 6, 1])
+with c2:
+    # Metric 선택 토글
+    metric_choice = st.radio(
+        "Select Visual Metric:",
+        ('Total Occurrences', 'Total Deaths', 'Total Affected'),
+        horizontal=True,
+        index=0
+    )
+    
+    # 색상 및 데이터 컬럼 매핑
+    if metric_choice == 'Total Occurrences':
+        color_scale = 'Oranges'
+        value_col = 'Event Name' # Count용
+        agg_func = 'count'
+    elif metric_choice == 'Total Deaths':
+        color_scale = 'Reds'
+        value_col = 'Total Deaths'
+        agg_func = 'sum'
+    else: # Affected
+        color_scale = 'YlOrBr' # Yellow base
+        value_col = 'Total Affected'
+        agg_func = 'sum'
 
-# Bar Chart (발생 건수)
-fig_decoupling.add_trace(go.Bar(
-    x=yearly_stats['Year'],
-    y=yearly_stats['Occurrence'],
-    name='발생 건수',
-    marker_color='#FF6B6B',
-    opacity=0.6,
-    yaxis='y1'
-))
+    # 연도 슬라이더
+    min_year, max_year = int(df_globe['Start Year'].min()), int(df_globe['Start Year'].max())
+    selected_year = st.slider("Select Year", min_year, max_year, 2023)
 
-# Line Chart (사망자 수)
-fig_decoupling.add_trace(go.Scatter(
-    x=yearly_stats['Year'],
-    y=yearly_stats['Deaths'],
-    name='사망자 수',
-    mode='lines+markers',
-    line=dict(color='#4ECDC4', width=3),
-    yaxis='y2'
-))
+# (2) 선택된 연도 데이터 필터링 및 집계
+df_year = df_globe[df_globe['Start Year'] == selected_year]
 
-# 레이아웃 설정 (이중축)
-fig_decoupling.update_layout(
-    xaxis=dict(title='Year'),
-    yaxis=dict(title='발생 건수 (건)', side='left'),
-    yaxis2=dict(title='사망자 수 (명)', side='right', overlaying='y'),
-    legend=dict(x=0, y=1.2, orientation='h'),
+# 지역(Region)별 집계
+region_stats = df_year.groupby(['Region']).agg({
+    value_col: agg_func
+}).rename(columns={value_col: 'Value'}).reset_index()
+
+# 지도 시각화를 위해 ISO 코드 매핑 (Region -> 각 Region에 속한 모든 국가의 ISO)
+# Plotly Choropleth는 ISO 코드를 기반으로 색칠하므로, Region 값을 해당 Region의 모든 국가에 할당합니다.
+df_iso_mapping = df_raw[['Region', 'ISO', 'Country']].drop_duplicates()
+map_data = pd.merge(df_iso_mapping, region_stats, on='Region', how='left').fillna(0)
+
+# (3) 지구본 시각화
+fig_globe = px.choropleth(
+    map_data,
+    locations="ISO",
+    color="Value",
+    hover_name="Region", # 호버 시 대륙/지역 이름 표시
+    hover_data={"ISO": False, "Country": True, "Value": True},
+    color_continuous_scale=color_scale,
+    projection="orthographic", # 지구본 모드
     template="plotly_dark",
-    height=500
+    title=f"Global {metric_choice} in {selected_year}"
 )
 
-st.plotly_chart(fig_decoupling, use_container_width=True)
-
-# -----------------------------------------------------------------------------
-# 섹션 2: Global Overview (지도 + 재해 유형)
-# -----------------------------------------------------------------------------
-col_map, col_type = st.columns([2, 1])
-
-with col_map:
-    st.subheader("🗺️ Global Heatmap: 어디가 가장 위험한가?")
-    # 지도 데이터 집계 (국가별)
-    country_stats = df_final.groupby('ISO').agg({
-        'Total Affected': 'sum',
-        'Country': 'first' # 이름 가져오기
-    }).reset_index()
-    
-    fig_map = px.choropleth(
-        country_stats,
-        locations="ISO",
-        color="Total Affected",
-        hover_name="Country",
-        color_continuous_scale=px.colors.sequential.Plasma,
-        template="plotly_dark",
-        projection="natural earth" # 평면 지도 (지구본 원하면 'orthographic')
+fig_globe.update_layout(
+    height=700,
+    margin={"r":0,"t":50,"l":0,"b":0},
+    geo=dict(
+        showframe=False,
+        showcoastlines=False,
+        projection_type='orthographic',
+        bgcolor='rgba(0,0,0,0)',
+        lakecolor='rgba(0,0,0,0)',
+        oceancolor='rgba(20,20,30,1)'
+    ),
+    coloraxis_colorbar=dict(
+        title=dict(text=metric_choice, side="right"),
+        x=0.9,
     )
-    fig_map.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-    st.plotly_chart(fig_map, use_container_width=True)
+)
 
-with col_type:
-    st.subheader("🌪️ 재해 유형 분석")
-    # Sunburst Chart
-    fig_sun = px.sunburst(
-        df_final,
-        path=['Disaster Group', 'Disaster Type'],
-        values='Total Affected', # 크기 기준
-        color='Disaster Group',
-        color_discrete_sequence=px.colors.qualitative.Pastel
-    )
-    fig_sun.update_layout(template="plotly_dark")
-    st.plotly_chart(fig_sun, use_container_width=True)
+st.plotly_chart(fig_globe, use_container_width=True)
+
 
 # -----------------------------------------------------------------------------
-# 섹션 3: Focus on Korea (인명 피해 상세)
+# 4. KOREA SECTION
 # -----------------------------------------------------------------------------
 st.markdown("---")
-st.subheader("🇰🇷 Focus on Korea: 한국의 재해 패턴")
+st.markdown('<p class="main-title" style="font-size: 2.5rem !important;">🇰🇷 Focus on Korea</p>', unsafe_allow_html=True)
+st.markdown('<p class="sub-title">한국의 재해 사망자 추이 및 규모 시각화</p>', unsafe_allow_html=True)
 
-# 한국 데이터 필터링 (ISO 코드가 KOR인 경우)
-df_korea = df[df['ISO'] == 'KOR'] # 혹은 'South Korea' 이름 확인 필요
+# 데이터 준비: 한국 데이터
+# Top 5 재해 유형 선정
+top_5_kor = df_korea_raw.groupby('Disaster Type')['Total_Deaths'].sum().nlargest(5).index.tolist()
+df_kor_filtered = df_korea_raw[df_korea_raw['Disaster Type'].isin(top_5_kor)]
 
-if df_korea.empty:
-    st.info("선택된 기간 내 한국 데이터가 없습니다.")
-else:
-    korea_tab1, korea_tab2 = st.tabs(["연도별 피해 추이", "재해 유형별 인명피해"])
+# [Chart 1] 연도별 피해 추이 (Stacked Bar)
+st.subheader("📊 Annual Death Toll Trend")
+fig_bar = px.bar(
+    df_kor_filtered,
+    x='Year',
+    y='Total_Deaths',
+    color='Disaster Type',
+    template='plotly_dark',
+    color_discrete_sequence=px.colors.qualitative.Pastel
+)
+fig_bar.update_layout(
+    xaxis_title=None,
+    yaxis_title="Total Deaths",
+    legend=dict(orientation="h", y=1.1, x=0.5, xanchor='center'),
+    height=400,
+    bargap=0.2
+)
+st.plotly_chart(fig_bar, use_container_width=True)
+
+st.markdown("<br><br>", unsafe_allow_html=True)
+
+# [Chart 2] Pictogram Visualization
+st.subheader("🧍 Impact Visualizer (Pictogram)")
+
+# 컨트롤러 (연도, 재해유형)
+col_ctrl1, col_ctrl2 = st.columns(2)
+with col_ctrl1:
+    kor_year = st.slider("Select Year for Pictogram", 
+                         int(df_kor_filtered['Year'].min()), 
+                         int(df_kor_filtered['Year'].max()), 
+                         2003)
+with col_ctrl2:
+    kor_type = st.selectbox("Select Disaster Type", top_5_kor)
+
+# 선택된 데이터 값 가져오기
+subset = df_kor_filtered[
+    (df_kor_filtered['Year'] == kor_year) & 
+    (df_kor_filtered['Disaster Type'] == kor_type)
+]
+death_count = subset['Total_Deaths'].sum() if not subset.empty else 0
+
+# 픽토그램 로직
+# 1 아이콘 = 10명 (예시)
+UNIT_PER_ICON = 10
+total_icons = 100 # 그리드 전체 크기 (10x10)
+active_icons = math.ceil(death_count / UNIT_PER_ICON)
+
+# 상태 관리를 위한 세션 스테이트 (클릭 여부 확인)
+if 'pictogram_active' not in st.session_state:
+    st.session_state.pictogram_active = False
+
+# 레이아웃: 왼쪽(버튼/트리거) | 오른쪽(그리드)
+col_pic_left, col_pic_right = st.columns([1, 3])
+
+with col_pic_left:
+    st.markdown(f"<div style='text-align: center; margin-top: 50px;'>", unsafe_allow_html=True)
+    st.markdown(f"<h2>{int(death_count):,} Deaths</h2>", unsafe_allow_html=True)
     
-    with korea_tab1:
-        # 연도별 발생 건수와 피해자 수 시각화
-        fig_kor = px.bar(
-            df_korea, 
-            x='Start Year', 
-            y='Total Affected',
-            color='Disaster Type',
-            title="연도별 한국 재해 피해 인구 (Stacked Bar)",
-            template="plotly_dark"
-        )
-        st.plotly_chart(fig_kor, use_container_width=True)
+    # 투명 버튼으로 클릭 감지 흉내 (Streamlit 버튼 활용)
+    if st.button("🔴 Click to Visualize"):
+        st.session_state.pictogram_active = not st.session_state.pictogram_active
+    
+    st.markdown("</div>", unsafe_allow_html=True)
+    st.info(f"1 Block ≈ {UNIT_PER_ICON} People")
+
+with col_pic_right:
+    # HTML 생성
+    icon_html = ""
+    
+    # 색상 결정
+    if death_count == 0:
+        active_class = ""
+    elif death_count > 100:
+        active_class = "active-red"
+    elif death_count > 50:
+        active_class = "active-orange"
+    else:
+        active_class = "active-yellow"
         
-    with korea_tab2:
-        # 사람 히스토그램 느낌 (Dot Plot)
-        # Scatter Plot을 활용하여 데이터 포인트로 사람을 표현
-        st.markdown("#### 재해 유형별 사망/실종 규모 (Bubble Size = 사망자 수)")
+    # 클릭 상태에 따라 활성화 개수 조절
+    display_active = active_icons if st.session_state.pictogram_active else 0
+    
+    # 최대 500개까지만 렌더링 (성능 보호)
+    limit_icons = min(active_icons + 50, 200) 
+    
+    for i in range(limit_icons):
+        state_class = active_class if i < display_active else ""
+        icon_html += f'<div class="person-icon {state_class}"></div>'
         
-        fig_bubble = px.scatter(
-            df_korea,
-            x="Start Year",
-            y="Disaster Type",
-            size="Total Deaths",
-            color="Disaster Type",
-            hover_name="Event Name",
-            size_max=60,
-            template="plotly_dark"
-        )
-        st.plotly_chart(fig_bubble, use_container_width=True)
+    st.markdown(f"""
+        <div class="person-grid">
+            {icon_html}
+        </div>
+    """, unsafe_allow_html=True)
+
+# 출처 표기
+st.markdown("---")
+st.markdown("<p style='text-align: center; color: grey; font-size: 0.8rem;'>Data Source: EM-DAT, KOR Disaster Stats</p>", unsafe_allow_html=True)
