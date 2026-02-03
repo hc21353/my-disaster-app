@@ -8,6 +8,7 @@ import math
 # -----------------------------------------------------------------------------
 # 1. 설정 및 데이터 로딩
 # -----------------------------------------------------------------------------
+
 st.set_page_config(
     page_title="The Pulse of Disasters",
     page_icon="🌍",
@@ -176,14 +177,19 @@ st.markdown("<br><br>", unsafe_allow_html=True)
 st.subheader("🧍 Impact Visualizer (Pictogram)")
 
 # 컨트롤러 (연도, 재해유형)
-col_ctrl1, col_ctrl2 = st.columns(2)
+col_ctrl1, col_ctrl2 = st.columns([2.2, 1])
+
 with col_ctrl1:
-    kor_year = st.slider("Select Year for Pictogram", 
-                         int(df_kor_filtered['Year'].min()), 
-                         int(df_kor_filtered['Year'].max()), 
+    kor_year = st.slider("Select Year for Pictogram",
+                         int(df_kor_filtered['Year'].min()),
+                         int(df_kor_filtered['Year'].max()),
                          2003)
+
 with col_ctrl2:
     kor_type = st.selectbox("Select Disaster Type", top_5_kor)
+
+
+
 
 # 선택된 데이터 값 가져오기
 subset = df_kor_filtered[
@@ -245,6 +251,8 @@ with col_pic_right:
             {icon_html}
         </div>
     """, unsafe_allow_html=True)
+
+
 
 # 출처 표기
 st.markdown("---")
