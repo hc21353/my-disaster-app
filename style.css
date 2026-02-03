@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Roboto', sans-serif;
+    color: #FAFAFA;
+}
+
+/* 메인 타이틀 스타일 - 중앙 정렬 */
+.main-title {
+    font-size: 3.5rem !important;
+    color: #FF4B4B;
+    font-weight: 800;
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+.sub-title {
+    font-size: 1.2rem;
+    color: #B0B0B0;
+    margin-bottom: 40px;
+    font-weight: 300;
+    text-align: center;
+}
+
+/* Streamlit 기본 요소 숨기기 */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+
+/* 플롯 배경 투명 및 중앙 정렬 보정 */
+.js-plotly-plot .plotly .main-svg {
+    background: rgba(0,0,0,0) !important;
+}
+.stPlotlyChart {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* 픽토그램 그리드 스타일 */
+.person-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: flex-start;
+    padding: 10px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+}
+
+.person-icon {
+    width: 15px;
+    height: 35px;
+    background-color: #444; /* 비활성 색상 */
+    border-radius: 3px;
+    transition: background-color 0.8s ease;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%); /* 단순화된 사람 모양 */
+}
+
+.person-icon.active-red { background-color: #FF4B4B; }
+.person-icon.active-orange { background-color: #FFA500; }
+.person-icon.active-yellow { background-color: #FFD700; }
+
+/* 큰 사람 버튼 스타일 */
+.big-person-btn {
+    font-size: 100px;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.2s;
+    background: none;
+    border: none;
+    color: #FAFAFA;
+}
+.big-person-btn:hover {
+    transform: scale(1.1);
+    color: #FF4B4B;
+}
