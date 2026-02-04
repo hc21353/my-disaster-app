@@ -62,20 +62,33 @@ st.markdown("---")
 
 # (1) 데이터 준비: 연도별/지역별/재해유형별 집계
 # Top 7 재해 유형 선정 (전체 기간 기준 빈도수)
-top_7_disasters = df_raw['Disaster Type'].value_counts().nlargest(7).index.tolist()
-df_globe = df_raw[df_raw['Disaster Type'].isin(top_7_disasters)].copy()
+# Top 5 재해 유형 선정 (전체 기간 기준 빈도수)
+top_5_disasters = df_raw["Disaster Type"].value_counts().nlargest(5).index.tolist()
+
+# 사용자 선택(토글): 기본은 Top 5 전체 선택
+selected_types = st.multiselect(
+    "Select Disaster Types (Top 5)",
+    options=top_5_disasters,
+    default=top_5_disasters
+)
+
+# 선택이 비면 전체로 fallback (안 보이는 화면 방지)
+if len(selected_types) == 0:
+    selected_types = top_5_disasters
+
+df_globe = df_raw[df_raw["Disaster Type"].isin(selected_types)].copy()
+
 
 # 컨트롤 패널 (토글 및 슬라이더)
 c1, c2, c3 = st.columns([0.1, 6, 1.9]) #[1, 6, 1] 가운데
-with c2:
-    # Metric 선택 토글
-    metric_choice = st.radio(
-        "Select Visual Metric:",
-        ('Total Occurrences', 'Total Deaths', 'Total Affected'),
-        horizontal=True,
-        index=0
-    )
-    
+# Metric 선택 토글
+metric_choice = st.radio(
+    "Select Visual Metric:",
+    ('Total Occurrences', 'Total Deaths', 'Total Affected'),
+    horizontal=True,
+    index=0
+)
+with c2:    
     # 색상 및 데이터 컬럼 매핑
     if metric_choice == 'Total Occurrences':
         color_scale = 'Oranges'
@@ -92,7 +105,8 @@ with c2:
 
     # 연도 슬라이더
     min_year, max_year = int(df_globe['Start Year'].min()), int(df_globe['Start Year'].max())
-    selected_year = st.slider("Select Year", min_year, max_year, 2023)
+    
+selected_year = st.slider("Select Year", min_year, max_year-1, 2023)
 
 # (2) 선택된 연도 데이터 필터링 및 집계
 df_year = df_globe[df_globe['Start Year'] == selected_year]
@@ -146,7 +160,7 @@ st.markdown("---")
 st.subheader("🌐 Disaster Occurrences by Type Over Time (Global)")
 
 # 1) 사용할 타입 수 조절 (너무 많으면 지저분하니까)
-TOP_N = 10
+TOP_N = 5
 top_types = df_raw["Disaster Type"].value_counts().nlargest(TOP_N).index
 
 df_occ = (
@@ -159,7 +173,7 @@ df_occ = (
 
 # 2) 연도 범위 슬라이더 (선택)
 min_y = int(df_occ["Start Year"].min())
-max_y = int(df_occ["Start Year"].max())
+max_y = int(df_occ["Start Year"].max()-1)
 year_range = st.slider("Year Range", min_y, max_y, (min_y, max_y))
 
 df_occ = df_occ[(df_occ["Start Year"] >= year_range[0]) & (df_occ["Start Year"] <= year_range[1])]
