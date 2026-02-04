@@ -456,7 +456,7 @@ with col_ctrl1:
                          2003)
 
 with col_ctrl2:
-    kor_type = st.selectbox("Select Disaster Type", top_5_kor)
+    kor_type = st.selectbox("Select Disaster Type", top_5_kor, key="kor_type_pic")
 
 
 
@@ -466,33 +466,50 @@ subset = df_kor_filtered[
     (df_kor_filtered['Year'] == kor_year) & 
     (df_kor_filtered['Disaster Type'] == kor_type)
 ]
-death_count = subset['Total_Deaths'].sum() if not subset.empty else 0
+death_count = int(subset['Total_Deaths'].sum()) if not subset.empty else 0
 
-# 픽토그램 로직
-# 1 아이콘 = 10명 (예시)
-UNIT_PER_ICON = 1
-total_icons = 100 # 그리드 전체 크기 
-active_icons = math.ceil(death_count / UNIT_PER_ICON)
+# -----------------------------
+# 컨텍스트 변경 시 상태 초기화 (잔상 제거 핵심)
+# -----------------------------
+current_context = f"{kor_year}_{kor_type}"
 
-# 상태 관리를 위한 세션 스테이트 (클릭 여부 확인)
-if 'pictogram_active' not in st.session_state:
+if "pictogram_context" not in st.session_state:
+    st.session_state.pictogram_context = current_context
+
+if st.session_state.pictogram_context != current_context:
+    st.session_state.pictogram_context = current_context
+    st.session_state.pictogram_step = 0
     st.session_state.pictogram_active = False
 
-# 레이아웃: 왼쪽(버튼/트리거) | 오른쪽(그리드)
+# -----------------------------
+# 상태 초기화
+# -----------------------------
+if "pictogram_step" not in st.session_state:
+    st.session_state.pictogram_step = 0
+
+if "pictogram_active" not in st.session_state:
+    st.session_state.pictogram_active = False
+
+# -----------------------------
+# 레이아웃
+# -----------------------------
 col_pic_left, col_pic_right = st.columns([1, 3])
 
+# =========================================================
+# LEFT: 컨트롤 / 버튼
+# =========================================================
 with col_pic_left:
-    st.markdown(f"<div style='text-align: center; margin-top: 50px;'>", unsafe_allow_html=True)
-    st.markdown(f"<h2>{int(death_count):,} Deaths</h2>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align:center; margin-top:40px;'>", unsafe_allow_html=True)
+    st.markdown(f"<h2>{death_count:,} Deaths</h2>", unsafe_allow_html=True)
 
-    # 상태 초기화
-    if "pictogram_active" not in st.session_state:
-        st.session_state.pictogram_active = False
-
-    if "pictogram_step" not in st.session_state:
-        st.session_state.pictogram_step = 0
-
-    speed = st.slider("Animation speed", 0.005, 0.05, 0.015, step=0.005)
+    speed = st.slider(
+        "Animation speed",
+        0.005,
+        0.05,
+        0.015,
+        step=0.005,
+        key="pic_speed"
+    )
 
     cA, cB = st.columns(2)
     with cA:
@@ -500,22 +517,18 @@ with col_pic_left:
     with cB:
         reset = st.button("↩ Reset", key="pic_reset")
 
-    if reset:
-        st.session_state.pictogram_active = False
-        st.session_state.pictogram_step = 0
-
     st.markdown("</div>", unsafe_allow_html=True)
-    st.info(f"1 Block = {UNIT_PER_ICON} Person")
+    st.info("1 Block = 1 Person")
 
+# =========================================================
+# RIGHT: Pictogram (항상 기본 그리드 표시)
+# =========================================================
 with col_pic_right:
-    # -------------------------
-    # 0) 설정
-    # -------------------------
     UNIT_PER_ICON = 1
     base_icons = 108
     active_icons = math.ceil(death_count / UNIT_PER_ICON)
 
-    # 108 이하면 108칸, 초과면 확장
+    # 기본 108, 초과 시 확장
     total_icons = max(base_icons, active_icons)
 
     # 색상 결정
@@ -528,28 +541,17 @@ with col_pic_right:
     else:
         active_class = "active-yellow"
 
-    # 상태 초기화
-    if "pictogram_step" not in st.session_state:
-        st.session_state.pictogram_step = 0
-
-    if "pictogram_active" not in st.session_state:
-        st.session_state.pictogram_active = False
-
-    # 플레이스홀더
     holder = st.empty()
 
-    # -------------------------
-    # 1) 렌더 함수
-    #    - step: 채워진(색칠된) 아이콘 수
-    # -------------------------
+    # -----------------------------
+    # 렌더 함수
+    # -----------------------------
     def render(step: int):
-        # step은 0~active_icons 사이
         step = max(0, min(step, active_icons))
-
         icon_html = ""
         for i in range(total_icons):
-            state_class = active_class if i < step else ""   # 채워진 것만 색칠, 나머진 회색(기본)
-            icon_html += f'<div class="person-icon {state_class}"></div>'
+            cls = active_class if i < step else ""
+            icon_html += f'<div class="person-icon {cls}"></div>'
 
         holder.markdown(
             f"""
@@ -560,33 +562,29 @@ with col_pic_right:
             unsafe_allow_html=True
         )
 
-    # -------------------------
-    # 2) 무조건 기본 그리드부터 한 번 렌더
-    # -------------------------
+    # 항상 기본 그리드부터 렌더
     render(st.session_state.pictogram_step)
 
-    # -------------------------
-    # 3) Play / Reset 이벤트 처리
-    #    - play/reset 버튼은 왼쪽 col에서 만든 변수를 그대로 사용한다고 가정
-    # -------------------------
+    # -----------------------------
+    # Reset
+    # -----------------------------
     if reset:
-        st.session_state.pictogram_active = False
         st.session_state.pictogram_step = 0
+        st.session_state.pictogram_active = False
         render(0)
         st.stop()
 
+    # -----------------------------
+    # Play (항상 0부터 시작)
+    # -----------------------------
     if play:
         st.session_state.pictogram_active = True
-        # 0부터 시작하고 싶으면 아래 줄 주석 해제
-        # st.session_state.pictogram_step = 0
+        st.session_state.pictogram_step = 0
 
-        for step in range(st.session_state.pictogram_step, active_icons + 1):
+        for step in range(0, active_icons + 1):
             st.session_state.pictogram_step = step
             render(step)
             time.sleep(speed)
-
-
-
 
 
 # 출처 표기
