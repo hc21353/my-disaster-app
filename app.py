@@ -155,47 +155,126 @@ st.plotly_chart(fig_globe, use_container_width=True)
 # -----------------------------------------------------------------------------
 # 3_2. Area plot (Global Trend by Disaster Type)
 # -----------------------------------------------------------------------------
+import plotly.express as px
 
 st.markdown("---")
-st.subheader("🌐 Disaster Occurrences by Type Over Time (Global)")
+st.subheader("🌐 Disaster Occurrences by Type Over Time")
 
-# 1) 사용할 타입 수 조절 (너무 많으면 지저분하니까)
+# -----------------------------
+# 0) 상위 토글: Region 선택 (Global 포함)
+# -----------------------------
+regions = ["Global"] + sorted(df_raw["Region"].dropna().unique().tolist())
+selected_region = st.radio("Select Region", regions, horizontal=True, index=0)
+
+# Region 필터링
+if selected_region == "Global":
+    df_region = df_raw.copy()
+else:
+    df_region = df_raw[df_raw["Region"] == selected_region].copy()
+
+# -----------------------------
+# 1) 선택된 Region 기준 Top 5 Disaster Type
+# -----------------------------
 TOP_N = 5
-top_types = df_raw["Disaster Type"].value_counts().nlargest(TOP_N).index
+top_types = (
+    df_region["Disaster Type"]
+    .value_counts()
+    .nlargest(TOP_N)
+    .index
+    .tolist()
+)
 
+# Region에 데이터가 너무 없어서 top_types가 비는 경우 방어
+if len(top_types) == 0:
+    st.warning("해당 Region에는 표시할 데이터가 없습니다.")
+    st.stop()
+
+# -----------------------------
+# 2) 하위 토글: Top 5 가로 체크박스
+#    (색상/순서 고정 위해 top_types 순서 유지)
+# -----------------------------
+st.caption("Select Disaster Types (Top 5 in selected region)")
+
+palette = px.colors.qualitative.Plotly
+color_map = {t: palette[i % len(palette)] for i, t in enumerate(top_types)}
+
+cols = st.columns(len(top_types))
+selected_types = []
+
+for col, t in zip(cols, top_types):
+    with col:
+        if st.checkbox(t, value=True, key=f"chk_{selected_region}_{t}"):
+            selected_types.append(t)
+
+# 아무것도 선택 안 하면: 그래프 대신 안내
+if len(selected_types) == 0:
+    st.info("👆 최소 1개 이상의 재해 유형을 선택해야 그래프가 표시됩니다.")
+    st.stop()
+
+# -----------------------------
+# 3) 집계: (연도 x 유형) 발생 횟수
+# -----------------------------
 df_occ = (
-    df_raw[df_raw["Disaster Type"].isin(top_types)]
+    df_region[df_region["Disaster Type"].isin(selected_types)]
     .groupby(["Start Year", "Disaster Type"])
     .size()
     .reset_index(name="Occurrences")
-    .sort_values("Start Year")
 )
 
-# 2) 연도 범위 슬라이더 (선택)
+# 그래프 순서 고정(체크박스 순서 = top_types 순서)
+ordered_selected = [t for t in top_types if t in selected_types]
+df_occ["Disaster Type"] = pd.Categorical(
+    df_occ["Disaster Type"],
+    categories=ordered_selected,
+    ordered=True
+)
+df_occ = df_occ.sort_values(["Start Year", "Disaster Type"])
+
+# -----------------------------
+# 4) 연도 범위 슬라이더
+# -----------------------------
 min_y = int(df_occ["Start Year"].min())
-max_y = int(df_occ["Start Year"].max()-1)
+max_y = int(df_occ["Start Year"].max())
 year_range = st.slider("Year Range", min_y, max_y, (min_y, max_y))
 
 df_occ = df_occ[(df_occ["Start Year"] >= year_range[0]) & (df_occ["Start Year"] <= year_range[1])]
 
-# 3) Area plot
+# -----------------------------
+# 5) Plotly Area plot (순서 + 색 고정)
+# -----------------------------
 fig_area = px.area(
     df_occ,
     x="Start Year",
     y="Occurrences",
     color="Disaster Type",
     template="plotly_dark",
+    category_orders={"Disaster Type": ordered_selected},  # 순서 고정
+    color_discrete_map=color_map,                         # 색 고정
     labels={"Start Year": "Year", "Occurrences": "Occurrences", "Disaster Type": "Type"},
-    title=f"Top {TOP_N} Disaster Types — Occurrences Over Time"
+    title=f"{selected_region} — Disaster Occurrences Over Time"
 )
 
+# legend가 그래프 가리지 않게 위로 빼기
 fig_area.update_layout(
-    height=500,
-    legend=dict(orientation="h", y=1.12, x=0.5, xanchor="center"),
-    margin=dict(l=20, r=20, t=100, b=20)
+    height=520,
+    title=dict(
+        x=0.5,
+        xanchor="center",
+        pad=dict(b=25)
+    ),
+    legend=dict(
+        orientation="h",
+        y=1.18,
+        x=0.5,
+        xanchor="center",
+        traceorder="normal"
+    ),
+    margin=dict(l=20, r=20, t=150, b=20)
 )
 
 st.plotly_chart(fig_area, use_container_width=True)
+
+
 
 # -----------------------------------------------------------------------------
 # 4. KOREA SECTION
