@@ -117,3 +117,13 @@ div[data-testid="stSelectbox"] {
         min-width: 100%;
     }
 }
+
+div.block-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+div[data-testid="stHorizontalBlock"]>div {
+    min-width: 0;
+}
