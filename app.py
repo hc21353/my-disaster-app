@@ -25,7 +25,7 @@ local_css("style.css")
 @st.cache_data
 def load_data():
     # 메인 데이터 로드
-    df = pd.read_csv("data/emdat.csv") # Raw Data for Globe Calculation
+    df = pd.read_csv("data/public_emdat_1970_2020.csv") # Raw Data for Globe Calculation
     df_korea = pd.read_csv("data/korea_deaths_by_disaster_year.csv")
     
     # 전처리: 연도 변환 및 결측치 처리
@@ -66,7 +66,7 @@ top_7_disasters = df_raw['Disaster Type'].value_counts().nlargest(7).index.tolis
 df_globe = df_raw[df_raw['Disaster Type'].isin(top_7_disasters)].copy()
 
 # 컨트롤 패널 (토글 및 슬라이더)
-c1, c2, c3 = st.columns([1, 6, 1])
+c1, c2, c3 = st.columns([0.1, 6, 1.9]) #[1, 6, 1] 가운데
 with c2:
     # Metric 선택 토글
     metric_choice = st.radio(
@@ -138,7 +138,50 @@ fig_globe.update_layout(
 )
 
 st.plotly_chart(fig_globe, use_container_width=True)
+# -----------------------------------------------------------------------------
+# 3_2. Area plot (Global Trend by Disaster Type)
+# -----------------------------------------------------------------------------
 
+st.markdown("---")
+st.subheader("🌐 Disaster Occurrences by Type Over Time (Global)")
+
+# 1) 사용할 타입 수 조절 (너무 많으면 지저분하니까)
+TOP_N = 10
+top_types = df_raw["Disaster Type"].value_counts().nlargest(TOP_N).index
+
+df_occ = (
+    df_raw[df_raw["Disaster Type"].isin(top_types)]
+    .groupby(["Start Year", "Disaster Type"])
+    .size()
+    .reset_index(name="Occurrences")
+    .sort_values("Start Year")
+)
+
+# 2) 연도 범위 슬라이더 (선택)
+min_y = int(df_occ["Start Year"].min())
+max_y = int(df_occ["Start Year"].max())
+year_range = st.slider("Year Range", min_y, max_y, (min_y, max_y))
+
+df_occ = df_occ[(df_occ["Start Year"] >= year_range[0]) & (df_occ["Start Year"] <= year_range[1])]
+
+# 3) Area plot
+fig_area = px.area(
+    df_occ,
+    x="Start Year",
+    y="Occurrences",
+    color="Disaster Type",
+    template="plotly_dark",
+    labels={"Start Year": "Year", "Occurrences": "Occurrences", "Disaster Type": "Type"},
+    title=f"Top {TOP_N} Disaster Types — Occurrences Over Time"
+)
+
+fig_area.update_layout(
+    height=500,
+    legend=dict(orientation="h", y=1.12, x=0.5, xanchor="center"),
+    margin=dict(l=20, r=20, t=100, b=20)
+)
+
+st.plotly_chart(fig_area, use_container_width=True)
 
 # -----------------------------------------------------------------------------
 # 4. KOREA SECTION
