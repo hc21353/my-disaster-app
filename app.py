@@ -200,7 +200,7 @@ death_count = subset['Total_Deaths'].sum() if not subset.empty else 0
 
 # 픽토그램 로직
 # 1 아이콘 = 10명 (예시)
-UNIT_PER_ICON = 10
+UNIT_PER_ICON = 1
 total_icons = 100 # 그리드 전체 크기 (10x10)
 active_icons = math.ceil(death_count / UNIT_PER_ICON)
 
@@ -220,7 +220,7 @@ with col_pic_left:
         st.session_state.pictogram_active = not st.session_state.pictogram_active
     
     st.markdown("</div>", unsafe_allow_html=True)
-    st.info(f"1 Block ≈ {UNIT_PER_ICON} People")
+    st.info(f"1 Block = {UNIT_PER_ICON} Person")
 
 with col_pic_right:
     # HTML 생성
