@@ -155,7 +155,6 @@ st.plotly_chart(fig_globe, use_container_width=True)
 # -----------------------------------------------------------------------------
 # 3_2. Area plot (Global Trend by Disaster Type)
 # -----------------------------------------------------------------------------
-import plotly.express as px
 
 st.markdown("---")
 st.subheader("🌐 Disaster Occurrences by Type Over Time")
@@ -234,7 +233,7 @@ df_occ = df_occ.sort_values(["Start Year", "Disaster Type"])
 # 4) 연도 범위 슬라이더
 # -----------------------------
 min_y = int(df_occ["Start Year"].min())
-max_y = int(df_occ["Start Year"].max())
+max_y = int(df_occ["Start Year"].max())-1
 year_range = st.slider("Year Range", min_y, max_y, (min_y, max_y))
 
 df_occ = df_occ[(df_occ["Start Year"] >= year_range[0]) & (df_occ["Start Year"] <= year_range[1])]
@@ -274,7 +273,140 @@ fig_area.update_layout(
 
 st.plotly_chart(fig_area, use_container_width=True)
 
+st.markdown("---")
+st.subheader("☠️ Disaster Death Toll by Type Over Time")
 
+# -----------------------------
+# 0) 상위 토글: Region 선택 (Global 포함)
+# -----------------------------
+regions = ["Global"] + sorted(df_raw["Region"].dropna().unique().tolist())
+selected_region = st.radio(
+    "Select Region (Deaths)",
+    regions,
+    horizontal=True,
+    index=0,
+    key="region_deaths"
+)
+
+# Region 필터링
+if selected_region == "Global":
+    df_region = df_raw.copy()
+else:
+    df_region = df_raw[df_raw["Region"] == selected_region].copy()
+
+# -----------------------------
+# 1) 선택된 Region 기준 Top 5 (사망자 합계 기준)
+# -----------------------------
+TOP_N = 5
+top_types = (
+    df_region.groupby("Disaster Type")["Total Deaths"]
+    .sum()
+    .sort_values(ascending=False)
+    .head(TOP_N)
+    .index
+    .tolist()
+)
+
+# 데이터 없는 경우 방어
+if len(top_types) == 0:
+    st.warning("해당 Region에는 인명 피해 데이터가 없습니다.")
+    st.stop()
+
+# -----------------------------
+# 2) 하위 토글: Top 5 가로 체크박스
+# -----------------------------
+st.caption("Select Disaster Types (Top 5 by Total Deaths)")
+
+palette = px.colors.qualitative.Plotly
+color_map = {t: palette[i % len(palette)] for i, t in enumerate(top_types)}
+
+cols = st.columns(len(top_types))
+selected_types = []
+
+for col, t in zip(cols, top_types):
+    with col:
+        if st.checkbox(t, value=True, key=f"chk_deaths_{selected_region}_{t}"):
+            selected_types.append(t)
+
+# 아무것도 선택 안 하면 안내만
+if len(selected_types) == 0:
+    st.info("👆 최소 1개 이상의 재해 유형을 선택해야 그래프가 표시됩니다.")
+    st.stop()
+
+# -----------------------------
+# 3) 집계: (연도 x 유형) 사망자 합계
+# -----------------------------
+df_deaths = (
+    df_region[df_region["Disaster Type"].isin(selected_types)]
+    .groupby(["Start Year", "Disaster Type"])["Total Deaths"]
+    .sum()
+    .reset_index()
+)
+
+# 순서 고정 (Top 5 기준)
+ordered_selected = [t for t in top_types if t in selected_types]
+df_deaths["Disaster Type"] = pd.Categorical(
+    df_deaths["Disaster Type"],
+    categories=ordered_selected,
+    ordered=True
+)
+df_deaths = df_deaths.sort_values(["Start Year", "Disaster Type"])
+
+# -----------------------------
+# 4) 연도 범위 슬라이더
+# -----------------------------
+min_y = int(df_deaths["Start Year"].min())
+max_y = int(df_deaths["Start Year"].max())
+year_range = st.slider(
+    "Year Range (Deaths)",
+    min_y,
+    max_y,
+    (min_y, max_y),
+    key="year_range_deaths"
+)
+
+df_deaths = df_deaths[
+    (df_deaths["Start Year"] >= year_range[0]) &
+    (df_deaths["Start Year"] <= year_range[1])
+]
+
+# -----------------------------
+# 5) Plotly Area plot (사망자)
+# -----------------------------
+fig_deaths = px.area(
+    df_deaths,
+    x="Start Year",
+    y="Total Deaths",
+    color="Disaster Type",
+    template="plotly_dark",
+    category_orders={"Disaster Type": ordered_selected},
+    color_discrete_map=color_map,
+    labels={
+        "Start Year": "Year",
+        "Total Deaths": "Total Deaths",
+        "Disaster Type": "Type"
+    },
+    title=f"{selected_region} — Disaster Death Toll Over Time"
+)
+
+# legend가 그래프 가리지 않게
+fig_deaths.update_layout(
+    height=520,
+    title=dict(
+        x=0.5,
+        xanchor="center",
+        pad=dict(b=25)
+    ),
+    legend=dict(
+        orientation="h",
+        y=1.18,
+        x=0.5,
+        xanchor="center"
+    ),
+    margin=dict(l=20, r=20, t=150, b=20)
+)
+
+st.plotly_chart(fig_deaths, use_container_width=True)
 
 # -----------------------------------------------------------------------------
 # 4. KOREA SECTION
