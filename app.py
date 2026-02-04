@@ -6,7 +6,6 @@ import numpy as np
 import math
 import time
 
-
 # -----------------------------------------------------------------------------
 # 1. 설정 및 데이터 로딩
 # -----------------------------------------------------------------------------
@@ -62,98 +61,212 @@ st.markdown("---")
 # 3. GLOBAL SECTION: The Globe
 # -----------------------------------------------------------------------------
 
-# (1) 데이터 준비: 연도별/지역별/재해유형별 집계
-# Top 7 재해 유형 선정 (전체 기간 기준 빈도수)
-# Top 5 재해 유형 선정 (전체 기간 기준 빈도수)
+st.markdown("## 🌍 Global Globe")
+
+DEFAULT_METRIC = "Total Occurrences"
+
+# Top 5 disaster types (global frequency)
 top_5_disasters = df_raw["Disaster Type"].value_counts().nlargest(5).index.tolist()
 
-# 사용자 선택(토글): 기본은 Top 5 전체 선택
+# -----------------------------
+# session_state init
+# -----------------------------
+if "globe_metric" not in st.session_state:
+    st.session_state["globe_metric"] = DEFAULT_METRIC
+
+if "globe_types" not in st.session_state:
+    st.session_state["globe_types"] = top_5_disasters
+
+if "globe_render_key" not in st.session_state:
+    st.session_state["globe_render_key"] = 0
+
+# -----------------------------
+# Handle globe reset (핵심)
+# -----------------------------
+if st.session_state.get("globe_reset", False):
+    st.session_state["globe_types"] = top_5_disasters
+    st.session_state["globe_metric"] = DEFAULT_METRIC
+    st.session_state["globe_reset"] = False
+
+# -----------------------------
+# Reset button
+# -----------------------------
+col_metric, col_reset = st.columns([8, 2])
+
+with col_metric:
+    metric_choice = st.radio(
+        "Select Visual Metric:",
+        ("Total Occurrences", "Total Deaths", "Total Affected"),
+        horizontal=True,
+        key="globe_metric"
+    )
+
+with col_reset:
+    st.markdown("<div style='height:32px'></div>", unsafe_allow_html=True)
+
+    if st.button("↩ Reset Globe", key="btn_reset_globe"):
+        # 대입(set) 금지
+        # st.session_state["globe_types"] = ...
+        # st.session_state["globe_metric"] = ...
+
+        # 대신 삭제(del)
+        for k in ["globe_types", "globe_metric"]:
+            if k in st.session_state:
+                del st.session_state[k]
+
+        # Plotly 지구본 자체를 새로 만들기 위한 key 증가
+        st.session_state["globe_render_key"] += 1
+
+        st.rerun()
+
+
+
+# -----------------------------
+# Controls (types + metric)
+# -----------------------------
 selected_types = st.multiselect(
     "Select Disaster Types (Top 5)",
     options=top_5_disasters,
-    default=top_5_disasters
+    key="globe_types"
 )
 
-# 선택이 비면 전체로 fallback (안 보이는 화면 방지)
+# 0개 선택이면 안내하고 중단 (오류 방지)
 if len(selected_types) == 0:
-    selected_types = top_5_disasters
+    st.warning("재해 유형을 최소 1개 이상 선택해주세요.")
+    st.stop()
 
+# -----------------------------
+# Filter data by selected types
+# -----------------------------
 df_globe = df_raw[df_raw["Disaster Type"].isin(selected_types)].copy()
 
+# -----------------------------
+# Metric mapping
+# -----------------------------
+if metric_choice == "Total Occurrences":
+    color_scale = "Oranges"
+    metric_mode = "count"   # count rows
+    value_col = None
+elif metric_choice == "Total Deaths":
+    color_scale = "Reds"
+    metric_mode = "sum"
+    value_col = "Total Deaths"
+else:
+    color_scale = "YlOrBr"
+    metric_mode = "sum"
+    value_col = "Total Affected"
 
-# 컨트롤 패널 (토글 및 슬라이더)
-c1, c2, c3 = st.columns([0.1, 6, 1.9]) #[1, 6, 1] 가운데
-# Metric 선택 토글
-metric_choice = st.radio(
-    "Select Visual Metric:",
-    ('Total Occurrences', 'Total Deaths', 'Total Affected'),
-    horizontal=True,
-    index=0
+# -----------------------------
+# Build ALL-years data for animation (Year slider INSIDE Plotly)
+# -----------------------------
+# 1) compute region-year value
+# 데이터셋 기준 최대 연도 - 1까지만 사용
+MAX_YEAR = df_globe["Start Year"].max() - 1
+df_globe = df_globe[df_globe["Start Year"] <= MAX_YEAR]
+
+if metric_mode == "count":
+    region_year = (
+        df_globe.groupby(["Start Year", "Region"])
+        .size()
+        .reset_index(name="Value")
+    )
+else:
+    region_year = (
+        df_globe.groupby(["Start Year", "Region"])[value_col]
+        .sum()
+        .reset_index(name="Value")
+    )
+
+# 2) ISO mapping: assign each country's ISO to its region value
+df_iso_mapping = df_raw[["Region", "ISO", "Country"]].drop_duplicates()
+
+map_data_all = (
+    df_iso_mapping.merge(region_year, on="Region", how="left")
+    .fillna({"Value": 0})
 )
-with c2:    
-    # 색상 및 데이터 컬럼 매핑
-    if metric_choice == 'Total Occurrences':
-        color_scale = 'Oranges'
-        value_col = 'Event Name' # Count용
-        agg_func = 'count'
-    elif metric_choice == 'Total Deaths':
-        color_scale = 'Reds'
-        value_col = 'Total Deaths'
-        agg_func = 'sum'
-    else: # Affected
-        color_scale = 'YlOrBr' # Yellow base
-        value_col = 'Total Affected'
-        agg_func = 'sum'
 
-    # 연도 슬라이더
-    min_year, max_year = int(df_globe['Start Year'].min()), int(df_globe['Start Year'].max())
-    
-selected_year = st.slider("Select Year", min_year, max_year-1, 2023)
+# -----------------------------
+# Fixed color scale across ALL years (robust: 95% cap)
+# -----------------------------
+min_scale = 0
+max_scale = float(region_year["Value"].quantile(0.95)) if len(region_year) else 1.0
+if max_scale <= 0:
+    max_scale = 1.0
 
-# (2) 선택된 연도 데이터 필터링 및 집계
-df_year = df_globe[df_globe['Start Year'] == selected_year]
-
-# 지역(Region)별 집계
-region_stats = df_year.groupby(['Region']).agg({
-    value_col: agg_func
-}).rename(columns={value_col: 'Value'}).reset_index()
-
-# 지도 시각화를 위해 ISO 코드 매핑 (Region -> 각 Region에 속한 모든 국가의 ISO)
-# Plotly Choropleth는 ISO 코드를 기반으로 색칠하므로, Region 값을 해당 Region의 모든 국가에 할당합니다.
-df_iso_mapping = df_raw[['Region', 'ISO', 'Country']].drop_duplicates()
-map_data = pd.merge(df_iso_mapping, region_stats, on='Region', how='left').fillna(0)
-
-# (3) 지구본 시각화
+# -----------------------------
+# Globe figure (animation_frame keeps rotation while changing year)
+# -----------------------------
 fig_globe = px.choropleth(
-    map_data,
+    map_data_all,
     locations="ISO",
     color="Value",
-    hover_name="Region", # 호버 시 대륙/지역 이름 표시
-    hover_data={"ISO": False, "Country": True, "Value": True},
+    hover_name="Region",
+    hover_data={"ISO": False, "Country": True, "Value": True, "Start Year": True},
     color_continuous_scale=color_scale,
-    projection="orthographic", # 지구본 모드
+    range_color=(min_scale, max_scale),
+    projection="orthographic",
+    animation_frame="Start Year",      # year slider inside plotly (no Streamlit rerun)
     template="plotly_dark",
-    title=f"Global {metric_choice} in {selected_year}"
+    title=f"Global {metric_choice} — {', '.join(selected_types)}"
 )
+
+# geo 스타일을 모든 animation frame에 강제 적용
+fig_globe.update_geos(
+    showframe=False,
+    showcoastlines=True,
+    coastlinecolor="rgba(220,220,220,0.35)",
+
+    showocean=True,
+    oceancolor="rgb(30, 55, 90)",   # 🌊 바다 색 (확실히 보이게)
+
+    showlakes=True,
+    lakecolor="rgb(30, 55, 90)",
+
+    bgcolor="rgb(12, 14, 20)",      # 🪐 지구 바깥 배경
+)
+
+# Make the play button a bit nicer + keep layout clean
+uirevision = None if st.session_state.get("globe_reset", False) else "globe_anim"
 
 fig_globe.update_layout(
     height=700,
-    margin={"r":0,"t":50,"l":0,"b":0},
-    geo=dict(
-        showframe=False,
-        showcoastlines=False,
-        projection_type='orthographic',
-        bgcolor='rgba(0,0,0,0)',
-        lakecolor='rgba(0,0,0,0)',
-        oceancolor='rgba(20,20,30,1)'
-    ),
+    margin={"r":0, "t":60, "l":0, "b":0},
+    paper_bgcolor="rgb(10,10,15)",
+    plot_bgcolor="rgb(10,10,15)",
     coloraxis_colorbar=dict(
         title=dict(text=metric_choice, side="right"),
         x=0.9,
-    )
+    ),
+    uirevision=uirevision
 )
 
-st.plotly_chart(fig_globe, use_container_width=True)
+fig_globe.update_geos(
+    showland=True,
+    landcolor="rgba(240,240,240,0.15)"
+)
+
+# --------------------------------------------------
+# Reset 시 연도 슬라이더를 항상 '첫 연도'로 시작
+# --------------------------------------------------
+if fig_globe.layout.sliders and len(fig_globe.layout.sliders) > 0:
+    fig_globe.layout.sliders[0].active = 0
+
+# Optional: slow down default animation speed (Play button)
+# (Plotly stores this in updatemenus[0].buttons[0].args[1])
+if fig_globe.layout.updatemenus and len(fig_globe.layout.updatemenus) > 0:
+    try:
+        fig_globe.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 600
+        fig_globe.layout.updatemenus[0].buttons[0].args[1]["transition"]["duration"] = 200
+    except Exception:
+        pass
+
+st.plotly_chart(
+    fig_globe,
+    use_container_width=True,
+    config={"scrollZoom": True},
+    key=f"globe_{st.session_state['globe_render_key']}"
+)
+
 # -----------------------------------------------------------------------------
 # 3_2. Area plot (Global Trend by Disaster Type)
 # -----------------------------------------------------------------------------
