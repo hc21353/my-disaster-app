@@ -658,7 +658,7 @@ with col_pic_left:
 # =========================================================
 with col_pic_right:
     UNIT_PER_ICON = 1
-    base_icons = 108
+    base_icons = 430 #86
     active_icons = math.ceil(death_count / UNIT_PER_ICON)
 
     # 기본 108, 초과 시 확장
