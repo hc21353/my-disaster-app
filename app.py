@@ -1361,7 +1361,7 @@ col_ctrl1, col_ctrl2 = st.columns([2.2, 1])
 with col_ctrl1:
     max_year_kor = int(df_kor_filtered["Year"].max())
     kor_year = st.slider(
-        "픽토그램 연도 선택",
+        "연도 선택",
         START_Y,
         max_year_kor,
         min(2003, max_year_kor)
