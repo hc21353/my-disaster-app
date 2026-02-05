@@ -28,7 +28,7 @@ local_css("style.css")
 def load_data():
     # 메인 데이터 로드
     df = pd.read_csv("data/public_emdat_1970_2020.csv") # Raw Data for Globe Calculation
-    df_korea = pd.read_csv("data/korea_deaths_by_disaster_year.csv")
+    df_korea = pd.read_csv("data/df_korea.csv")
     
     # 전처리: 연도 변환 및 결측치 처리
     df = df[df['Start Year'].notna()]
@@ -41,6 +41,12 @@ def load_data():
             df[col] = df[col].fillna(0)
     
     # 한국 데이터 전처리
+    # df_korea.csv는 Start Year, Total Deaths 컬럼 사용
+    if 'Start Year' in df_korea.columns:
+        df_korea = df_korea.rename(columns={'Start Year': 'Year'})
+    if 'Total Deaths' in df_korea.columns:
+        df_korea = df_korea.rename(columns={'Total Deaths': 'Total_Deaths'})
+    
     df_korea['Total_Deaths'] = df_korea['Total_Deaths'].fillna(0)
     
     return df, df_korea
@@ -54,8 +60,20 @@ except FileNotFoundError:
 # -----------------------------------------------------------------------------
 # 2. 메인 헤더
 # -----------------------------------------------------------------------------
-st.markdown('<p class="main-title"> 자연재해의 동향🌍</p>', unsafe_allow_html=True)
-st.markdown('<p class="sub-title">재난 발생 빈도 vs. 인명 피해</p>', unsafe_allow_html=True)
+st.markdown(
+    """
+    <div style="text-align:center; margin-top: 6px; margin-bottom: 6px;">
+        <div style="font-size: 3.4rem; font-weight: 900; line-height: 1.05; color: #ff3b3b;">
+            자연재해의 동향🌍
+        </div>
+        <div style="font-size: 1.35rem; font-weight: 600; opacity: 0.85; margin-top: 8px;">
+            재난 발생 빈도 vs. 인명 피해
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 st.markdown("---")
 
 # -----------------------------------------------------------------------------
@@ -1231,9 +1249,10 @@ if st.session_state["story_step"] == 4:
         .sort_values("Start Year")
     )
 
-    # 최대 연도 -1
+    # 1970년부터 최대 연도 -1까지 필터링
+    MINY = 1970
     MAXY = int(df_raw["Start Year"].max()) - 1
-    d = d[d["Start Year"] <= MAXY]
+    d = d[(d["Start Year"] >= MINY) & (d["Start Year"] <= MAXY)]
 
     # -----------------------------
     # Animated 그래프 함수
@@ -1336,68 +1355,182 @@ if st.session_state["story_step"] == 4:
 # 4. KOREA SECTION
 # -----------------------------------------------------------------------------
 st.markdown("---")
-st.markdown('<p class="main-title" style="font-size: 2.5rem !important;">🇰🇷 한국 중심 분석</p>', unsafe_allow_html=True)
-st.markdown('<p class="sub-title">한국의 재해 사망자 추이 및 규모 시각화</p>', unsafe_allow_html=True)
+st.markdown(
+    """
+    <div style="text-align:center; margin-top: 6px; margin-bottom: 6px;">
+        <div style="font-size: 3.4rem; font-weight: 900; line-height: 1.05;color: #ff3b3b;">
+            🇰🇷 한국 중심 분석
+        </div>
+        <div style="font-size: 1.35rem; font-weight: 600; opacity: 0.85; margin-top: 8px;">
+            한국의 재해 사망자 추이 및 규모 시각화
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
-# 데이터 준비: 한국 데이터
-# Top 5 재해 유형 선정
-top_5_kor = df_korea_raw.groupby('Disaster Type')['Total_Deaths'].sum().nlargest(5).index.tolist()
-df_kor_filtered = df_korea_raw[
-    (df_korea_raw['Disaster Type'].isin(top_5_kor)) &
-    (df_korea_raw['Year'] >= 1970)
-]
+# ✅ 한국 섹션 시작 연도 고정
+START_Y = 1970
 
-# [Chart 1] 연도별 피해 추이 (Stacked Bar)
+# -----------------------------------------------------------------------------
+# (A) 한국 데이터 자동 정리 유틸 (전처리 파일 없이도 동작)
+# -----------------------------------------------------------------------------
+def normalize_korea_df(df_korea_raw: pd.DataFrame) -> pd.DataFrame:
+    """
+    어떤 한국 데이터가 와도 Year / Disaster Type / Total_Deaths 형태로 맞춘 뒤,
+    (Year, Disaster Type) 중복은 합치고, Year는 int, Total_Deaths는 numeric으로 강제.
+    """
+    dfk = df_korea_raw.copy()
+
+    # ----- Year 컬럼 자동 탐색
+    if "Year" in dfk.columns:
+        year_col = "Year"
+    elif "Start Year" in dfk.columns:
+        year_col = "Start Year"
+    else:
+        raise ValueError(f"[KOREA] Year 컬럼을 찾을 수 없어요. 현재 컬럼: {list(dfk.columns)}")
+
+    # ----- Deaths 컬럼 자동 탐색
+    if "Total_Deaths" in dfk.columns:
+        deaths_col = "Total_Deaths"
+    elif "Total Deaths" in dfk.columns:
+        deaths_col = "Total Deaths"
+    else:
+        raise ValueError(f"[KOREA] Deaths 컬럼을 찾을 수 없어요. 현재 컬럼: {list(dfk.columns)}")
+
+    # ----- Type 컬럼 자동 탐색
+    if "Disaster Type" in dfk.columns:
+        type_col = "Disaster Type"
+    else:
+        raise ValueError(f"[KOREA] 'Disaster Type' 컬럼이 없어요. 현재 컬럼: {list(dfk.columns)}")
+
+    # 표준 컬럼으로 통일
+    dfk = dfk.rename(columns={year_col: "Year", deaths_col: "Total_Deaths", type_col: "Disaster Type"})
+
+    # 타입/결측 처리
+    dfk["Year"] = pd.to_numeric(dfk["Year"], errors="coerce").astype("Int64")
+    dfk["Total_Deaths"] = pd.to_numeric(dfk["Total_Deaths"], errors="coerce").fillna(0)
+    dfk["Disaster Type"] = dfk["Disaster Type"].astype(str)
+
+    dfk = dfk.dropna(subset=["Year"])
+    dfk["Year"] = dfk["Year"].astype(int)
+
+    # (Year, Type) 중복 합치기
+    dfk = dfk.groupby(["Year", "Disaster Type"], as_index=False)["Total_Deaths"].sum()
+
+    return dfk
+
+
+def make_korea_panel(dfk_norm: pd.DataFrame, start_year: int = 1970, top_n: int = 5):
+    """
+    1970~마지막연도 전체를 '0 포함'으로 채운 패널(df_kor_filtered)을 만들고,
+    top_n 타입 리스트도 반환.
+    """
+    dfk = dfk_norm[dfk_norm["Year"] >= start_year].copy()
+    if dfk.empty:
+        return [], dfk
+
+    end_year = int(dfk["Year"].max())
+
+    top_types = (
+        dfk.groupby("Disaster Type")["Total_Deaths"]
+        .sum()
+        .nlargest(top_n)
+        .index
+        .tolist()
+    )
+
+    years = pd.DataFrame({"Year": list(range(start_year, end_year + 1))})
+    base = years.merge(pd.DataFrame({"Disaster Type": top_types}), how="cross")
+
+    panel = (
+        base.merge(dfk[dfk["Disaster Type"].isin(top_types)], on=["Year", "Disaster Type"], how="left")
+            .fillna({"Total_Deaths": 0})
+            .sort_values(["Year", "Disaster Type"])
+    )
+
+    return top_types, panel
+
+
+# -----------------------------------------------------------------------------
+# (B) 한국 데이터 준비 (df_korea_raw → 자동 정리 → 1970부터 패널 생성)
+# -----------------------------------------------------------------------------
+try:
+    dfk_norm = normalize_korea_df(df_korea_raw)
+    top_5_kor, df_kor_filtered = make_korea_panel(dfk_norm, start_year=START_Y, top_n=5)
+except Exception as e:
+    st.error(f"한국 데이터 처리 중 오류: {e}")
+    st.stop()
+
+if len(top_5_kor) == 0 or df_kor_filtered.empty:
+    st.warning("한국 데이터가 비어있어서 표시할 수 없습니다.")
+    st.stop()
+
+# -----------------------------------------------------------------------------
+# [Chart 1] 연도별 사망자 추이 (Stacked Bar) ✅ 1970부터 0 포함해서 쭉 보임
+# -----------------------------------------------------------------------------
 st.subheader("📊 연도별 사망자 추이")
+
 fig_bar = px.bar(
     df_kor_filtered,
-    x='Year',
-    y='Total_Deaths',
-    color='Disaster Type',
-    template='plotly_dark',
+    x="Year",
+    y="Total_Deaths",
+    color="Disaster Type",
+    template="plotly_dark",
     category_orders={"Disaster Type": top_5_kor},
-        color_discrete_map=DISASTER_COLOR_MAP,
-        opacity=0.7
+    color_discrete_map=DISASTER_COLOR_MAP,
+    opacity=0.7
 )
 fig_bar.update_layout(
     xaxis_title=None,
     yaxis_title="Total Deaths",
-    legend=dict(orientation="h", y=1.1, x=0.5, xanchor='center'),
-    height=400,
+    legend=dict(orientation="h", y=1.1, x=0.5, xanchor="center"),
+    height=420,
     bargap=0.2
 )
 st.plotly_chart(fig_bar, use_container_width=True)
 
 st.markdown("<br><br>", unsafe_allow_html=True)
 
-# [Chart 2] Pictogram Visualization
+# -----------------------------------------------------------------------------
+# [Chart 2] Pictogram Visualization ✅ 연도 슬라이더 1970부터
+# -----------------------------------------------------------------------------
 st.subheader("🧍 인명 피해 시각화 (픽토그램)")
 
-# 컨트롤러 (연도, 재해유형)
 col_ctrl1, col_ctrl2 = st.columns([2.2, 1])
 
 with col_ctrl1:
-    kor_year = st.slider("Select Year for Pictogram",
-                         int(df_kor_filtered['Year'].min()),
-                         int(df_kor_filtered['Year'].max()),
-                         2003)
+    max_year_kor = int(df_kor_filtered["Year"].max())
+    kor_year = st.slider(
+        "Select Year for Pictogram",
+        START_Y,
+        max_year_kor,
+        min(2003, max_year_kor)
+    )
 
 with col_ctrl2:
-    kor_type = st.selectbox("Select Disaster Type", top_5_kor, key="kor_type_pic")
+    default_type = "Fire (Miscellaneous)"   # 🔥 원하는 기본값
+
+    default_index = top_5_kor.index(default_type) if default_type in top_5_kor else 0
+
+    kor_type = st.selectbox(
+        "Select Disaster Type",
+        top_5_kor,
+        index=default_index,
+        key="kor_type_pic"
+    )
 
 
-
-
-# 선택된 데이터 값 가져오기
+# 선택된 값
 subset = df_kor_filtered[
-    (df_kor_filtered['Year'] == kor_year) & 
-    (df_kor_filtered['Disaster Type'] == kor_type)
+    (df_kor_filtered["Year"] == kor_year) &
+    (df_kor_filtered["Disaster Type"] == kor_type)
 ]
-death_count = int(subset['Total_Deaths'].sum()) if not subset.empty else 0
+death_count = int(subset["Total_Deaths"].sum()) if not subset.empty else 0
 
-# -----------------------------
-# 컨텍스트 변경 시 상태 초기화 (잔상 제거 핵심)
-# -----------------------------
+# -----------------------------------------------------------------------------
+# 컨텍스트 변경 시 상태 초기화 (잔상 제거)
+# -----------------------------------------------------------------------------
 current_context = f"{kor_year}_{kor_type}"
 
 if "pictogram_context" not in st.session_state:
@@ -1408,23 +1541,18 @@ if st.session_state.pictogram_context != current_context:
     st.session_state.pictogram_step = 0
     st.session_state.pictogram_active = False
 
-# -----------------------------
-# 상태 초기화
-# -----------------------------
 if "pictogram_step" not in st.session_state:
     st.session_state.pictogram_step = 0
 
 if "pictogram_active" not in st.session_state:
     st.session_state.pictogram_active = False
 
-# -----------------------------
+# -----------------------------------------------------------------------------
 # 레이아웃
-# -----------------------------
+# -----------------------------------------------------------------------------
 col_pic_left, col_pic_right = st.columns([1, 3])
 
-# =========================================================
-# LEFT: 컨트롤 / 버튼
-# =========================================================
+# LEFT: 컨트롤
 with col_pic_left:
     st.markdown("<div style='text-align:center; margin-top:40px;'>", unsafe_allow_html=True)
     st.markdown(f"<h2>{death_count:,} Deaths</h2>", unsafe_allow_html=True)
@@ -1447,18 +1575,14 @@ with col_pic_left:
     st.markdown("</div>", unsafe_allow_html=True)
     st.info("1 Block = 1 Person")
 
-# =========================================================
-# RIGHT: Pictogram (항상 기본 그리드 표시)
-# =========================================================
+# RIGHT: 픽토그램
 with col_pic_right:
     UNIT_PER_ICON = 1
-    base_icons = 430 #86
+    base_icons = 430
     active_icons = math.ceil(death_count / UNIT_PER_ICON)
 
-    # 기본 108, 초과 시 확장
     total_icons = max(base_icons, active_icons)
 
-    # 색상 결정
     if death_count == 0:
         active_class = ""
     elif death_count > 100:
@@ -1470,9 +1594,6 @@ with col_pic_right:
 
     holder = st.empty()
 
-    # -----------------------------
-    # 렌더 함수
-    # -----------------------------
     def render(step: int):
         step = max(0, min(step, active_icons))
         icon_html = ""
@@ -1489,21 +1610,14 @@ with col_pic_right:
             unsafe_allow_html=True
         )
 
-    # 항상 기본 그리드부터 렌더
     render(st.session_state.pictogram_step)
 
-    # -----------------------------
-    # Reset
-    # -----------------------------
     if reset:
         st.session_state.pictogram_step = 0
         st.session_state.pictogram_active = False
         render(0)
         st.stop()
 
-    # -----------------------------
-    # Play (항상 0부터 시작)
-    # -----------------------------
     if play:
         st.session_state.pictogram_active = True
         st.session_state.pictogram_step = 0
@@ -1513,7 +1627,10 @@ with col_pic_right:
             render(step)
             time.sleep(speed)
 
-
-# 출처 표기
+# 출처
 st.markdown("---")
-st.markdown("<p style='text-align: center; color: grey; font-size: 0.8rem;'>Data Source: EM-DAT, KOR Disaster Stats</p>", unsafe_allow_html=True)
+st.markdown(
+    "<p style='text-align: center; color: grey; font-size: 0.8rem;'>"
+    "Data Source: EM-DAT, KOR Disaster Stats</p>",
+    unsafe_allow_html=True
+)

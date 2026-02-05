@@ -5,19 +5,21 @@ body,
 [class*="css"] {
     font-family: 'Roboto', sans-serif;
     color: #FAFAFA;
+    font-size: 1.15rem !important;
 }
 
 /* 메인 타이틀 스타일 - 중앙 정렬 */
 .main-title {
-    font-size: 3.5rem !important;
+    font-size: 7rem !important;
     color: #FF4B4B;
     font-weight: 800;
     margin-bottom: 0px;
     text-align: center;
+    line-height: 1.2;
 }
 
 .sub-title {
-    font-size: 1.2rem;
+    font-size: 2rem;
     color: #B0B0B0;
     margin-bottom: 40px;
     font-weight: 300;
@@ -126,4 +128,45 @@ div.block-container {
 
 div[data-testid="stHorizontalBlock"]>div {
     min-width: 0;
+}
+
+/* Streamlit UI 요소 폰트 크기 증가 */
+.stMarkdown h1,
+.stMarkdown h2,
+.stMarkdown h3 {
+    font-size: 1.5rem !important;
+}
+
+.stMarkdown p {
+    font-size: 1.15rem !important;
+}
+
+.stButton>button {
+    font-size: 1.1rem !important;
+}
+
+.stRadio>label,
+.stCheckbox>label,
+.stSelectbox>label {
+    font-size: 1.15rem !important;
+}
+
+.stSlider>label {
+    font-size: 1.15rem !important;
+}
+
+.stCaption {
+    font-size: 1.1rem !important;
+}
+
+.stInfo,
+.stSuccess,
+.stWarning,
+.stError {
+    font-size: 1.15rem !important;
+}
+
+/* 서브헤더 크기 조절 (main-title보다 작게) */
+.stMarkdown h2 {
+    font-size: 2rem !important;
 }
