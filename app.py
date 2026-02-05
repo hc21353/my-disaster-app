@@ -750,6 +750,424 @@ fig_deaths.update_layout(
 st.plotly_chart(fig_deaths, use_container_width=True)
 
 # -----------------------------------------------------------------------------
+# Storytelling Interactive Visualization (Step-by-step) — NO WINDOW VERSION
+# -----------------------------------------------------------------------------
+st.markdown("---")
+st.subheader("🧭 Story: 기후 변화는 각 대륙에 어떤 영향을 미쳤을까요?")
+
+# ---- Step state init
+if "story_step" not in st.session_state:
+    st.session_state["story_step"] = 0
+
+def next_step():
+    st.session_state["story_step"] += 1
+    st.rerun()
+
+def prev_step():
+    st.session_state["story_step"] = max(0, st.session_state["story_step"] - 1)
+    st.rerun()
+
+def reset_story():
+    # window 관련 키는 없애고, 여기서 쓰는 키들만 정리
+    for k in ["story_step", "story_region", "story_year_end", "story_metric_mode"]:
+        if k in st.session_state:
+            del st.session_state[k]
+    st.rerun()
+
+# ---- Controls row (Back / Reset)
+nav_l, nav_c, nav_r = st.columns([2, 6, 2])
+with nav_l:
+    if st.session_state["story_step"] > 0:
+        st.button("⬅ Back", on_click=prev_step)
+with nav_r:
+    st.button("↩ Reset Story", on_click=reset_story)
+
+# -----------------------------------------------------------------------------
+# Common helpers for story (cache)  ✅ window 제거 버전
+# -----------------------------------------------------------------------------
+@st.cache_data(show_spinner=False)
+def story_agg_no_window(df: pd.DataFrame, region: str, year_end: int):
+    """
+    1970 ~ year_end 전체 추이 집계 (window 제거)
+    Returns:
+      - summary: disaster type별 전체 합계(occ_total, d_total) — 랭킹용
+      - yearly:  (Start Year, Disaster Type) 연도별 추이 (Occurrences, Deaths) — 그래프용
+    """
+    FIXED_START = 1970
+
+    dff = df.copy()
+    if region != "Global":
+        dff = dff[dff["Region"] == region]
+
+    dff = dff[(dff["Start Year"] >= FIXED_START) & (dff["Start Year"] <= year_end)]
+
+    summary = (
+        dff.groupby("Disaster Type")
+        .agg(
+            occ_total=("Disaster Type", "size"),
+            d_total=("Total Deaths", "sum"),
+        )
+        .reset_index()
+        .sort_values(["occ_total", "d_total"], ascending=False)
+    )
+
+    yearly = (
+        dff.groupby(["Start Year", "Disaster Type"])
+        .agg(
+            Occurrences=("Disaster Type", "size"),
+            Deaths=("Total Deaths", "sum"),
+        )
+        .reset_index()
+        .sort_values(["Start Year", "Disaster Type"])
+    )
+
+    return summary, yearly
+
+# -----------------------------------------------------------------------------
+# Step 0: intro
+# -----------------------------------------------------------------------------
+if st.session_state["story_step"] == 0:
+    st.info(
+        "이 스토리는 **대륙별로 재해 발생/인명피해가 어떻게 달라졌는지**를 단계적으로 따라가며 탐색합니다.\n\n"
+        "➡️ 준비되면 **Start**를 눌러주세요."
+    )
+    st.button("🚀 Start", on_click=next_step)
+
+# -----------------------------------------------------------------------------
+# Step 1: choose continent
+# -----------------------------------------------------------------------------
+if st.session_state["story_step"] == 1:
+    st.markdown("### 1) 먼저, 가장 궁금한 **대륙(Region)** 을 선택해 주세요.")
+
+    regions = ["Global"] + sorted(df_raw["Region"].dropna().unique().tolist())
+    if "story_region" not in st.session_state:
+        st.session_state["story_region"] = "Global"
+
+    st.session_state["story_region"] = st.radio(
+        "Choose Region",
+        regions,
+        horizontal=True,
+        index=regions.index(st.session_state["story_region"]) if st.session_state["story_region"] in regions else 0
+    )
+
+    st.button("Next ➜", on_click=next_step)
+
+# -----------------------------------------------------------------------------
+# Step 2: choose END year only (start fixed = 1970)  ✅ window UI 제거
+# -----------------------------------------------------------------------------
+if st.session_state["story_step"] == 2:
+    st.markdown("### 2) 어떤 기간을 살펴볼까요?")
+    st.caption("시작 연도는 **1970년 고정**이고, 끝 연도만 선택합니다.")
+
+    FIXED_START = 1970
+    data_max_minus1 = int(df_raw["Start Year"].max()) - 1
+    max_year = min(2025, data_max_minus1)
+
+    if "story_year_end" not in st.session_state:
+        st.session_state["story_year_end"] = max_year
+
+    col1, col2 = st.columns([6, 4])
+
+    with col1:
+        st.session_state["story_year_end"] = st.slider(
+            f"End year (Start fixed at {FIXED_START})",
+            min_value=FIXED_START,
+            max_value=max_year,
+            value=st.session_state["story_year_end"],
+            step=1
+        )
+        st.caption(f"Selected range: **{FIXED_START}–{st.session_state['story_year_end']}**")
+
+    with col2:
+        if "story_metric_mode" not in st.session_state:
+            st.session_state["story_metric_mode"] = "Occurrences"
+
+        st.session_state["story_metric_mode"] = st.radio(
+            "Focus",
+            ["Occurrences", "Deaths"],
+            horizontal=True,
+            index=0 if st.session_state["story_metric_mode"] == "Occurrences" else 1
+        )
+
+    st.button("Next ➜", on_click=next_step)
+
+# -----------------------------------------------------------------------------
+# Step 3: show "top impact" + charts (Top5 + trend)  ✅ window 비교 제거
+# -----------------------------------------------------------------------------
+if st.session_state["story_step"] == 3:
+    region = st.session_state.get("story_region", "Global")
+    year_end = st.session_state.get("story_year_end", int(df_raw["Start Year"].max()) - 1)
+    focus = st.session_state.get("story_metric_mode", "Occurrences")
+
+    df_sum, df_yearly = story_agg_no_window(df_raw, region, year_end)
+
+    if df_sum.empty:
+        st.warning("선택한 조건에서 표시할 데이터가 없습니다.")
+        st.stop()
+
+    if focus == "Occurrences":
+        df_rank = df_sum.sort_values("occ_total", ascending=False)
+        metric_title = "발생 건수"
+        value_col = "occ_total"
+    else:
+        df_rank = df_sum.sort_values("d_total", ascending=False)
+        metric_title = "사망자 수"
+        value_col = "d_total"
+
+    top = df_rank.iloc[0]
+    top_type = top["Disaster Type"]
+    top_val = int(top[value_col])
+
+    st.markdown("### 3) 어떤 재해가 가장 큰 영향을 미쳤을까요?")
+    st.success(
+        f"**{region}**에서 **1970–{year_end}** 동안\n\n"
+        f"➡️ **{top_type}**의 **{metric_title}**가 가장 큽니다.\n\n"
+        f"- 합계: **{top_val:,}**"
+    )
+
+    # --- Top 5 (Animated bar by year)
+    topN = 5
+    view = df_rank.head(topN).copy()
+    top_types = view["Disaster Type"].tolist()
+
+    # 연도별(1970~year_end) Top5만 집계
+    dff_top = df_yearly[df_yearly["Disaster Type"].isin(top_types)].copy()
+
+    # focus에 따라 y값 선택
+    if focus == "Occurrences":
+        y_col = "Occurrences"
+        title = f"Top {topN} ({metric_title}) — {region} (1970–{year_end})"
+    else:
+        y_col = "Deaths"
+        title = f"Top {topN} ({metric_title}) — {region} (1970–{year_end})"
+
+    # ✅ 각 연도에 Top5 타입이 모두 보이도록 0으로 채우기 (막대가 5개 항상 뜨게)
+    years = sorted(dff_top["Start Year"].unique().tolist())
+    full_index = pd.MultiIndex.from_product([years, top_types], names=["Start Year", "Disaster Type"])
+    dff_anim = (
+        dff_top.set_index(["Start Year", "Disaster Type"])[[y_col]]
+        .reindex(full_index, fill_value=0)
+        .reset_index()
+    )
+
+    # ✅ 애니메이션 바차트 (연도 슬라이더 + 재생 버튼 자동 포함)
+    fig_top_anim = px.bar(
+        dff_anim,
+        x="Disaster Type",
+        y=y_col,
+        color="Disaster Type",
+        animation_frame="Start Year",          # <- 핵심: 연도별 애니메이션
+        category_orders={"Disaster Type": top_types},  # <- Top5 순서 고정
+        color_discrete_map=DISASTER_COLOR_MAP,         # <- 기존 색상 맵 통일
+        template="plotly_dark",
+        title=title
+    )
+    # ✅ 애니메이션 속도 조절
+    if fig_top_anim.layout.updatemenus:
+        try:
+            fig_top_anim.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 30
+            fig_top_anim.layout.updatemenus[0].buttons[0].args[1]["transition"]["duration"] = 10
+            fig_top_anim.layout.updatemenus[0].buttons[0].args[1]["transition"]["easing"] = "linear"
+
+        except Exception:
+            pass
+
+    # ✅ Autoscale을 처음부터 적용
+    y_max = dff_anim[y_col].max() * 1.15
+    fig_top_anim.update_yaxes(range=[0, y_max])
+
+    # 보기 좋게 레이아웃 조정
+    fig_top_anim.update_layout(
+        height=420,
+        margin=dict(l=20, r=20, t=70, b=20),
+        xaxis_title="",
+        yaxis_title=metric_title,
+        showlegend=False,  # 막대 자체가 색으로 구분되니 legend는 꺼도 깔끔
+    )
+
+    # ✅ 애니메이션 속도(재생 버튼 눌렀을 때)
+    # (Plotly는 play 버튼 설정이 updatemenus에 들어감)
+    if fig_top_anim.layout.updatemenus and len(fig_top_anim.layout.updatemenus) > 0:
+        try:
+            fig_top_anim.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 500
+            fig_top_anim.layout.updatemenus[0].buttons[0].args[1]["transition"]["duration"] = 200
+        except Exception:
+            pass
+
+    # (선택) 첫 프레임을 1970으로 고정
+    if fig_top_anim.layout.sliders and len(fig_top_anim.layout.sliders) > 0:
+        fig_top_anim.layout.sliders[0].active = 0
+
+    st.plotly_chart(fig_top_anim, use_container_width=True)
+
+    # --- Trend line for Top 5 types
+    st.markdown("#### 1970년부터 선택한 연도까지, 연도별 추이")
+
+    dff = df_yearly[df_yearly["Disaster Type"].isin(view["Disaster Type"])].copy()
+
+    if focus == "Occurrences":
+        fig_trend = px.line(
+            dff,
+            x="Start Year",
+            y="Occurrences",
+            color="Disaster Type",
+            color_discrete_map=DISASTER_COLOR_MAP,
+            template="plotly_dark",
+            title=f"{region} — Trend (Occurrences) 1970–{year_end}"
+        )
+    else:
+        fig_trend = px.line(
+            dff,
+            x="Start Year",
+            y="Deaths",
+            color="Disaster Type",
+            color_discrete_map=DISASTER_COLOR_MAP,
+            template="plotly_dark",
+            title=f"{region} — Trend (Deaths) 1970–{year_end}"
+        )
+
+    # top 1 강조
+    for tr in fig_trend.data:
+        if tr.name == top_type:
+            tr.line.width = 4
+        else:
+            tr.line.width = 2
+            tr.opacity = 0.55
+
+    fig_trend.update_layout(height=420, margin=dict(l=20, r=20, t=60, b=20))
+    st.plotly_chart(fig_trend, use_container_width=True)
+
+    st.info("➡️ 다음 단계에서 특정 재해를 골라 더 자세히 볼 수 있어요.")
+    st.button("Next ➜", on_click=next_step)
+
+# -----------------------------------------------------------------------------
+# Step 4: user chooses a disaster and explores (Bar=Occurrences, Line=Deaths)
+# -----------------------------------------------------------------------------
+if st.session_state["story_step"] == 4:
+
+    st.markdown("### 4) 이제 특정 재해를 골라 더 자세히 볼까요?")
+
+    region = st.session_state.get("story_region", "Global")
+
+    cand = sorted(df_raw["Disaster Type"].dropna().unique().tolist())
+    choice = st.selectbox("Pick a disaster type", cand)
+
+    # -----------------------------
+    # 연도별 집계
+    # -----------------------------
+    d = df_raw.copy()
+
+    if region != "Global":
+        d = d[d["Region"] == region]
+
+    d = (
+        d[d["Disaster Type"] == choice]
+        .groupby("Start Year")
+        .agg(
+            Occurrences=("Disaster Type", "size"),
+            Deaths=("Total Deaths", "sum")
+        )
+        .reset_index()
+        .sort_values("Start Year")
+    )
+
+    # 최대 연도 -1
+    MAXY = int(df_raw["Start Year"].max()) - 1
+    d = d[d["Start Year"] <= MAXY]
+
+    # -----------------------------
+    # Animated 그래프 함수
+    # -----------------------------
+    def make_anim(d):
+
+        years = d["Start Year"].tolist()
+
+        fig = go.Figure()
+
+        # 초기 데이터
+        d0 = d[d["Start Year"] <= years[0]]
+
+        fig.add_bar(
+            x=d0["Start Year"],
+            y=d0["Occurrences"],
+            name="Occurrences",
+            marker=dict(color=DISASTER_COLOR_MAP.get(choice, "#1f77b4")),
+            opacity=0.65,
+            yaxis="y"
+        )
+
+        fig.add_scatter(
+            x=d0["Start Year"],
+            y=d0["Deaths"],
+            name="Deaths",
+            mode="lines+markers",
+            line=dict(color=DISASTER_COLOR_MAP.get(choice, "#1f77b4"), width=3),
+            yaxis="y2"
+        )
+
+        # frames 생성
+        frames = []
+        for y in years:
+
+            dy = d[d["Start Year"] <= y]
+
+            frames.append(
+                go.Frame(
+                    name=str(y),
+                    data=[
+                        go.Bar(x=dy["Start Year"], y=dy["Occurrences"]),
+                        go.Scatter(x=dy["Start Year"], y=dy["Deaths"])
+                    ]
+                )
+            )
+
+        fig.frames = frames
+
+        # 슬라이더
+        steps = []
+        for y in years:
+            steps.append(
+                dict(
+                    method="animate",
+                    args=[[str(y)],
+                          dict(frame=dict(duration=80, redraw=True),
+                               transition=dict(duration=40))],
+                    label=str(y)
+                )
+            )
+
+        fig.update_layout(
+            template="plotly_dark",
+            height=520,
+            title=f"{region} — {choice}",
+            sliders=[dict(active=0, steps=steps)],
+            updatemenus=[
+                dict(
+                    type="buttons",
+                    buttons=[
+                        dict(
+                            label="▶ Play",
+                            method="animate",
+                            args=[None, dict(frame=dict(duration=80, redraw=True))]
+                        )
+                    ]
+                )
+            ],
+            yaxis=dict(title="Occurrences"),
+            yaxis2=dict(title="Deaths", overlaying="y", side="right")
+        )
+
+        return fig
+
+    fig_anim = make_anim(d)
+
+    st.plotly_chart(fig_anim, use_container_width=True)
+
+    st.success("✅ 스토리 완료!")
+
+
+
+# -----------------------------------------------------------------------------
 # 4. KOREA SECTION
 # -----------------------------------------------------------------------------
 st.markdown("---")
