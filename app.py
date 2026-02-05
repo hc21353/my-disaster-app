@@ -68,6 +68,17 @@ DEFAULT_METRIC = "Total Occurrences"
 # Top 5 disaster types (global frequency)
 top_5_disasters = df_raw["Disaster Type"].value_counts().nlargest(5).index.tolist()
 
+# 고정 색상 매핑: Disaster Type -> Color (한 번 만들면 계속 유지)
+palette = px.colors.qualitative.Plotly #storm, epidemic (green)
+all_types = sorted(df_raw["Disaster Type"].dropna().unique().tolist())
+
+if "DISASTER_COLOR_MAP" not in st.session_state:
+    st.session_state["DISASTER_COLOR_MAP"] = {
+        t: palette[i % len(palette)] for i, t in enumerate(all_types)
+    }
+
+DISASTER_COLOR_MAP = st.session_state["DISASTER_COLOR_MAP"]
+
 #FIRST LOAD: checkbox key가 없으면 기본 True로 세팅
 for t in top_5_disasters:
     k = f"globe_type_{t}"
@@ -85,7 +96,7 @@ if "globe_types" not in st.session_state:
 if "globe_render_key" not in st.session_state:
     st.session_state["globe_render_key"] = 0
 
-# ✅ reset flag init
+# reset flag init
 if "globe_reset" not in st.session_state:
     st.session_state["globe_reset"] = False
 
@@ -123,7 +134,7 @@ with col_reset:
     st.markdown("<div style='height:32px'></div>", unsafe_allow_html=True)
 
     if st.button("↩ Reset Globe", key="btn_reset_globe"):
-        # ✅ del 하지 말고 reset flag만 올리기
+        # del 하지 말고 reset flag만 올리기
         st.session_state["globe_reset"] = True
 
         # plotly 재렌더 키 증가
@@ -131,7 +142,7 @@ with col_reset:
         st.rerun()
 
 # -----------------------------
-# Controls (types) - ✅ value를 직접 넣지 말고 session_state(checkbox key)에 맡기기
+# Controls (types) - value를 직접 넣지 말고 session_state(checkbox key)에 맡기기
 # -----------------------------
 st.caption("Select Disaster Types (Top 5)")
 
@@ -286,6 +297,10 @@ st.plotly_chart(
     config={"scrollZoom": True},
     key=f"globe_{st.session_state['globe_render_key']}"
 )
+# -----------------------------------------------------------------------------
+# Global Trend Section
+# -----------------------------------------------------------------------------
+
 
 # -----------------------------------------------------------------------------
 # 3_2. Area plot (Global Trend by Disaster Type)
@@ -329,8 +344,7 @@ if len(top_types) == 0:
 # -----------------------------
 st.caption("Select Disaster Types (Top 5 in selected region)")
 
-palette = px.colors.qualitative.Plotly
-color_map = {t: palette[i % len(palette)] for i, t in enumerate(top_types)}
+color_map = DISASTER_COLOR_MAP
 
 cols = st.columns(len(top_types))
 selected_types = []
@@ -452,8 +466,7 @@ if len(top_types) == 0:
 # -----------------------------
 st.caption("Select Disaster Types (Top 5 by Total Deaths)")
 
-palette = px.colors.qualitative.Plotly
-color_map = {t: palette[i % len(palette)] for i, t in enumerate(top_types)}
+color_map = DISASTER_COLOR_MAP
 
 cols = st.columns(len(top_types))
 selected_types = []
