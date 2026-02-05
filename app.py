@@ -70,15 +70,45 @@ DEFAULT_METRIC = "Total Occurrences"
 top_5_disasters = df_raw["Disaster Type"].value_counts().nlargest(5).index.tolist()
 
 # 고정 색상 매핑: Disaster Type -> Color (한 번 만들면 계속 유지)
-palette = px.colors.qualitative.Plotly #storm, epidemic (green)
+palette = (
+    px.colors.qualitative.Dark24 +
+    px.colors.qualitative.Light24 +
+    px.colors.qualitative.Alphabet
+)
+
 all_types = sorted(df_raw["Disaster Type"].dropna().unique().tolist())
 
+manual_colors = {
+    "Flood": "#1f77b4",
+    "Wildfire": "#d62728",
+    "Drought": "#8c564b",
+    "Storm": "#9467bd",
+}
+
 if "DISASTER_COLOR_MAP" not in st.session_state:
-    st.session_state["DISASTER_COLOR_MAP"] = {
-        t: palette[i % len(palette)] for i, t in enumerate(all_types)
-    }
+
+    cmap = {}
+    used_colors = set(manual_colors.values())
+    palette_index = 0
+
+    for t in all_types:
+
+        if t in manual_colors:
+            cmap[t] = manual_colors[t]
+
+        else:
+            # manual 색 피하면서 자동 배정
+            while palette[palette_index % len(palette)] in used_colors:
+                palette_index += 1
+
+            cmap[t] = palette[palette_index % len(palette)]
+            used_colors.add(cmap[t])
+            palette_index += 1
+
+    st.session_state["DISASTER_COLOR_MAP"] = cmap
 
 DISASTER_COLOR_MAP = st.session_state["DISASTER_COLOR_MAP"]
+
 
 #FIRST LOAD: checkbox key가 없으면 기본 True로 세팅
 for t in top_5_disasters:
@@ -368,7 +398,9 @@ def build_insight1_agg(df, selected_types):
 
 df_ins1 = build_insight1_agg(df_raw, tuple(ins1_selected))
 
-from plotly.subplots import make_subplots
+MAX_YEAR_INS1 = df_raw["Start Year"].max() - 1
+df_ins1 = df_ins1[df_ins1["Start Year"] <= MAX_YEAR_INS1]
+
 fig_ins1 = make_subplots(specs=[[{"secondary_y": True}]])
 
 # =====================================================================
