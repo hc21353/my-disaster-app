@@ -64,11 +64,10 @@ st.markdown(
     """
     <div style="text-align:center; margin-top: 6px; margin-bottom: 6px;">
         <div style="font-size: 3.4rem; font-weight: 900; line-height: 1.05; color: #ff3b3b;">
-            자연재해의 동향🌍
+            Remapping Global Disasters 🌍
         </div>
         <div style="font-size: 1.35rem; font-weight: 600; opacity: 0.85; margin-top: 8px;">
-            재난 발생 빈도 vs. 인명 피해
-        </div>
+            EM-DAT 데이터를 기반으로 전 세계 재해의 발생 위치, 유형, 빈도, 피해 규모를 시공간적으로 살펴봅니다.
     </div>
     """,
     unsafe_allow_html=True
@@ -80,7 +79,7 @@ st.markdown("---")
 # 3. GLOBAL SECTION: The Globe
 # -----------------------------------------------------------------------------
 
-st.markdown("## 🌍 글로벌 지구본 시각화")
+st.markdown("## 🌍 섹션 1. 대륙별 Top 5 재해 발생 현황")
 
 DEFAULT_METRIC = "Total Occurrences"
 
@@ -357,7 +356,7 @@ st.plotly_chart(
 # Insight 1: Global (Occurrences=Bar, Deaths=Line) with Top5 toggle + TOTAL mode
 # -----------------------------------------------------------------------------
 st.markdown("---")
-st.subheader("📊 재난 발생 vs 인명 피해 추이")
+st.subheader("📊 섹션 2. Top 5 재해 발생 수 vs 사망자 수 추이")
 
 # Global 기준 발생 건수 Top5
 top5_global = (
@@ -526,7 +525,7 @@ st.plotly_chart(fig_ins1, use_container_width=True)
 # -----------------------------------------------------------------------------
 
 st.markdown("---")
-st.subheader("🌐 시간에 따른 재난 유형별 발생 추이")
+st.subheader("🌐 섹션 3. 대륙별 Top 5 재해 발생 수 추이")
 
 # -----------------------------
 # 0) 상위 토글: Region 선택 (Global 포함)
@@ -645,7 +644,7 @@ fig_area.update_layout(
 st.plotly_chart(fig_area, use_container_width=True)
 
 st.markdown("---")
-st.subheader("☠️ 시간에 따른 재난 유형별 사망자 수 추이")
+st.subheader("☠️ 섹션 4. 대륙별 Top 5 재해 유형별 사망자 수 추이")
 
 # -----------------------------
 # 0) 상위 토글: Region 선택 (Global 포함)
@@ -784,7 +783,7 @@ st.plotly_chart(fig_deaths, use_container_width=True)
 # Storytelling Interactive Visualization (Step-by-step) — NO WINDOW VERSION
 # -----------------------------------------------------------------------------
 st.markdown("---")
-st.subheader("🧭 기후 변화는 각 대륙에 어떤 영향을 미쳤을까요?")
+st.subheader("🧭 각 대륙별로 어떤 재해가 가장 큰 영향을 미쳤을까요?")
 
 # ---- Step state init
 if "story_step" not in st.session_state:
@@ -867,8 +866,8 @@ def story_agg_no_window(df: pd.DataFrame, region: str, year_end: int):
 # -----------------------------------------------------------------------------
 if st.session_state["story_step"] == 0:
     st.info(
-        "이 스토리는 **대륙별로 재해 발생/인명피해가 어떻게 달라졌는지**를 단계적으로 따라가며 탐색합니다.\n\n"
-        "➡️ 준비되면 **Start**를 눌러주세요."
+        "대륙별로 재해 발생/인명피해가 어떻게 달라졌는지를 탐색해보세요!.\n\n"
+        "➡️  준비되면 **Start**를 눌러주세요."
     )
     st.button("🚀 Start", on_click=next_step)
 
@@ -876,7 +875,7 @@ if st.session_state["story_step"] == 0:
 # Step 1: choose continent
 # -----------------------------------------------------------------------------
 if st.session_state["story_step"] == 1:
-    st.markdown("### 1) 먼저, 가장 궁금한 **대륙** 을 선택해 주세요.")
+    st.markdown("### 먼저, 가장 궁금한 대륙을 선택해 주세요.")
 
     regions = ["Global"] + sorted(df_raw["Region"].dropna().unique().tolist())
     if "story_region" not in st.session_state:
@@ -894,8 +893,8 @@ if st.session_state["story_step"] == 1:
 # Step 2: choose END year only (start fixed = 1970)  ✅ window UI 제거
 # -----------------------------------------------------------------------------
 if st.session_state["story_step"] == 2:
-    st.markdown("### 2) 어떤 기간을 살펴볼까요?")
-    st.caption("시작 연도는 **1970년 고정**이고, 끝 연도만 선택합니다.")
+    st.markdown("### 어떤 기간을 살펴볼까요?")
+    st.caption("시작 연도는 1970년 고정이며, 마지막 연도만 선택합니다.")
 
     FIXED_START = 1970
     data_max_minus1 = int(df_raw["Start Year"].max()) - 1
@@ -1186,7 +1185,7 @@ if st.session_state["story_step"] == 3:
     top_type = top["Disaster Type"]
     top_val = int(top[value_col])
 
-    st.markdown("### 3) 어떤 재해가 가장 큰 영향을 미쳤을까요?")
+    st.markdown("### 어떤 재해가 가장 큰 영향을 미쳤는지 확인해보세요!")
     st.success(
         f"**{region}**에서 **1970–{year_end}** 동안\n\n"
         f"➡️ **{top_type}**의 **{metric_title}**가 가장 큽니다.\n\n"
@@ -1216,14 +1215,14 @@ if st.session_state["story_step"] == 3:
     st.plotly_chart(fig_top_anim, use_container_width=True)
 
     
-    st.info("➡️ 다음 단계에서 특정 재해를 골라 더 자세히 볼 수 있어요.")
+    st.info("➡️  다음 단계에서 특정 재해를 골라 더 자세히 볼 수 있어요.")
 
 # -----------------------------------------------------------------------------
 # Step 4: user chooses a disaster and explores (Bar=Occurrences, Line=Deaths)
 # -----------------------------------------------------------------------------
 if st.session_state["story_step"] == 4:
 
-    st.markdown("### 4) 이제 특정 재해를 골라 더 자세히 볼까요?")
+    st.markdown("### 이제 특정 재해를 골라 더 자세히 확인해 볼까요?")
 
     region = st.session_state.get("story_region", "Global")
 
@@ -1347,7 +1346,7 @@ if st.session_state["story_step"] == 4:
 
     st.plotly_chart(fig_anim, use_container_width=True)
 
-    st.success("✅ 스토리 완료!")
+    st.success("✅ 다른 대륙도 자유롭게 탐색해 보세요!")
 
 
 
@@ -1359,10 +1358,10 @@ st.markdown(
     """
     <div style="text-align:center; margin-top: 6px; margin-bottom: 6px;">
         <div style="font-size: 3.4rem; font-weight: 900; line-height: 1.05;color: #ff3b3b;">
-            🇰🇷 한국 중심 분석
+            🇰🇷 한국 재해 심층 분석
         </div>
         <div style="font-size: 1.35rem; font-weight: 600; opacity: 0.85; margin-top: 8px;">
-            한국의 재해 사망자 추이 및 규모 시각화
+            한국의 재해는 어떻게 변해왔는가
         </div>
     </div>
     """,
@@ -1469,7 +1468,7 @@ if len(top_5_kor) == 0 or df_kor_filtered.empty:
 # -----------------------------------------------------------------------------
 # [Chart 1] 연도별 사망자 추이 (Stacked Bar) ✅ 1970부터 0 포함해서 쭉 보임
 # -----------------------------------------------------------------------------
-st.subheader("📊 연도별 사망자 추이")
+st.subheader("📊 연도별 재해 발생 수 추이")
 
 fig_bar = px.bar(
     df_kor_filtered,
@@ -1495,7 +1494,7 @@ st.markdown("<br><br>", unsafe_allow_html=True)
 # -----------------------------------------------------------------------------
 # [Chart 2] Pictogram Visualization ✅ 연도 슬라이더 1970부터
 # -----------------------------------------------------------------------------
-st.subheader("🧍 인명 피해 시각화 (픽토그램)")
+st.subheader("🧍 한국의 재해 사망자 추이 및 규모")
 
 col_ctrl1, col_ctrl2 = st.columns([2.2, 1])
 
