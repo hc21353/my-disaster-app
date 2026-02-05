@@ -1,0 +1,191 @@
+﻿Disaster Type,Start Year,Total Deaths
+Storm,1970,39.0
+Flood,1970,28.0
+Storm,1971,64.0
+Storm,1971,45.0
+Fire (Miscellaneous),1971,158.0
+Flood,1972,672.0
+Flood,1972,75.0
+Fire (Miscellaneous),1972,50.0
+Fire (Miscellaneous),1974,88.0
+Mass movement (wet),1976,25.0
+Flood,1977,297.0
+Flood,1977,18.0
+Explosion (Industrial),1977,56.0
+Flood,1978,27.0
+Storm,1978,0.0
+Storm,1979,115.0
+Storm,1980,150.0
+Storm,1980,15.0
+Rail,1981,65.0
+Storm,1981,113.0
+Mass movement (wet),1981,0.0
+Storm,1982,63.0
+Storm,1982,5.0
+Fire (Miscellaneous),1984,38.0
+Mass movement (wet),1984,47.0
+Flood,1984,166.0
+Storm,1985,57.0
+Miscellaneous accident (General),1985,13.0
+Storm,1986,33.0
+Water,1986,25.0
+Storm,1987,483.0
+Air,1987,115.0
+Flood,1987,50.0
+Storm,1987,136.0
+Water,1987,25.0
+Fire (Industrial),1988,20.0
+Road,1988,20.0
+Mass movement (wet),1988,25.0
+Storm,1989,109.0
+Air,1989,21.0
+Explosion (Industrial),1989,16.0
+Flood,1990,127.0
+Storm,1990,27.0
+Extreme temperature,1990,40.0
+Fire (Industrial),1990,0.0
+Road,1990,20.0
+Flood,1991,54.0
+Road,1991,10.0
+Storm,1991,72.0
+Explosion (Industrial),1991,120.0
+Explosion (Industrial),1991,0.0
+Water,1991,32.0
+Road,1991,20.0
+Flood,1992,5.0
+Storm,1992,0.0
+Storm,1993,32.0
+Mass movement (wet),1993,11.0
+Water,1993,250.0
+Storm,1994,28.0
+Water,1994,29.0
+Gas leak,1994,10.0
+Collapse (Miscellaneous),1994,32.0
+Explosion (Miscellaneous),1994,12.0
+Explosion (Miscellaneous),1995,109.0
+Collapse (Miscellaneous),1995,458.0
+Storm,1995,45.0
+Storm,1995,28.0
+Water,1995,27.0
+Flood,1996,85.0
+Mass movement (wet),1996,19.0
+Collapse (Industrial),1996,15.0
+Water,1996,26.0
+Rail,1997,14.0
+Flood,1997,11.0
+Flood,1997,4.0
+Storm,1998,26.0
+Storm,1998,19.0
+Flood,1998,403.0
+Storm,1998,55.0
+Fire (Industrial),1998,27.0
+Epidemic,1998,0.0
+Fire (Miscellaneous),1999,23.0
+Flood,1999,64.0
+Storm,1999,4.0
+Fire (Miscellaneous),1999,54.0
+Miscellaneous accident (General),2022,159.0
+Extreme temperature,2022,2.0
+Storm,2022,12.0
+Road,2000,18.0
+Fire (Industrial),2024,22.0
+Water,2000,11.0
+Epidemic,2000,6.0
+Earthquake,2017,0.0
+Road,2002,16.0
+Earthquake,2016,0.0
+Air,2002,129.0
+Road,2002,15.0
+Flood,2002,21.0
+Fire (Miscellaneous),2003,430.0
+Rail,2003,3.0
+Water,2005,13.0
+Miscellaneous accident (General),2005,11.0
+Water,2006,15.0
+Storm,2019,3.0
+Oil spill,2007,0.0
+Water,2007,14.0
+Fire (Industrial),2008,40.0
+Road,2009,17.0
+Storm,2019,15.0
+Water,2010,46.0
+Fire (Miscellaneous),2010,10.0
+Water,2011,11.0
+Water,2011,11.0
+Gas leak,2012,5.0
+Water,2014,304.0
+Rail,2014,0.0
+Fire (Miscellaneous),2014,21.0
+Collapse (Miscellaneous),2014,14.0
+Collapse (Miscellaneous),2014,10.0
+Epidemic,2015,36.0
+Fire (Miscellaneous),2015,5.0
+Water,2017,15.0
+Fire (Miscellaneous),2017,29.0
+Fire (Miscellaneous),2018,37.0
+Extreme temperature,2018,0.0
+Water,2019,12.0
+Fire (Miscellaneous),2020,38.0
+Flood,2022,14.0
+Fire (Miscellaneous),2023,0.0
+Wildfire,2023,1.0
+Flood,2023,58.0
+Storm,2023,2.0
+Flood,2024,4.0
+Storm,2024,1.0
+Water,2024,14.0
+Air,2024,179.0
+Extreme temperature,2024,22.0
+Wildfire,2025,31.0
+Flood,2025,28.0
+Flood,2025,3.0
+Storm,2019,2.0
+Storm,2020,1.0
+Flood,2020,42.0
+Storm,2021,0.0
+Flood,2000,13.0
+Storm,2002,4.0
+Storm,2002,184.0
+Storm,2004,0.0
+Flood,2004,10.0
+Storm,2004,0.0
+Storm,2005,5.0
+Flood,2007,3.0
+Mass movement (wet),2011,59.0
+Storm,2020,2.0
+Wildfire,2000,2.0
+Storm,2000,8.0
+Storm,2001,11.0
+Storm,2002,16.0
+Storm,2004,8.0
+Flood,2006,46.0
+Storm,2007,20.0
+Storm,2012,0.0
+Storm,2014,14.0
+Storm,2016,9.0
+Storm,2020,26.0
+Flood,2000,7.0
+Flood,2001,8.0
+Wildfire,2004,0.0
+Storm,2004,6.0
+Wildfire,2005,0.0
+Storm,2005,5.0
+Flood,2008,10.0
+Storm,2010,12.0
+Flood,2011,53.0
+Storm,2014,10.0
+Flood,2011,9.0
+Storm,2012,20.0
+Storm,2012,2.0
+Flood,2014,17.0
+Extreme temperature,2016,6.0
+Wildfire,2019,1.0
+Flood,2020,10.0
+Wildfire,2022,0.0
+Storm,2005,1.0
+Flood,2005,18.0
+Flood,2004,0.0
+Storm,2003,130.0
+Drought,2001,0.0
+Flood,2001,62.0
+Storm,2000,25.0
