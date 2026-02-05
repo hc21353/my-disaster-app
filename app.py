@@ -5,6 +5,7 @@ import plotly.graph_objects as go
 import numpy as np
 import math
 import time
+from plotly.subplots import make_subplots
 
 # -----------------------------------------------------------------------------
 # 1. 설정 및 데이터 로딩
@@ -298,8 +299,168 @@ st.plotly_chart(
     key=f"globe_{st.session_state['globe_render_key']}"
 )
 # -----------------------------------------------------------------------------
-# Global Trend Section
+# Insight 1: Global (Occurrences=Bar, Deaths=Line) with Top5 toggle + TOTAL mode
 # -----------------------------------------------------------------------------
+st.markdown("---")
+st.subheader("📊 재해는 늘었지만, 인류는 강해졌다 (Decoupling)")
+
+# Global 기준 발생 건수 Top5
+top5_global = (
+    df_raw["Disaster Type"]
+    .value_counts()
+    .nlargest(5)
+    .index
+    .tolist()
+)
+
+# 첫 로드: 기본값 Top5 모두 True
+for t in top5_global:
+    k = f"ins1_type_{t}"
+    if k not in st.session_state:
+        st.session_state[k] = True
+
+# TOTAL 모드 토글(추가)
+if "ins1_total_mode" not in st.session_state:
+    st.session_state["ins1_total_mode"] = False
+
+# ---- UI Row: (TOTAL 토글 + 타입 체크박스들)
+top_row_l, top_row_r = st.columns([2, 8])
+
+with top_row_l:
+    st.checkbox(
+        "TOTAL",
+        key="ins1_total_mode",
+        help="체크하면 선택된 재해들을 합산해서 (발생 1개 bar + 사망 1개 line)로 표시합니다."
+    )
+
+with top_row_r:
+    st.caption("Select Disaster Types (Top 5 by Global Occurrences)")
+    cols = st.columns(len(top5_global))
+    ins1_selected = []
+    for col, t in zip(cols, top5_global):
+        with col:
+            if st.checkbox(t, key=f"ins1_type_{t}"):
+                ins1_selected.append(t)
+
+if len(ins1_selected) == 0:
+    st.warning("재해 유형을 최소 1개 이상 선택해주세요.")
+    st.stop()
+
+# 성능: 집계는 캐시 (선택된 타입이 바뀔 때만 다시 계산)
+@st.cache_data(show_spinner=False)
+def build_insight1_agg(df, selected_types):
+    dff = df[df["Disaster Type"].isin(selected_types)].copy()
+
+    occ = (
+        dff.groupby(["Start Year", "Disaster Type"])
+        .size()
+        .reset_index(name="Occurrences")
+    )
+    deaths = (
+        dff.groupby(["Start Year", "Disaster Type"])["Total Deaths"]
+        .sum()
+        .reset_index(name="Deaths")
+    )
+
+    out = occ.merge(deaths, on=["Start Year", "Disaster Type"], how="outer").fillna(0)
+    out["Start Year"] = out["Start Year"].astype(int)
+    return out.sort_values(["Start Year", "Disaster Type"])
+
+df_ins1 = build_insight1_agg(df_raw, tuple(ins1_selected))
+
+from plotly.subplots import make_subplots
+fig_ins1 = make_subplots(specs=[[{"secondary_y": True}]])
+
+# =====================================================================
+# TOTAL MODE: 선택된 재해 합산 (bar 1개 + line 1개)
+# =====================================================================
+if st.session_state["ins1_total_mode"]:
+    df_total = (
+        df_ins1.groupby("Start Year")[["Occurrences", "Deaths"]]
+        .sum()
+        .reset_index()
+        .sort_values("Start Year")
+    )
+
+    fig_ins1.add_trace(
+        go.Bar(
+            x=df_total["Start Year"],
+            y=df_total["Occurrences"],
+            name="Total Occurrences",
+            opacity=0.70,
+        ),
+        secondary_y=False
+    )
+
+    fig_ins1.add_trace(
+        go.Scatter(
+            x=df_total["Start Year"],
+            y=df_total["Deaths"],
+            name="Total Deaths",
+            mode="lines+markers",
+            line=dict(width=2),
+            marker=dict(size=4),
+        ),
+        secondary_y=True
+    )
+
+    fig_ins1.update_layout(barmode="overlay")  # bar 1개라 overlay가 깔끔
+
+# =====================================================================
+# TYPE MODE: 재해별 (stacked bar + 재해별 line)  (기존 방식)
+# =====================================================================
+else:
+    # 1) 발생 건수(Bar) - 재해별 색 고정 (stacked)
+    for t in ins1_selected:
+        df_t = df_ins1[df_ins1["Disaster Type"] == t]
+        fig_ins1.add_trace(
+            go.Bar(
+                x=df_t["Start Year"],
+                y=df_t["Occurrences"],
+                name=t,
+                marker=dict(color=DISASTER_COLOR_MAP.get(t, "#888")),
+                opacity=0.70,
+            ),
+            secondary_y=False
+        )
+
+    # 2) 인명피해(Line) - 같은 색으로 재해별 라인
+    for t in ins1_selected:
+        df_t = df_ins1[df_ins1["Disaster Type"] == t]
+        fig_ins1.add_trace(
+            go.Scatter(
+                x=df_t["Start Year"],
+                y=df_t["Deaths"],
+                name=f"{t} (Deaths)",
+                mode="lines+markers",
+                line=dict(color=DISASTER_COLOR_MAP.get(t, "#888"), width=2),
+                marker=dict(size=4),
+            ),
+            secondary_y=True
+        )
+
+    fig_ins1.update_layout(barmode="stack")  # 막대는 누적
+
+# ---- 공통 레이아웃
+fig_ins1.update_layout(
+    template="plotly_dark",
+    height=520,
+    margin=dict(l=20, r=20, t=60, b=20),
+    xaxis_title="Year",
+    legend=dict(
+        orientation="h",
+        y=1.15,
+        x=0.0,
+        xanchor="left",
+        title=dict(text="Type")
+    ),
+)
+
+fig_ins1.update_yaxes(title_text="발생 건수 (건)", secondary_y=False)
+fig_ins1.update_yaxes(title_text="사망자 수 (명)", secondary_y=True)
+
+st.plotly_chart(fig_ins1, use_container_width=True)
+
 
 
 # -----------------------------------------------------------------------------
