@@ -12,7 +12,7 @@ from plotly.subplots import make_subplots
 # -----------------------------------------------------------------------------
 
 st.set_page_config(
-    page_title="The Pulse of Disasters",
+    page_title="재난의 동향",
     page_icon="🌍",
     layout="wide",
     initial_sidebar_state="collapsed" # 사이드바 숨김 (지구본 집중)
@@ -54,15 +54,15 @@ except FileNotFoundError:
 # -----------------------------------------------------------------------------
 # 2. 메인 헤더
 # -----------------------------------------------------------------------------
-st.markdown('<p class="main-title">The Pulse of Disasters 🌍</p>', unsafe_allow_html=True)
-st.markdown('<p class="sub-title">Decoupling: Disaster Frequency vs. Human Impact</p>', unsafe_allow_html=True)
+st.markdown('<p class="main-title"> 자연재해의 동향🌍</p>', unsafe_allow_html=True)
+st.markdown('<p class="sub-title">재난 발생 빈도 vs. 인명 피해</p>', unsafe_allow_html=True)
 st.markdown("---")
 
 # -----------------------------------------------------------------------------
 # 3. GLOBAL SECTION: The Globe
 # -----------------------------------------------------------------------------
 
-st.markdown("## 🌍 Global Globe")
+st.markdown("## 🌍 글로벌 지구본 시각화")
 
 DEFAULT_METRIC = "Total Occurrences"
 
@@ -70,19 +70,26 @@ DEFAULT_METRIC = "Total Occurrences"
 top_5_disasters = df_raw["Disaster Type"].value_counts().nlargest(5).index.tolist()
 
 # 고정 색상 매핑: Disaster Type -> Color (한 번 만들면 계속 유지)
+# - dark background에서도 잘 보이는, 채도가 높은 팔레트로 구성
 palette = (
-    px.colors.qualitative.Dark24 +
-    px.colors.qualitative.Light24 +
-    px.colors.qualitative.Alphabet
+    px.colors.qualitative.Plotly +
+    px.colors.qualitative.Set1 +
+    px.colors.qualitative.Set2 +
+    px.colors.qualitative.Safe
 )
 
 all_types = sorted(df_raw["Disaster Type"].dropna().unique().tolist())
 
+# 주요 재해 유형은 수동으로, 검은 배경에서도 대비가 잘 나는 색으로 고정
 manual_colors = {
-    "Flood": "#1f77b4",
-    "Wildfire": "#d62728",
-    "Drought": "#8c564b",
-    "Storm": "#9467bd",
+    "Flood": "#4c78a8",            # 밝은 블루
+    "Storm": "#f58518",            # 오렌지
+    "Drought": "#e45756",          # 레드
+    "Wildfire": "#ffbf00",         # 옐로우/오렌지
+    "Earthquake": "#72b7b2",       # 티얼
+    "Landslide": "#54a24b",        # 그린
+    "Extreme temperature": "#b279a2",
+    "Epidemic": "#ff9da6",
 }
 
 if "DISASTER_COLOR_MAP" not in st.session_state:
@@ -332,7 +339,7 @@ st.plotly_chart(
 # Insight 1: Global (Occurrences=Bar, Deaths=Line) with Top5 toggle + TOTAL mode
 # -----------------------------------------------------------------------------
 st.markdown("---")
-st.subheader("📊 재해는 늘었지만, 인류는 강해졌다 (Decoupling)")
+st.subheader("📊 재난 발생 vs 인명 피해 추이")
 
 # Global 기준 발생 건수 Top5
 top5_global = (
@@ -400,6 +407,7 @@ df_ins1 = build_insight1_agg(df_raw, tuple(ins1_selected))
 
 MAX_YEAR_INS1 = df_raw["Start Year"].max() - 1
 df_ins1 = df_ins1[df_ins1["Start Year"] <= MAX_YEAR_INS1]
+df_ins1 = df_ins1[df_ins1["Start Year"] != 1970]
 
 fig_ins1 = make_subplots(specs=[[{"secondary_y": True}]])
 
@@ -430,7 +438,7 @@ if st.session_state["ins1_total_mode"]:
             y=df_total["Deaths"],
             name="Total Deaths",
             mode="lines+markers",
-            line=dict(width=2),
+            line=dict(width=4),
             marker=dict(size=4),
         ),
         secondary_y=True
@@ -465,7 +473,7 @@ else:
                 y=df_t["Deaths"],
                 name=f"{t} (Deaths)",
                 mode="lines+markers",
-                line=dict(color=DISASTER_COLOR_MAP.get(t, "#888"), width=2),
+                line=dict(color=DISASTER_COLOR_MAP.get(t, "#888"), width=4),
                 marker=dict(size=4),
             ),
             secondary_y=True
@@ -500,7 +508,7 @@ st.plotly_chart(fig_ins1, use_container_width=True)
 # -----------------------------------------------------------------------------
 
 st.markdown("---")
-st.subheader("🌐 Disaster Occurrences by Type Over Time")
+st.subheader("🌐 시간에 따른 재난 유형별 발생 추이")
 
 # -----------------------------
 # 0) 상위 토글: Region 선택 (Global 포함)
@@ -595,6 +603,9 @@ fig_area = px.area(
     title=f"{selected_region} — Disaster Occurrences Over Time"
 )
 
+# 투명도는 trace 단에서 일괄 적용
+fig_area.update_traces(opacity=0.7)
+
 # legend가 그래프 가리지 않게 위로 빼기
 fig_area.update_layout(
     height=520,
@@ -616,7 +627,7 @@ fig_area.update_layout(
 st.plotly_chart(fig_area, use_container_width=True)
 
 st.markdown("---")
-st.subheader("☠️ Disaster Death Toll by Type Over Time")
+st.subheader("☠️ 시간에 따른 재난 유형별 사망자 수 추이")
 
 # -----------------------------
 # 0) 상위 토글: Region 선택 (Global 포함)
@@ -730,6 +741,8 @@ fig_deaths = px.area(
     title=f"{selected_region} — Disaster Death Toll Over Time"
 )
 
+fig_deaths.update_traces(opacity=0.7)
+
 # legend가 그래프 가리지 않게
 fig_deaths.update_layout(
     height=520,
@@ -753,7 +766,7 @@ st.plotly_chart(fig_deaths, use_container_width=True)
 # Storytelling Interactive Visualization (Step-by-step) — NO WINDOW VERSION
 # -----------------------------------------------------------------------------
 st.markdown("---")
-st.subheader("🧭 Story: 기후 변화는 각 대륙에 어떤 영향을 미쳤을까요?")
+st.subheader("🧭 기후 변화는 각 대륙에 어떤 영향을 미쳤을까요?")
 
 # ---- Step state init
 if "story_step" not in st.session_state:
@@ -761,24 +774,32 @@ if "story_step" not in st.session_state:
 
 def next_step():
     st.session_state["story_step"] += 1
-    st.rerun()
 
 def prev_step():
     st.session_state["story_step"] = max(0, st.session_state["story_step"] - 1)
-    st.rerun()
+
 
 def reset_story():
     # window 관련 키는 없애고, 여기서 쓰는 키들만 정리
     for k in ["story_step", "story_region", "story_year_end", "story_metric_mode"]:
         if k in st.session_state:
             del st.session_state[k]
-    st.rerun()
+
 
 # ---- Controls row (Back / Reset)
-nav_l, nav_c, nav_r = st.columns([2, 6, 2])
+nav_l, nav_c, nav_r = st.columns([3, 5, 2])
+
 with nav_l:
     if st.session_state["story_step"] > 0:
-        st.button("⬅ Back", on_click=prev_step)
+        col_b1, col_b2 = st.columns([1, 1])
+
+        with col_b1:
+            st.button("⬅ Back", on_click=prev_step)
+
+        with col_b2:
+            if 0 < st.session_state["story_step"] < 4:
+                st.button("Next ➜", on_click=next_step)
+
 with nav_r:
     st.button("↩ Reset Story", on_click=reset_story)
 
@@ -837,7 +858,7 @@ if st.session_state["story_step"] == 0:
 # Step 1: choose continent
 # -----------------------------------------------------------------------------
 if st.session_state["story_step"] == 1:
-    st.markdown("### 1) 먼저, 가장 궁금한 **대륙(Region)** 을 선택해 주세요.")
+    st.markdown("### 1) 먼저, 가장 궁금한 **대륙** 을 선택해 주세요.")
 
     regions = ["Global"] + sorted(df_raw["Region"].dropna().unique().tolist())
     if "story_region" not in st.session_state:
@@ -850,7 +871,6 @@ if st.session_state["story_step"] == 1:
         index=regions.index(st.session_state["story_region"]) if st.session_state["story_region"] in regions else 0
     )
 
-    st.button("Next ➜", on_click=next_step)
 
 # -----------------------------------------------------------------------------
 # Step 2: choose END year only (start fixed = 1970)  ✅ window UI 제거
@@ -889,14 +909,243 @@ if st.session_state["story_step"] == 2:
             index=0 if st.session_state["story_metric_mode"] == "Occurrences" else 1
         )
 
-    st.button("Next ➜", on_click=next_step)
 
 # -----------------------------------------------------------------------------
-# Step 3: show "top impact" + charts (Top5 + trend)  ✅ window 비교 제거
+# Step 3: show "top impact" + charts
 # -----------------------------------------------------------------------------
+def make_bar_race_with_trail(
+    df_yearly: pd.DataFrame,
+    y_col: str,
+    region: str,
+    year_end: int,
+    topN: int = 5,
+    trail_years: int = 5,
+):
+    """
+    df_yearly: columns = ["Start Year","Disaster Type", y_col]
+    y_col: "Occurrences" or "Deaths"
+    """
+    d = df_yearly[["Start Year", "Disaster Type", y_col]].copy()
+    d = d[d["Start Year"] <= year_end]
+    d = d[d[y_col].fillna(0) > 0]
+
+    if d.empty:
+        return None
+
+    years = sorted(d["Start Year"].unique().tolist())
+
+    # 전체 max로 x축 고정 (안 흔들리게)
+    # ✅ outlier 완화: 분위수 기준으로 x축 고정 (Deaths가 특히 중요)
+    q = 0.98 if y_col == "Deaths" else 0.95
+
+    x_cap = float(d[y_col].quantile(q))
+    x_cap = max(x_cap, 1.0)          # 0 방어
+
+    x_max = x_cap * 1.15             # 여유
+
+    def top_for_year(y: int):
+        g = d[d["Start Year"] == y].sort_values(y_col, ascending=False).head(topN)
+
+        order = g["Disaster Type"].tolist()
+        vals_raw = g[y_col].astype(float).tolist()
+    # ✅ 막대는 cap으로 그리기 (그래프 안에서 보기 좋게)
+        vals_plot = [min(v, x_cap) for v in vals_raw]
+
+        return order, vals_plot, vals_raw
+
+
+    # trail용 값 미리 조회 (빠르게)
+    pivot = d.pivot_table(index="Start Year", columns="Disaster Type", values=y_col, aggfunc="sum").fillna(0)
+
+    first_year = years[0]
+    order0, vals0_plot, vals0_raw = top_for_year(first_year)
+
+    bar = go.Bar(
+        x=vals0_plot,
+        y=order0,
+        orientation="h",
+        marker=dict(color=[DISASTER_COLOR_MAP.get(t, "#888") for t in order0]),
+        # ✅ 표시는 raw 값으로 (cap된 값이 아니라 실제 값)
+        text=[f"{int(v):,}" for v in vals0_raw],
+        textposition="inside",
+        insidetextanchor="end",
+        cliponaxis=False,
+        # ✅ hover도 raw 값이 보이게 커스텀
+        hovertemplate="%{y}<br>%{customdata:,}<extra></extra>",
+        customdata=vals0_raw,
+        name="",
+    )
+
+
+    trail_traces = []
+    # trail을 여러 개 trace로 만들어서 오래된 건 더 희미하게
+    for k in range(1, trail_years + 1):
+        alpha = max(0.08, 0.35 * (1 - (k / (trail_years + 1))))  # 점점 희미
+        trail_traces.append(
+            go.Scatter(
+                x=[pivot.loc[first_year - k, t] if (first_year - k) in pivot.index and t in pivot.columns else None for t in order0],
+                y=order0,
+                mode="markers",
+                marker=dict(
+                    size=8,
+                    opacity=alpha,
+                    color=[DISASTER_COLOR_MAP.get(t, "#888") for t in order0],
+                    symbol="circle",
+                ),
+                hoverinfo="skip",
+                showlegend=False,
+            )
+        )
+
+    # --- frames
+    frames = []
+    for y in years:
+        order, vals_plot, vals_raw = top_for_year(y)
+        bar_y = order
+        bar_x = vals_plot
+
+        # trails (현재 topN에 대해서만, 과거 값 찍기)
+        trails = []
+        for k in range(1, trail_years + 1):
+            alpha = max(0.08, 0.35 * (1 - (k / (trail_years + 1))))
+            prev_y = y - k
+            trails.append(
+                go.Scatter(
+                    x=[pivot.loc[prev_y, t] if (prev_y in pivot.index and t in pivot.columns) else None for t in order],
+                    y=order,
+                    mode="markers",
+                    marker=dict(
+                        size=8,
+                        opacity=alpha,
+                        color=[DISASTER_COLOR_MAP.get(t, "#888") for t in order],
+                        symbol="circle",
+                    ),
+                    hoverinfo="skip",
+                    showlegend=False,
+                )
+            )
+
+        frames.append(
+            go.Frame(
+                name=str(y),
+                data=[
+                    go.Bar(
+                        x=bar_x,              # plot용(cap 적용)
+                        y=bar_y,
+                        orientation="h",
+                        marker=dict(color=[DISASTER_COLOR_MAP.get(t, "#888") for t in bar_y]),
+                        text=[f"{int(v):,}" for v in vals_raw],  # ✅ 표시는 raw
+                        textposition="outside",
+                        cliponaxis=False,
+                        customdata=vals_raw,
+                        hovertemplate="%{y}<br>%{customdata:,}<extra></extra>",  # ✅ hover도 raw
+                    ),
+
+                    *trails
+                ],
+                layout=go.Layout(
+                    # ✅ 연도마다 categoryarray를 바꿔서 “순서도 같이 움직이게”
+                    yaxis=dict(categoryorder="array", categoryarray=bar_y),
+                    title=dict(text=f"연도별 Top {topN} ({'발생 건수' if y_col=='Occurrences' else '사망자 수'}) — {region} (1970–{year_end})<br><sup>{y}</sup>")
+                )
+            )
+        )
+
+    fig = go.Figure(data=[bar, *trail_traces], frames=frames)
+
+    fig.update_layout(
+        template="plotly_dark",
+        height=560,
+        margin=dict(l=30, r=30, t=90, b=40),
+        xaxis=dict(title=("발생 건수" if y_col == "Occurrences" else "사망자 수"), range=[0, x_max], fixedrange=False),
+        yaxis=dict(title="", categoryorder="array", categoryarray=order0, autorange="reversed"),
+        showlegend=False,
+        title=dict(text=f"연도별 Top {topN} ({'발생 건수' if y_col=='Occurrences' else '사망자 수'}) — {region} (1970–{year_end})<br><sup>{first_year}</sup>", x=0.02),
+        updatemenus=[
+            dict(
+                type="buttons",
+                direction="left",
+                x=0.02,
+                y=-0.12,
+                buttons=[
+                    dict(
+                        label="▶ Play",
+                        method="animate",
+                        args=[
+                            None,
+                            dict(
+                                frame=dict(duration=600, redraw=True),
+                                transition=dict(duration=450, easing="cubic-in-out"),
+                                fromcurrent=True
+                            )
+                        ],
+                    ),
+                    dict(
+                        label="⏸ Pause",
+                        method="animate",
+                        args=[
+                            [None],
+                            dict(frame=dict(duration=0, redraw=False), mode="immediate"),
+                        ],
+                    ),
+                ],
+            )
+        ],
+        sliders=[
+            dict(
+                x=0.15,
+                y=-0.12,
+                len=0.82,
+                active=0,
+                currentvalue=dict(prefix="Year = "),
+                pad=dict(t=10),
+                steps=[
+                    dict(
+                        method="animate",
+                        args=[
+                            [str(y)],
+                            dict(
+                                frame=dict(duration=0, redraw=True),
+                                transition=dict(duration=350, easing="cubic-in-out"),
+                                mode="immediate",
+                            ),
+                        ],
+                        label=str(y),
+                    )
+                    for y in years
+                ],
+            )
+        ],
+    )
+    # ✅ 레이아웃/플롯 영역 고정 (흔들림 방지 핵심)
+    fig.update_layout(
+        autosize=False,                         # 자동 리사이즈 금지
+        uirevision="bar_race_lock",             # UI 상태/축 고정(프레임 바뀌어도 유지)
+        margin=dict(l=260, r=60, t=90, b=110),  # ✅ 여백을 넉넉히 '고정' (슬라이더/버튼 포함)
+        xaxis=dict(
+            range=[0, x_max],                   # ✅ x축 고정
+            autorange=False,
+            fixedrange=False,                  # 줌은 허용(원하면 True로)
+            zeroline=True,
+            zerolinewidth=1,
+        ),
+        yaxis=dict(
+            automargin=False,                  # ✅ y라벨 때문에 margin 자동 변경 금지
+        ),
+    )
+
+    return fig
+
+
 if st.session_state["story_step"] == 3:
+
     region = st.session_state.get("story_region", "Global")
-    year_end = st.session_state.get("story_year_end", int(df_raw["Start Year"].max()) - 1)
+    year_end = st.session_state.get(
+        "story_year_end",
+        int(df_raw["Start Year"].max()) - 1
+    )
+
+    # ✅ focus는 Step 3 안에서 반드시 정의되어야 함
     focus = st.session_state.get("story_metric_mode", "Occurrences")
 
     df_sum, df_yearly = story_agg_no_window(df_raw, region, year_end)
@@ -905,6 +1154,7 @@ if st.session_state["story_step"] == 3:
         st.warning("선택한 조건에서 표시할 데이터가 없습니다.")
         st.stop()
 
+    # ✅ 기간 전체 기준 Top 랭킹(설명용)
     if focus == "Occurrences":
         df_rank = df_sum.sort_values("occ_total", ascending=False)
         metric_title = "발생 건수"
@@ -925,120 +1175,30 @@ if st.session_state["story_step"] == 3:
         f"- 합계: **{top_val:,}**"
     )
 
-    # --- Top 5 (Animated bar by year)
+    # -------------------------------------------------------------------------
+    # ✅ (A) 연도별 Top5 "동적" 애니메이션 바차트  (고정 Top5 아님)
+    # -------------------------------------------------------------------------
     topN = 5
-    view = df_rank.head(topN).copy()
-    top_types = view["Disaster Type"].tolist()
 
-    # 연도별(1970~year_end) Top5만 집계
-    dff_top = df_yearly[df_yearly["Disaster Type"].isin(top_types)].copy()
+    y_col = "Occurrences" if focus == "Occurrences" else "Deaths"
 
-    # focus에 따라 y값 선택
-    if focus == "Occurrences":
-        y_col = "Occurrences"
-        title = f"Top {topN} ({metric_title}) — {region} (1970–{year_end})"
-    else:
-        y_col = "Deaths"
-        title = f"Top {topN} ({metric_title}) — {region} (1970–{year_end})"
-
-    # ✅ 각 연도에 Top5 타입이 모두 보이도록 0으로 채우기 (막대가 5개 항상 뜨게)
-    years = sorted(dff_top["Start Year"].unique().tolist())
-    full_index = pd.MultiIndex.from_product([years, top_types], names=["Start Year", "Disaster Type"])
-    dff_anim = (
-        dff_top.set_index(["Start Year", "Disaster Type"])[[y_col]]
-        .reindex(full_index, fill_value=0)
-        .reset_index()
+    fig_top_anim = make_bar_race_with_trail(
+        df_yearly=df_yearly,
+        y_col=y_col,
+        region=region,
+        year_end=year_end,
+        topN=5,
+        trail_years=6,  # trailing 길이(원하면 3~10 사이로)
     )
 
-    # ✅ 애니메이션 바차트 (연도 슬라이더 + 재생 버튼 자동 포함)
-    fig_top_anim = px.bar(
-        dff_anim,
-        x="Disaster Type",
-        y=y_col,
-        color="Disaster Type",
-        animation_frame="Start Year",          # <- 핵심: 연도별 애니메이션
-        category_orders={"Disaster Type": top_types},  # <- Top5 순서 고정
-        color_discrete_map=DISASTER_COLOR_MAP,         # <- 기존 색상 맵 통일
-        template="plotly_dark",
-        title=title
-    )
-    # ✅ 애니메이션 속도 조절
-    if fig_top_anim.layout.updatemenus:
-        try:
-            fig_top_anim.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 30
-            fig_top_anim.layout.updatemenus[0].buttons[0].args[1]["transition"]["duration"] = 10
-            fig_top_anim.layout.updatemenus[0].buttons[0].args[1]["transition"]["easing"] = "linear"
-
-        except Exception:
-            pass
-
-    # ✅ Autoscale을 처음부터 적용
-    y_max = dff_anim[y_col].max() * 1.15
-    fig_top_anim.update_yaxes(range=[0, y_max])
-
-    # 보기 좋게 레이아웃 조정
-    fig_top_anim.update_layout(
-        height=420,
-        margin=dict(l=20, r=20, t=70, b=20),
-        xaxis_title="",
-        yaxis_title=metric_title,
-        showlegend=False,  # 막대 자체가 색으로 구분되니 legend는 꺼도 깔끔
-    )
-
-    # ✅ 애니메이션 속도(재생 버튼 눌렀을 때)
-    # (Plotly는 play 버튼 설정이 updatemenus에 들어감)
-    if fig_top_anim.layout.updatemenus and len(fig_top_anim.layout.updatemenus) > 0:
-        try:
-            fig_top_anim.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 500
-            fig_top_anim.layout.updatemenus[0].buttons[0].args[1]["transition"]["duration"] = 200
-        except Exception:
-            pass
-
-    # (선택) 첫 프레임을 1970으로 고정
-    if fig_top_anim.layout.sliders and len(fig_top_anim.layout.sliders) > 0:
-        fig_top_anim.layout.sliders[0].active = 0
+    if fig_top_anim is None:
+        st.warning("선택한 조건에서 표시할 데이터가 없습니다.")
+        st.stop()
 
     st.plotly_chart(fig_top_anim, use_container_width=True)
 
-    # --- Trend line for Top 5 types
-    st.markdown("#### 1970년부터 선택한 연도까지, 연도별 추이")
-
-    dff = df_yearly[df_yearly["Disaster Type"].isin(view["Disaster Type"])].copy()
-
-    if focus == "Occurrences":
-        fig_trend = px.line(
-            dff,
-            x="Start Year",
-            y="Occurrences",
-            color="Disaster Type",
-            color_discrete_map=DISASTER_COLOR_MAP,
-            template="plotly_dark",
-            title=f"{region} — Trend (Occurrences) 1970–{year_end}"
-        )
-    else:
-        fig_trend = px.line(
-            dff,
-            x="Start Year",
-            y="Deaths",
-            color="Disaster Type",
-            color_discrete_map=DISASTER_COLOR_MAP,
-            template="plotly_dark",
-            title=f"{region} — Trend (Deaths) 1970–{year_end}"
-        )
-
-    # top 1 강조
-    for tr in fig_trend.data:
-        if tr.name == top_type:
-            tr.line.width = 4
-        else:
-            tr.line.width = 2
-            tr.opacity = 0.55
-
-    fig_trend.update_layout(height=420, margin=dict(l=20, r=20, t=60, b=20))
-    st.plotly_chart(fig_trend, use_container_width=True)
-
+    
     st.info("➡️ 다음 단계에서 특정 재해를 골라 더 자세히 볼 수 있어요.")
-    st.button("Next ➜", on_click=next_step)
 
 # -----------------------------------------------------------------------------
 # Step 4: user chooses a disaster and explores (Bar=Occurrences, Line=Deaths)
@@ -1092,7 +1252,7 @@ if st.session_state["story_step"] == 4:
             y=d0["Occurrences"],
             name="Occurrences",
             marker=dict(color=DISASTER_COLOR_MAP.get(choice, "#1f77b4")),
-            opacity=0.65,
+            opacity=0.70,
             yaxis="y"
         )
 
@@ -1115,7 +1275,7 @@ if st.session_state["story_step"] == 4:
                 go.Frame(
                     name=str(y),
                     data=[
-                        go.Bar(x=dy["Start Year"], y=dy["Occurrences"]),
+                        go.Bar(x=dy["Start Year"], y=dy["Occurrences"], opacity=0.70),
                         go.Scatter(x=dy["Start Year"], y=dy["Deaths"])
                     ]
                 )
@@ -1156,6 +1316,11 @@ if st.session_state["story_step"] == 4:
             yaxis=dict(title="Occurrences"),
             yaxis2=dict(title="Deaths", overlaying="y", side="right")
         )
+        fig.update_layout(
+            autosize=False,                 # 레이아웃 자동 리사이즈 방지
+            margin=dict(l=220, r=40, t=90, b=60),  # ✅ 왼쪽 여백을 넉넉히 "고정"
+        )
+        fig.update_yaxes(automargin=False)  # ✅ y축 라벨 때문에 margin 자동 변경 금지
 
         return fig
 
@@ -1171,23 +1336,28 @@ if st.session_state["story_step"] == 4:
 # 4. KOREA SECTION
 # -----------------------------------------------------------------------------
 st.markdown("---")
-st.markdown('<p class="main-title" style="font-size: 2.5rem !important;">🇰🇷 Focus on Korea</p>', unsafe_allow_html=True)
+st.markdown('<p class="main-title" style="font-size: 2.5rem !important;">🇰🇷 한국 중심 분석</p>', unsafe_allow_html=True)
 st.markdown('<p class="sub-title">한국의 재해 사망자 추이 및 규모 시각화</p>', unsafe_allow_html=True)
 
 # 데이터 준비: 한국 데이터
 # Top 5 재해 유형 선정
 top_5_kor = df_korea_raw.groupby('Disaster Type')['Total_Deaths'].sum().nlargest(5).index.tolist()
-df_kor_filtered = df_korea_raw[df_korea_raw['Disaster Type'].isin(top_5_kor)]
+df_kor_filtered = df_korea_raw[
+    (df_korea_raw['Disaster Type'].isin(top_5_kor)) &
+    (df_korea_raw['Year'] >= 1970)
+]
 
 # [Chart 1] 연도별 피해 추이 (Stacked Bar)
-st.subheader("📊 Annual Death Toll Trend")
+st.subheader("📊 연도별 사망자 추이")
 fig_bar = px.bar(
     df_kor_filtered,
     x='Year',
     y='Total_Deaths',
     color='Disaster Type',
     template='plotly_dark',
-    color_discrete_sequence=px.colors.qualitative.Pastel
+    category_orders={"Disaster Type": top_5_kor},
+        color_discrete_map=DISASTER_COLOR_MAP,
+        opacity=0.7
 )
 fig_bar.update_layout(
     xaxis_title=None,
@@ -1201,7 +1371,7 @@ st.plotly_chart(fig_bar, use_container_width=True)
 st.markdown("<br><br>", unsafe_allow_html=True)
 
 # [Chart 2] Pictogram Visualization
-st.subheader("🧍 Impact Visualizer (Pictogram)")
+st.subheader("🧍 인명 피해 시각화 (픽토그램)")
 
 # 컨트롤러 (연도, 재해유형)
 col_ctrl1, col_ctrl2 = st.columns([2.2, 1])
