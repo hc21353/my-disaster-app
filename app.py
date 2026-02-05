@@ -68,6 +68,22 @@ DEFAULT_METRIC = "Total Occurrences"
 # Top 5 disaster types (global frequency)
 top_5_disasters = df_raw["Disaster Type"].value_counts().nlargest(5).index.tolist()
 
+# 고정 색상 매핑: Disaster Type -> Color (한 번 만들면 계속 유지)
+palette = px.colors.qualitative.Plotly #storm, epidemic (green)
+all_types = sorted(df_raw["Disaster Type"].dropna().unique().tolist())
+
+if "DISASTER_COLOR_MAP" not in st.session_state:
+    st.session_state["DISASTER_COLOR_MAP"] = {
+        t: palette[i % len(palette)] for i, t in enumerate(all_types)
+    }
+
+DISASTER_COLOR_MAP = st.session_state["DISASTER_COLOR_MAP"]
+
+#FIRST LOAD: checkbox key가 없으면 기본 True로 세팅
+for t in top_5_disasters:
+    k = f"globe_type_{t}"
+    if k not in st.session_state:
+        st.session_state[k] = True
 # -----------------------------
 # session_state init
 # -----------------------------
@@ -80,12 +96,25 @@ if "globe_types" not in st.session_state:
 if "globe_render_key" not in st.session_state:
     st.session_state["globe_render_key"] = 0
 
+# reset flag init
+if "globe_reset" not in st.session_state:
+    st.session_state["globe_reset"] = False
+
 # -----------------------------
-# Handle globe reset (핵심)
+# Handle globe reset (체크박스까지 강제 초기화) - 체크박스 만들기 전에!
 # -----------------------------
-if st.session_state.get("globe_reset", False):
+if st.session_state["globe_reset"]:
+    # Top5는 True로 (초기 선택)
+    for t in top_5_disasters:
+        st.session_state[f"globe_type_{t}"] = True    
+
+    # 3) 내부 리스트도 초기화
     st.session_state["globe_types"] = top_5_disasters
+
+    # 4) metric도 초기화
     st.session_state["globe_metric"] = DEFAULT_METRIC
+
+    # 5) reset 종료
     st.session_state["globe_reset"] = False
 
 # -----------------------------
@@ -105,35 +134,37 @@ with col_reset:
     st.markdown("<div style='height:32px'></div>", unsafe_allow_html=True)
 
     if st.button("↩ Reset Globe", key="btn_reset_globe"):
-        # 대입(set) 금지
-        # st.session_state["globe_types"] = ...
-        # st.session_state["globe_metric"] = ...
+        # del 하지 말고 reset flag만 올리기
+        st.session_state["globe_reset"] = True
 
-        # 대신 삭제(del)
-        for k in ["globe_types", "globe_metric"]:
-            if k in st.session_state:
-                del st.session_state[k]
-
-        # Plotly 지구본 자체를 새로 만들기 위한 key 증가
+        # plotly 재렌더 키 증가
         st.session_state["globe_render_key"] += 1
-
         st.rerun()
 
-
-
 # -----------------------------
-# Controls (types + metric)
+# Controls (types) - value를 직접 넣지 말고 session_state(checkbox key)에 맡기기
 # -----------------------------
-selected_types = st.multiselect(
-    "Select Disaster Types (Top 5)",
-    options=top_5_disasters,
-    key="globe_types"
-)
+st.caption("Select Disaster Types (Top 5)")
 
-# 0개 선택이면 안내하고 중단 (오류 방지)
+cols = st.columns(len(top_5_disasters))
+selected_types = []
+
+for col, t in zip(cols, top_5_disasters):
+    with col:
+        checked = st.checkbox(
+            t,
+            key=f"globe_type_{t}"
+        )
+        if checked:
+            selected_types.append(t)
+
+# 선택 결과를 globe_types에 저장
+st.session_state["globe_types"] = selected_types
+
 if len(selected_types) == 0:
     st.warning("재해 유형을 최소 1개 이상 선택해주세요.")
     st.stop()
+
 
 # -----------------------------
 # Filter data by selected types
@@ -266,6 +297,10 @@ st.plotly_chart(
     config={"scrollZoom": True},
     key=f"globe_{st.session_state['globe_render_key']}"
 )
+# -----------------------------------------------------------------------------
+# Global Trend Section
+# -----------------------------------------------------------------------------
+
 
 # -----------------------------------------------------------------------------
 # 3_2. Area plot (Global Trend by Disaster Type)
@@ -309,8 +344,7 @@ if len(top_types) == 0:
 # -----------------------------
 st.caption("Select Disaster Types (Top 5 in selected region)")
 
-palette = px.colors.qualitative.Plotly
-color_map = {t: palette[i % len(palette)] for i, t in enumerate(top_types)}
+color_map = DISASTER_COLOR_MAP
 
 cols = st.columns(len(top_types))
 selected_types = []
@@ -432,8 +466,7 @@ if len(top_types) == 0:
 # -----------------------------
 st.caption("Select Disaster Types (Top 5 by Total Deaths)")
 
-palette = px.colors.qualitative.Plotly
-color_map = {t: palette[i % len(palette)] for i, t in enumerate(top_types)}
+color_map = DISASTER_COLOR_MAP
 
 cols = st.columns(len(top_types))
 selected_types = []
@@ -638,7 +671,7 @@ with col_pic_left:
 # =========================================================
 with col_pic_right:
     UNIT_PER_ICON = 1
-    base_icons = 108
+    base_icons = 430 #86
     active_icons = math.ceil(death_count / UNIT_PER_ICON)
 
     # 기본 108, 초과 시 확장
