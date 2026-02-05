@@ -105,30 +105,54 @@ with col_reset:
     st.markdown("<div style='height:32px'></div>", unsafe_allow_html=True)
 
     if st.button("↩ Reset Globe", key="btn_reset_globe"):
-        # 대입(set) 금지
-        # st.session_state["globe_types"] = ...
-        # st.session_state["globe_metric"] = ...
 
-        # 대신 삭제(del)
+        # 기존 state 제거
         for k in ["globe_types", "globe_metric"]:
             if k in st.session_state:
                 del st.session_state[k]
 
-        # Plotly 지구본 자체를 새로 만들기 위한 key 증가
+        # ✅ 체크박스 상태도 같이 제거
+        for t in top_5_disasters:
+            chk_key = f"globe_type_{t}"
+            if chk_key in st.session_state:
+                del st.session_state[chk_key]
+
+        # plotly 재렌더
         st.session_state["globe_render_key"] += 1
 
         st.rerun()
 
 
 
+
 # -----------------------------
 # Controls (types + metric)
 # -----------------------------
-selected_types = st.multiselect(
-    "Select Disaster Types (Top 5)",
-    options=top_5_disasters,
-    key="globe_types"
-)
+st.caption("Select Disaster Types (Top 5)")
+
+cols = st.columns(len(top_5_disasters))
+selected_types = []
+
+# session_state에 저장된 선택값(기본: top_5_disasters)
+current_selected = set(st.session_state.get("globe_types", top_5_disasters))
+
+for col, t in zip(cols, top_5_disasters):
+    with col:
+        checked = st.checkbox(
+            t,
+            value=(t in current_selected),
+            key=f"globe_type_{t}"   # 각 체크박스 key 유니크
+        )
+        if checked:
+            selected_types.append(t)
+
+# 선택 결과를 globe_types에 다시 저장 (다음 rerun에도 유지)
+st.session_state["globe_types"] = selected_types
+
+if len(selected_types) == 0:
+    st.warning("재해 유형을 최소 1개 이상 선택해주세요.")
+    st.stop()
+
 
 # 0개 선택이면 안내하고 중단 (오류 방지)
 if len(selected_types) == 0:
