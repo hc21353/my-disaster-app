@@ -59,7 +59,7 @@ st.markdown(
     """
     <div style="text-align:center; margin-top: 6px; margin-bottom: 6px;">
         <div style="font-size: 3.4rem; font-weight: 900; line-height: 1.05; color: #ff3b3b;">
-            전 세계 재난 현황 분석 🌍
+            Remapping Global Disasters 🌍
         </div>
         <div style="font-size: 1.35rem; font-weight: 600; opacity: 0.85; margin-top: 8px;">
             EM-DAT 데이터를 기반으로 전 세계 재해의 발생 위치, 유형, 빈도, 피해 규모를 시공간적으로 살펴봅니다.
@@ -687,7 +687,7 @@ st.info(
 # Storytelling Interactive Visualization
 # -----------------------------------------------------------------------------
 st.markdown("---")
-st.subheader("🧭 각 대륙별로 어떤 재해가 가장 큰 영향을 미쳤을까?")
+st.subheader("🧭 섹션 5. 각 대륙별로 어떤 재해가 가장 큰 영향을 미쳤을까?")
 
 if "story_step" not in st.session_state:
     st.session_state["story_step"] = 0
